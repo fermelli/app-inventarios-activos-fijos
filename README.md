@@ -52,3 +52,17 @@ Vue Router es el enrutador oficial para Vue.js. Permite crear una aplicacion de 
 5. Usar `vue-router` en el archivo `resources/js/src/main.js` con el siguiente codigo: `app.use(router)`.
 
 6. En el archivo `App.vue` se agrega el componente `router-view` que es el componente que se encarga de renderizar los componentes de las rutas. Tambien se agrega el componente `router-link` que es el componente que se encarga de renderizar los links de las rutas.
+
+### Instalacion de Vuetify
+
+Vuetify es un framework de componentes para Vue.js 3.0 que permite crear aplicaciones rapidamente.
+
+1. Instalar el paquete `vuetify` con el comando `npm install vuetify` y el plugin `vite-plugin-vuetify` con el comando `npm install vite-plugin-vuetify`, que permite utilizar Vuetify con Vite.
+
+2. Configurar el plugin `vite-plugin-vuetify` en el archivo `vite.config.js`.
+
+3. Crear el archivo `resources/js/src/vuetify.js` que es el archivo de configuracion de Vuetify.
+
+4. Usar `vuetify` en el archivo `resources/js/src/main.js` con el siguiente codigo: `app.use(vuetify)`. Se observara que los estilos de Vuetify se aplican a la aplicacion.
+
+5. En el archivo `App.vue` se agrega el componente `v-app` que es el componente que se encarga de renderizar la aplicacion.
