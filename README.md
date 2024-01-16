@@ -36,3 +36,19 @@ Para realizar el empaquetado de los archivos JavaScript y CSS, Laravel 10 utiliz
 7. Arrancar el servidor de laravel con el comando `php artisan serve` y el servidor de vite con el comando `npm run dev`.
 
 8. Para que las peticiones se redirijan a la vista principal en el archivo `routes/web.php` se agrega la ruta: `Route::view('/{any}', 'app')->where('any', '.*');` para que se redirija a la vista principal.
+
+### Instalacion de Vue Router
+
+Vue Router es el enrutador oficial para Vue.js. Permite crear una aplicacion de una sola pagina con multiples componentes.
+
+1. Instalar el paquete `vue-router` con el comando `npm install vue-router`.
+
+2. Crear el archivo `resources/js/src/router/index.js` que es el archivo de configuracion de Vue Router.
+
+3. Crear los archivos `resources/js/src/views/InicioVista.vue`, `resources/js/src/views/SobreNosotrosVista.vue` y `resources/js/src/views/ContactoDesarrolladorVista.vue` que son los componentes que se van a renderizar en las rutas.
+
+4. Crear el archivo `resources/js/src/router/routes.js` que es el archivo donde se definen las rutas de la aplicacion.
+
+5. Usar `vue-router` en el archivo `resources/js/src/main.js` con el siguiente codigo: `app.use(router)`.
+
+6. En el archivo `App.vue` se agrega el componente `router-view` que es el componente que se encarga de renderizar los componentes de las rutas. Tambien se agrega el componente `router-link` que es el componente que se encarga de renderizar los links de las rutas.
