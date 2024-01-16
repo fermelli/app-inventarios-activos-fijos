@@ -84,3 +84,11 @@ Las herramientas de desarrollo para el frontend son las siguientes: ESLint, Pret
 6. Instalar las extensiones para el editor de codigo [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) y [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) que permite utilizar ESLint y Prettier en el editor de codigo. Y tambien instalar la extension [Volar](https://marketplace.visualstudio.com/items?itemName=vue.volar) que es una extension para Vue.js.
 
 7. Se agregar los scripts `lint` y `format` en el archivo `package.json` que permite ejecutar ESLint y Prettier respectivamente. El script `lint` se ejecuta con el comando `npm run lint` y el script `format` se ejecuta con el comando `npm run format`.
+
+### Layout de la Aplicacion y Componentes de Barra de Aplicacion y Menu de Navegacion
+
+1. Crear el archivo `resources/js/src/components/BarraAplicacion.vue` que es el componente de la barra de aplicacion.
+
+2. Crear el archivo `resources/js/src/components/MenuNavegacion.vue` que es el componente del menu de navegacion.
+
+3. Establecer el layout de la aplicacion en el archivo `resources/js/src/views/App.vue`.

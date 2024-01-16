@@ -1,21 +1,34 @@
 <script>
+import BarraAplicacion from "@/components/BarraAplicacion.vue";
+import MenuNavegacion from "@/components/MenuNavegacion.vue";
+
 export default {
     name: "App",
+    components: { BarraAplicacion, MenuNavegacion },
+    data() {
+        return {
+            abiertoNavegacion: false,
+        };
+    },
 };
 </script>
 
 <template>
     <v-app>
-        <h1>Hola desde Vue</h1>
+        <v-layout>
+            <BarraAplicacion
+                @abrir-cerrar-menu-navegacion="
+                    abiertoNavegacion = !abiertoNavegacion
+                "
+            />
 
-        <p>
-            <router-link to="/">Inicio</router-link> |
-            <router-link to="/sobre-nosotros">Sobre Nosotros</router-link> |
-            <router-link to="/contacto-desarrollador">
-                Contacto Desarrollador
-            </router-link>
-        </p>
+            <MenuNavegacion :abierto-navegacion="abiertoNavegacion" />
 
-        <router-view />
+            <v-main>
+                <v-container fluid>
+                    <router-view />
+                </v-container>
+            </v-main>
+        </v-layout>
     </v-app>
 </template>
