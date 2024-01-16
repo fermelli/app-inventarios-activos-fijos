@@ -3,6 +3,7 @@ import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "node:url";
 import Vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import eslint from "vite-plugin-eslint";
 
 export default defineConfig({
     plugins: [
@@ -18,6 +19,10 @@ export default defineConfig({
             },
         }),
         Vuetify(),
+        eslint({
+            cache: true,
+            failOnWarning: true,
+        }),
     ],
     resolve: {
         alias: {

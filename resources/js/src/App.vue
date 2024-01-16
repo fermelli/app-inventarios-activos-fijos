@@ -16,6 +16,6 @@ export default {
             </router-link>
         </p>
 
-        <router-view></router-view>
+        <router-view />
     </v-app>
 </template>

@@ -66,3 +66,21 @@ Vuetify es un framework de componentes para Vue.js 3.0 que permite crear aplicac
 4. Usar `vuetify` en el archivo `resources/js/src/main.js` con el siguiente codigo: `app.use(vuetify)`. Se observara que los estilos de Vuetify se aplican a la aplicacion.
 
 5. En el archivo `App.vue` se agrega el componente `v-app` que es el componente que se encarga de renderizar la aplicacion.
+
+### Instalacion de Herramientas de Desarrollo para el Frontend
+
+Las herramientas de desarrollo para el frontend son las siguientes: ESLint, Prettier y Vue DevTools. Que permitira asegurar la calidad del codigo, formatear el codigo y depurar la aplicacion respectivamente.
+
+1. Instalar el paquete `eslint` y otros paquetes relacionados con el comando `npm install -D eslint eslint-plugin-vue vite-plugin-eslint`. El paquete `eslint` es el linter para JavaScript, el paquete `eslint-plugin-vue` es el plugin para Vue.js y el paquete `vite-plugin-eslint` es el plugin para Vite.
+
+2. Tambien se instala el paquete `prettier` con el comando `npm install -D prettier eslint-config-prettier eslint-plugin-prettier` que es el formateador de codigo para JavaScript. El paquete `eslint-config-prettier` es el plugin para ESLint y el paquete `eslint-plugin-prettier` es el plugin para ESLint que permite utilizar Prettier.
+
+3. Crear el archivo `.eslintrc.json` que es el archivo de configuracion de ESLint y el archivo `.prettierrc.json` que es el archivo de configuracion de Prettier.
+
+4. Configurar el plugin `vite-plugin-eslint` en el archivo `vite.config.js`.
+
+5. Instalar la extension de Vue [Vue DevTools](https://devtools.vuejs.org/guide/installation.html) que permite depurar aplicaciones Vue.js.
+
+6. Instalar las extensiones para el editor de codigo [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) y [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) que permite utilizar ESLint y Prettier en el editor de codigo. Y tambien instalar la extension [Volar](https://marketplace.visualstudio.com/items?itemName=vue.volar) que es una extension para Vue.js.
+
+7. Se agregar los scripts `lint` y `format` en el archivo `package.json` que permite ejecutar ESLint y Prettier respectivamente. El script `lint` se ejecuta con el comando `npm run lint` y el script `format` se ejecuta con el comando `npm run format`.
