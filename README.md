@@ -1,5 +1,7 @@
 # Aplicacion de Inventarios para Casegural
 
+Esta es una aplicacion de inventarios para Casegural.
+
 ## Instrucciones
 
 ### Inicio del proyecto
