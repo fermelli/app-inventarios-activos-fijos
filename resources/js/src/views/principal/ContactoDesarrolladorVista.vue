@@ -11,6 +11,6 @@ export default {
 
     <p>
         <a href="omartaboada1990@hotmail.com">Email</a> |
-        <a href="https://github.com/omartaboada">GitHub</a>
+        <a href="https://github.com/omartabo">GitHub</a>
     </p>
 </template>
