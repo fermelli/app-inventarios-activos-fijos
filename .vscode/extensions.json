@@ -2,6 +2,9 @@
     "recommendations": [
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
-        "vue.volar"
+        "vue.volar",
+        "xdebug.php-pack",
+        "wongjn.php-sniffer",
+        "bmewburn.vscode-intelephense-client"
     ]
 }

@@ -94,3 +94,15 @@ Las herramientas de desarrollo para el frontend son las siguientes: ESLint, Pret
 2. Crear el archivo `resources/js/src/components/MenuNavegacion.vue` que es el componente del menu de navegacion.
 
 3. Establecer el layout de la aplicacion en el archivo `resources/js/src/views/App.vue`.
+
+### Instalacion de Herramientas de Desarrollo para el Backend
+
+Las herramientas de desarrollo para el backend son las siguientes: [Conjunto de reglas PHP Codesniffer para seguir el estilo de codificación de Laravel](https://github.com/mreduar/laravel-phpcs). Que permitira asegurar la calidad del codigo, analizar el codigo, analizar la calidad del codigo, realizar pruebas unitarias y depurar la aplicacion respectivamente.
+
+1. Instalar el paquete `laravel/phpcs` con el comando `composer require mreduar/laravel-phpcs --dev` que es el linter para PHP. Aceptar la instalacion del plugin de PHP CodeSniffer.
+
+2. Crear el archivo `phpcs.xml` que es el archivo de configuracion de PHP CodeSniffer y agregar las reglas que van a seguirse en el codigo.
+
+3. Instalar las extensiones para el editor de codigo [PHP Extension Pack](https://marketplace.visualstudio.com/items?itemName=xdebug.php-pack) que contiene las extensiones [PHP Debug](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug) que permite depurar aplicaciones PHP y [PHP IntelliSense](https://marketplace.visualstudio.com/items?itemName=zobo.php-intellisense) que permite autocompletar codigo PHP. Ademas [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client) que es un servidor de lenguaje PHP para VS Code. Y tambien instalar la extension [PHP Sniffer](https://marketplace.visualstudio.com/items?itemName=wongjn.php-sniffer) que permite utilizar PHP CodeSniffer en el editor de codigo.
+
+4. Puede ejecutar PHP CodeSniffer con el comando `vendor/bin/phpcs` para mostrar los errores de codigo y con el comando `vendor/bin/phpcbf` para corregir los errores de codigo.
