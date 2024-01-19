@@ -188,3 +188,20 @@ INFO  Running migrations.
 10. En `routes/api.php` proteger las rutas con el middleware `auth:sanctum`.
 
 11. Agregar el archivo de `Postman` que se encuentra en la carpeta raiz del proyecto ([App Inventarios Casegural.postman_collection.json](App%20Inventarios%20Casegural.postman_collection.json)) que contiene las rutas de autenticacion.
+
+#### Personalizacion de los Campos de la Tabla de usuarios (antes users) y del Modelo de Usuario (User)
+
+1. Crear y ejecutar las migraciones para:
+
+-   Cambiar el nombre de la tabla de usuarios de `users` a `usuarios`.
+-   Cambiar el nombre las columnas de la tabla de usuarios de `name` a `nombre`, `email` a `correo_electronico`, `created_at` a `creado_en` y `updated_at` a `actualizado_en`.
+
+2. Cambios en el modelo de usuario `User`:
+
+-   Agregar el atributo `$table = 'usuarios'` que es el nombre de la tabla de usuarios.
+-   Cambiar el atributo `$fillable` que son los campos que se pueden asignar masivamente de `['name', 'email', 'password',]` a `['nombre', 'correo_electronico', 'password',]`.
+-   Agregar las constantes `CREATED_AT = 'creado_en'` y `UPDATED_AT = 'actualizado_en'` que son los nombres de las columnas de fecha de creacion y actualizacion respectivamente.
+
+3. Modificar el archivo `config/fortify.php` en la llave `email` para que sea `correo_electronico` y en la llave `username` para que sea `correo_electronico`.
+
+4. Modificar la accion `CreateNewUser.php` en la carpeta `app/Actions/Fortify` para que se cree el usuario con el campo `nombre` en vez de `name` y `correo_electronico` en vez de `email`.

@@ -57,7 +57,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"omartaboada1990@hotmail.com\",\r\n    \"password\": \"Password123$\"\r\n}",
+							"raw": "{\r\n    \"correo_electronico\": \"omartaboada1990@hotmail.com\",\r\n    \"password\": \"Password123$\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -89,7 +89,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"omartaboada\",\r\n    \"email\": \"omartaboada1990@hotmail.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
+							"raw": "{\r\n    \"nombre\": \"omartaboada\",\r\n    \"correo_electronico\": \"omartaboada1991@hotmail.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

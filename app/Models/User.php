@@ -14,13 +14,26 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'usuarios';
+
+    /**
+     * Custom name for "created_at" and "updated_at" columns.
+     */
+    public const CREATED_AT = 'creado_en';
+    public const UPDATED_AT = 'actualizado_en';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
+        'nombre',
+        'correo_electronico',
         'password',
     ];
 
