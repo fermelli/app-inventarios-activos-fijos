@@ -106,3 +106,85 @@ Las herramientas de desarrollo para el backend son las siguientes: [Conjunto de 
 3. Instalar las extensiones para el editor de codigo [PHP Extension Pack](https://marketplace.visualstudio.com/items?itemName=xdebug.php-pack) que contiene las extensiones [PHP Debug](https://marketplace.visualstudio.com/items?itemName=xdebug.php-debug) que permite depurar aplicaciones PHP y [PHP IntelliSense](https://marketplace.visualstudio.com/items?itemName=zobo.php-intellisense) que permite autocompletar codigo PHP. Ademas [PHP Intelephense](https://marketplace.visualstudio.com/items?itemName=bmewburn.vscode-intelephense-client) que es un servidor de lenguaje PHP para VS Code. Y tambien instalar la extension [PHP Sniffer](https://marketplace.visualstudio.com/items?itemName=wongjn.php-sniffer) que permite utilizar PHP CodeSniffer en el editor de codigo.
 
 4. Puede ejecutar PHP CodeSniffer con el comando `vendor/bin/phpcs` para mostrar los errores de codigo y con el comando `vendor/bin/phpcbf` para corregir los errores de codigo.
+
+### Autenticacion de Usuarios del Backend
+
+#### Instalacion de Laravel Sanctum
+
+1. Instalar el paquete `laravel/sanctum` con el comando `composer require laravel/sanctum` que es el paquete que permite autenticar usuarios de un SPA.
+
+2. Ejecutar el comando `php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"` que permite publicar los archivos de configuracion de Sanctum como el archivo `config/sanctum.php` y el archivo de migracion `database/migrations/2019_12_14_000001_create_personal_access_tokens_table.php`.
+
+3. Agregar la llave `SANCTUM_STATEFUL_DOMAINS` en el archivo `.env` que es la lista de dominios que se consideran seguros para autenticar usuarios y que se separan por comas y se agregan sin espacios. Tambien se debe agregar la llave `SESSION_DOMAIN` que es el dominio de la sesion.
+
+4. Agregar el middleware `EnsureFrontendRequestsAreStateful` en el archivo `app/Http/Kernel.php` en la seccion `api` que permite que las peticiones de la aplicacion frontend sean seguras.
+
+5. Configurar los datos de conexion a la base de datos (se debe crear la base de datos) en el archivo `.env` de la siguiente manera:
+
+```bash
+...
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=app_inventarios_casegural
+DB_USERNAME=root
+DB_PASSWORD=
+
+...
+```
+
+6. Ejecutar el comando `php artisan migrate` que permite ejecutar las migraciones, de esta manera se crean las tablas de la base de datos:
+
+```bash
+$ php artisan migrate
+
+INFO  Preparing database.
+
+Creating migration table ............................................................................................................... 40ms DONE
+
+INFO  Running migrations.
+
+2014_10_12_000000_create_users_table .................................................................................................. 240ms DONE
+2014_10_12_100000_create_password_reset_tokens_table ................................................................................... 22ms DONE
+2019_08_19_000000_create_failed_jobs_table ............................................................................................ 135ms DONE
+2019_12_14_000001_create_personal_access_tokens_table ................................................................................. 151ms DONE
+```
+
+#### Instalacion de Laravel Fortify
+
+1. Instalar el paquete `laravel/fortify` con el comando `composer require laravel/fortify` que es el paquete que implementa la autenticacion de usuarios.
+
+2. Ejecutar el comando `php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"` que permite publicar los archivos de configuracion de Fortify como el archivo `config/fortify.php` y los archivos de acciones de autenticacion que se encuentran en la carpeta `app/Actions/Fortify`.
+
+3. Agregar el `App\Providers\FortifyServiceProvider::class,` en el archivo `config/app.php` en la seccion `providers` que permite registrar el proveedor de servicios de Fortify.
+
+4. Ejecutar el comando `php artisan migrate` que permite ejecutar las migraciones, de esta manera se crean las tablas de la base de datos:
+
+```bash
+$ php artisan migrate
+
+INFO  Running migrations.
+
+2014_10_12_200000_add_two_factor_columns_to_users_table ................................................................................ 26ms DONE
+```
+
+5. En las configuraciones de Fortify en el archivo `config/fortify.php` se debe configurar:
+
+-   El prefijo en este caso `prefix => 'api'` para las rutas de autenticacion
+-   El middleware en este caso `middleware => ['api']` para las rutas de autenticacion
+-   Establecer los limites de intentos de inicio de sesion `limiters => ['login' => login]` que por defecto es de 5 intentos en 1 minuto.
+-   Deshabilitar las rutas de vistas `views => false` ya que no se van a utilizar.
+-   Habilitar o deshabilitar las caracteristicas de autenticacion en la llave `features`.
+
+6. Modificar los middlewares en la carpeta `app/Http/Middleware` los archivos `Authenticate.php` y `RedirectIfAuthenticated.php`.
+
+7. Modificar el archivo `app/Providers/FortifyServiceProvider.php` para quitar los limites de intentos de inicio de sesion y de dos factores.
+
+8. Cambiar la ruta `Home` en el archivo `app/Providers/RouteServiceProvider.php` para que apunte a la ruta `inicio` osea `public const HOME = '/';` y tambien en el archivo `config/fortify.php` en la llave `home`.
+
+9. En el archivo `config/cors.php` cambiar a verdadero `'supports_credentials' => true,`.
+
+10. En `routes/api.php` proteger las rutas con el middleware `auth:sanctum`.
+
+11. Agregar el archivo de `Postman` que se encuentra en la carpeta raiz del proyecto ([App Inventarios Casegural.postman_collection.json](App%20Inventarios%20Casegural.postman_collection.json)) que contiene las rutas de autenticacion.

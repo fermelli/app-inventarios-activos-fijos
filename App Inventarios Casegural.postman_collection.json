@@ -1,0 +1,204 @@
+{
+	"info": {
+		"_postman_id": "7a18bba9-5033-4e06-b56a-d610f8c0f77c",
+		"name": "App Inventarios Casegural",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8046053"
+	},
+	"item": [
+		{
+			"name": "Autenticacion",
+			"item": [
+				{
+					"name": "CSRF-COOKIE",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/sanctum/csrf-cookie",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sanctum",
+								"csrf-cookie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Iniciar Sesion",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"omartaboada1990@hotmail.com\",\r\n    \"password\": \"Password123$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/login",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrarse",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"omartaboada\",\r\n    \"email\": \"omartaboada1990@hotmail.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/register",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cerrar Sesion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/logout",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario Autenticado",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/user",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const jar = pm.cookies.jar();",
+					"",
+					"jar.get(pm.collectionVariables.get(\"url\"), \"XSRF-TOKEN\", (error, cookie) => {",
+					"    pm.request.addHeader({",
+					"        key: \"X-XSRF-TOKEN\",",
+					"        value: cookie",
+					"    });",
+					"",
+					"    pm.request.addHeader({",
+					"        key: \"Referer\",",
+					"        value: pm.collectionVariables.get(\"url\")",
+					"    });",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "url_api",
+			"value": "http://localhost:8000/api",
+			"type": "string"
+		}
+	]
+}
