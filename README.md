@@ -224,3 +224,15 @@ INFO  Running migrations.
 ```
 
 3. Refactorizacion de `App.vue` para la utilizacion de los layouts.
+
+### Instalacion y configuracion de Vuex
+
+`Vuex` es un patron de administracion de estado + biblioteca para aplicaciones Vue.js. Sirve como un almacen centralizado para todos los componentes de una aplicacion, con reglas que aseguran que el estado solo pueda mutarse de manera predecible.
+
+1. Instalar el paquete `vuex` con el comando `npm install vuex` que es el paquete que permite manejar el estado de la aplicacion.
+
+2. Crear el archivo `resources/js/src/store/index.js` que es el archivo de configuracion de Vuex.
+
+3. Crear el modulo `resources/js/src/store/modules/autenticacion.js` que es el modulo de autenticacion, que por ahora realiza la autenticacion falsa de usuarios.
+
+4. Usar `vuex` en el archivo `resources/js/src/main.js` con el siguiente codigo: `app.use(store)`.
