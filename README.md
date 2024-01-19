@@ -205,3 +205,22 @@ INFO  Running migrations.
 3. Modificar el archivo `config/fortify.php` en la llave `email` para que sea `correo_electronico` y en la llave `username` para que sea `correo_electronico`.
 
 4. Modificar la accion `CreateNewUser.php` en la carpeta `app/Actions/Fortify` para que se cree el usuario con el campo `nombre` en vez de `name` y `correo_electronico` en vez de `email`.
+
+### Agregado Layouts para App y en Blanco
+
+1. Crear el archivo `resources/js/src/layouts/AppLayout.vue` que es el layout de la aplicacion y el archivo `resources/js/src/layouts/BlankLayout.vue` que es el layout en blanco.
+
+2. Definir las rutas en el archivo `resources/js/src/router/routes.js` para que utilicen los layouts en el la propiedad `meta` de la siguiente manera:
+
+```js
+{
+    path: '/',
+    name: 'inicio',
+    component: InicioVista,
+    meta: {
+        layout: 'app-layout',
+    },
+},
+```
+
+3. Refactorizacion de `App.vue` para la utilizacion de los layouts.

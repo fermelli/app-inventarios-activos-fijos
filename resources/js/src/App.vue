@@ -1,13 +1,14 @@
 <script>
-import BarraAplicacion from "@/components/BarraAplicacion.vue";
-import MenuNavegacion from "@/components/MenuNavegacion.vue";
+import AppLayout from "./layouts/AppLayout.vue";
+import BlankLayout from "./layouts/BlankLayout.vue";
+import { LAYOUTS } from "./utils/constantes";
 
 export default {
     name: "App",
-    components: { BarraAplicacion, MenuNavegacion },
+    components: { AppLayout, BlankLayout },
     data() {
         return {
-            abiertoNavegacion: false,
+            layouts: LAYOUTS,
         };
     },
 };
@@ -15,20 +16,8 @@ export default {
 
 <template>
     <v-app>
-        <v-layout>
-            <BarraAplicacion
-                @abrir-cerrar-menu-navegacion="
-                    abiertoNavegacion = !abiertoNavegacion
-                "
-            />
+        <AppLayout v-if="$route.meta.layout == layouts.app" />
 
-            <MenuNavegacion :abierto-navegacion="abiertoNavegacion" />
-
-            <v-main>
-                <v-container fluid>
-                    <router-view />
-                </v-container>
-            </v-main>
-        </v-layout>
+        <BlankLayout v-else />
     </v-app>
 </template>
