@@ -13,7 +13,9 @@ export default {
         </v-main>
 
         <v-footer app>
-            <span class="d-inline-block mx-auto">&copy; 2021</span>
+            <span class="d-inline-block mx-auto">
+                &copy; 2024 - CASEGURAL
+            </span>
         </v-footer>
     </v-layout>
 </template>

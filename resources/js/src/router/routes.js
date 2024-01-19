@@ -7,6 +7,7 @@ export default [
         component: () => import("../views/principal/InicioVista.vue"),
         meta: {
             layout: LAYOUTS.app,
+            requiresAuth: true,
         },
     },
     {
@@ -15,6 +16,7 @@ export default [
         component: () => import("../views/principal/SobreNosotrosVista.vue"),
         meta: {
             layout: LAYOUTS.app,
+            requiresAuth: true,
         },
     },
     {
@@ -24,6 +26,7 @@ export default [
             import("../views/principal/ContactoDesarrolladorVista.vue"),
         meta: {
             layout: LAYOUTS.app,
+            requiresAuth: true,
         },
     },
     {
@@ -32,6 +35,16 @@ export default [
         component: () => import("../views/autenticacion/LoginVista.vue"),
         meta: {
             layout: LAYOUTS.blank,
+            requiresAuth: false,
+        },
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        name: "no-encontrado",
+        component: () => import("../views/NoEncontradoVista.vue"),
+        meta: {
+            layout: LAYOUTS.blank,
+            requiresAuth: false,
         },
     },
 ];

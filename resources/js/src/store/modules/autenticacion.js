@@ -1,3 +1,6 @@
+import AutenticacionService from "../../services/autenticacion";
+import router from "@/router";
+
 const autenticacionStore = {
     namespaced: true,
     state() {
@@ -11,14 +14,34 @@ const autenticacionStore = {
         },
     },
     actions: {
-        async login({ commit }, credenciales) {
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    commit("setUsuario", credenciales);
+        async obtenerUsuarioAutenticado({ commit }) {
+            try {
+                const { data } =
+                    await AutenticacionService.usuarioAutenticado();
 
-                    resolve(true);
-                }, 1500);
-            });
+                commit("setUsuario", data);
+
+                return data;
+            } catch (error) {
+                commit("setUsuario", null);
+            }
+        },
+        logout({ commit }) {
+            return AutenticacionService.logout()
+                .then(() => {
+                    commit("SET_USER", null);
+                    if (router.currentRoute.name !== "login") {
+                        router.push({ name: "login" });
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
+    },
+    getters: {
+        usuarioAutenticado(state) {
+            return state.usuario;
         },
     },
 };

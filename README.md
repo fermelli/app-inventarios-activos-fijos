@@ -236,3 +236,27 @@ INFO  Running migrations.
 3. Crear el modulo `resources/js/src/store/modules/autenticacion.js` que es el modulo de autenticacion, que por ahora realiza la autenticacion falsa de usuarios.
 
 4. Usar `vuex` en el archivo `resources/js/src/main.js` con el siguiente codigo: `app.use(store)`.
+
+### Login de Usuarios del Frontend
+
+1. Crear el archivo `resources/js/src/views/LoginVista.vue` que es la vista de login donde se encuentra el formulario de login con los campos `correo_electronico` y `password` que son validados para que sean requeridos y que el campo `correo_electronico` sea un correo electronico valido.
+
+2. Se agrega la ruta `login` en el archivo `resources/js/src/router/routes.js` que apunta a la vista de login. Y se agrega la ruta de `no-encontrado` que muestra la vista de `NoEncontradoVista.vue` cuando no se encuentra la ruta.
+
+3. Se agrega en la definicion de las rutas en el archivo `resources/js/src/router/routes.js` la propiedad `meta` la llave `requiresAuth` que es un booleano que indica si la ruta requiere autenticacion o no.
+
+4. Se agregar variables de entorno en el archivo `.env` que son `VITE_API_URL` que es la url del backend y `VITE_APP_URL` que es la url del frontend.
+
+5. Se agrega la instancia principal de axios en el archivo `resources/js/src/services/index.js` que es la que se utiliza para realizar las peticiones al backend, donde se configura la `baseURL`, `WithCredentials` y `withXSRFToken` y las cabeceras `Accept`, `Content-Type` y `X-Requested-With` que se envian en las peticiones.
+
+6. Se crear el servicio para la autenticacion en `resources/js/src/services/autenticacion.js` que donde esta la funcion `login`, `usuario-autenticado` y `logout` que son las funciones que se utilizan para realizar la autenticacion de usuarios.
+
+7. Se implementa las `actions` para recuperar el usuario autenticado y el logout en la store la `autenticacion` de usuarios en `resources/js/src/store/modules/autenticacion.js`.
+
+8. Se crea un interceptor de respuesta de axios en el archivo `resources/js/src/services/index.js` que es el que se encarga de verificar si el usuario esta autenticado osea que no haya errores con codigo `401` y `419` si es asi procede a realizar el logout del usuario.
+
+9. Se crea un guard de navegacion en el archivo `resources/js/src/router/index.js` que comprueba antes de acceder a una ruta si el usuario esta autenticado, si no lo esta redirige a la ruta de `login`.
+
+10. Se implementa el `login` en el componente `LoginVista.vue` y se redirige a la ruta de `inicio` si el usuario se autentica correctamente.
+
+11. Se implementa el `logout` en el componente `BarraAplicacion.vue` y se muestra el nombre del usuario autenticado en el componente.

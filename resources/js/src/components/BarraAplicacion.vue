@@ -1,10 +1,18 @@
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "BarraAplicacion",
     emits: ["abrirCerrarMenuNavegacion"],
+    computed: {
+        ...mapGetters("autenticacion", ["usuarioAutenticado"]),
+    },
     methods: {
         abrirCerrarMenuNavegacion() {
             this.$emit("abrirCerrarMenuNavegacion");
+        },
+        cerrarSesion() {
+            this.$store.dispatch("autenticacion/logout");
         },
     },
 };
@@ -18,7 +26,7 @@ export default {
 
         <v-spacer />
 
-        <v-menu location="bottom">
+        <v-menu v-if="usuarioAutenticado" location="bottom">
             <template #activator="{ props }">
                 <v-btn v-bind="props" icon>
                     <v-avatar size="45" color="primary">
@@ -30,7 +38,7 @@ export default {
             <v-list>
                 <v-list-item>
                     <v-list-item-title>
-                        omartaboada1990@hotmail.com
+                        {{ usuarioAutenticado.correo_electronico }}
                     </v-list-item-title>
                 </v-list-item>
 
@@ -40,7 +48,7 @@ export default {
                     <v-list-item-title> Perfil de usuario </v-list-item-title>
                 </v-list-item>
 
-                <v-list-item link>
+                <v-list-item link @click="cerrarSesion">
                     <v-list-item-title>Cerrar sesión</v-list-item-title>
                 </v-list-item>
             </v-list>
