@@ -143,12 +143,12 @@
 							}
 						],
 						"url": {
-							"raw": "{{url_api}}/user",
+							"raw": "{{url_api}}/usuario-autenticado",
 							"host": [
 								"{{url_api}}"
 							],
 							"path": [
-								"user"
+								"usuario-autenticado"
 							]
 						}
 					},
