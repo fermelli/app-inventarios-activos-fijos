@@ -260,3 +260,11 @@ INFO  Running migrations.
 10. Se implementa el `login` en el componente `LoginVista.vue` y se redirige a la ruta de `inicio` si el usuario se autentica correctamente.
 
 11. Se implementa el `logout` en el componente `BarraAplicacion.vue` y se muestra el nombre del usuario autenticado en el componente.
+
+### Notificaciones: Instalacion de Vue Toastification
+
+1. Instalar el paquete `vue-toastification` con el comando `npm install vue-toastification` que es el paquete que permite mostrar notificaciones en la aplicacion.
+
+2. Configurar la utilizacion de `vue-toastification` en el archivo `resources/js/src/main.js`, como plugin de Vue.
+
+3. Agregar notificaciones en el interceptor de respuesta de axios en el archivo `resources/js/src/services/index.js` para errores de la aplicacion.
