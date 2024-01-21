@@ -287,3 +287,66 @@ INFO  Running migrations.
 
 -   `NoAutorizadoVista.vue` que es la vista que se muestra cuando el usuario no esta autorizado para acceder a la ruta.
 -   `DashboardVista.vue` que es la vista del dashboard de la aplicacion, que se muestra cuando el usuario esta autorizado con el rol `administrador`.
+
+## Iteraciones
+
+### Iteración 1: Desarrollar un modulo de gestion para el ingreso y salida del material del almacen
+
+#### Historia de Usuarios
+
+##### Historia de Usuario 01: Gestionar Categorias
+
+|                         |                                                                                              |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| Numero                  | 01                                                                                           |
+| Nombre                  | Gestionar Categorias                                                                         |
+| Usuario                 | Administrador                                                                                |
+| Descripción             | Como administrador quiero gestionar categorias para la correcta organizacion del almacen     |
+| Criterios de Aceptación | - Poder listar categorias con su categoria padre                                             |
+|                         | - Poder listar categorias con sus categorias hijas                                           |
+|                         | - Poder mostrar una categoria especifica con su categoria padre y sus categorias hijas       |
+|                         | - Poder crear categorias con los campos: nombre y que pueda pertenecer a una categoria padre |
+|                         | - Poder editar categorias                                                                    |
+|                         | - Poder desactivar y activar categorias                                                      |
+
+###### Tareas de la Historia de Usuario 01
+
+-   Tareas del Backend
+
+    -   [x] Crear la migracion para crear la tabla de `categorias` con el comando `php artisan make:migration crear_tabla_categorias --create=categorias` que contiene los campos:
+        -   `id`, de tipo `biginteger`, autoincrementable (`auto_increment`), clave primaria (`primary_key`).
+        -   `nombre`, de tipo `varchar`, longitud `100` y campo `unique` que es el nombre de la categoria.
+        -   `eliminado_en`, de tipo `timestamp` que es la fecha de `desactivacion` de la categoria.
+        -   `categoria_padre_id`, de tipo `biginteger` y `unsigned` que es la categoria padre de la categoria.
+        -   Y establecer las relaciones de la tabla de `categorias` con la misma tabla de `categorias` para la relacion de `categoria_padre_id` con `id`.
+        -   Ejecutar la migracion con el comando `php artisan migrate`.
+    -   [x] Crear el `seeder` para rellenar la tabla `categorias` con el comando `php artisan make:seeder CategoriaSeeder` y ejecutar el seeder con el comando `php artisan db:seed --class=CategoriaSeeder`.
+    -   [x] Crear el modelo de `Categoria` con el comando `php artisan make:model Categoria`:
+        -   establecer el nombre de la tabla con el atributo `$table` que es `categorias`.
+        -   establecer los campos que se pueden asignar masivamente con la propiedad `$fillable` que son `nombre` y `categoria_padre_id`
+        -   quitamos los campos `created_at` y `updated_at` con el atributo `$timestamps` a `false`.
+        -   establecer la relacion de la tabla de `categorias` con la misma tabla de `categorias` para la relacion de `categoria_padre_id` con `id`.
+        -   configurar el campo `eliminado_en` como una fecha de tipo `timestamp` con el atributo `$dates`.
+    -   [x] Crear los `FormRequest` para la validacion de los campos para crear `CrearCategoriaRequest` y para actualizar `ActualizarCategoriaRequest`, con los comandos `php artisan make:request CrearCategoriaRequest` y `php artisan make:request ActualizarCategoriaRequest` respectivamente y crear las reglas de validacion para los campos.
+        -   creamos un regla de validacion personalizada para validar que la categoria padre este activa con el comando `php artisan make:rule CategoriaPadreActivaRule`.
+    -   [x] Crear el controlador de `CategoriaController` relacionado con el modelo `Categoria` con el comando `php artisan make:controller CategoriaController --api --model=Categoria` que contiene los metodos:
+        -   `index`, que `lista` las categorias.
+        -   `store`, que `crea` una categoria utilizando el `CrearCategoriaRequest` para validar los campos.
+        -   `show`, que `muestra` una categoria especifica por su `id`.
+        -   `update`, que `actualiza` una categoria utilizando el `ActualizarCategoriaRequest` para validar los campos.
+        -   `destroy`, que `elimina` una categoria de la base de datos por su `id`.
+        -   `reactivar`, que `activa` una categoria que fue `desactivada` (eliminada de manera logica), por su `id`, osea establece la fecha de desactivacion (`eliminado_en`) a `null`.
+        -   `desactivar`, que `desactiva` una categoria (eliminacion logica), por su `id`, osea establece la fecha de eliminacion (`eliminado_en`) a la fecha actual.
+    -   [x] Agregar las rutas de `categorias` en `routes/api.php` para todos los metodos del controlador de `CategoriaController` con la linea `Route::apiResource('categorias', CategoriaController::class);` que creara las rutas (que puede visualizar las rutas con el comando `php artisan route:list`):
+        -   `GET /categorias` que lista las categorias.
+        -   `POST /categorias` que crea una categoria.
+        -   `GET /categorias/{categoria}` que muestra una categoria especifica.
+        -   `PUT/PATCH /categorias/{categoria}` que actualiza una categoria especifica.
+        -   `DELETE /categorias/{categoria}` que elimina una categoria especifica.
+    -   [x] Agregue las rutas para los metodos `indexPadresConHijas`, `softDestroy` y `restore` del controlador `CategoriaController`:
+        -   `GET /categorias/padres-con-hijas` que lista las categorias padres con sus categorias hijas.
+        -   `PUT/PATCH /categorias/{categoria}/desactivar` que `desactiva` (elimina de manera logica) una categoria especifica.
+        -   `PUT/PATCH /categorias/{categoria}/activar` que `activa` (restaura) una categoria especifica.
+    -   [x] Crear la coleccion de postman y probar los endpoints de `categorias`.
+    -   [x] Crear un Gate para la autorizacion del rol `administrador` en el archivo `app/Providers/AuthServiceProvider.php` en el metodo `boot`, y utilizarlo en la definicion de rutas en el archivo `routes/api.php` para los metodos del controlador de `CategoriaController` que son `store`, `update`, `destroy`, `softDestroy` y `restore`.
+    -   [x] Volver a probar los endpoints de `categorias` con la coleccion de postman y verificar que solo los usuarios autorizados por el rol `administrador` puedan acceder a los endpoints.

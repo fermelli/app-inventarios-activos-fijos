@@ -57,4 +57,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    public const ROL_ADMINISTRADOR = 'administrador';
+    public const ROL_PERSONAL = 'personal';
 }
