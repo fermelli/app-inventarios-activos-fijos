@@ -26,7 +26,7 @@ const autenticacionStore = {
                 commit("setUsuario", null);
             }
         },
-        logout({ commit }) {
+        async logout({ commit }) {
             return AutenticacionService.logout()
                 .then(() => {
                     commit("SET_USER", null);
