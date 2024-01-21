@@ -268,3 +268,22 @@ INFO  Running migrations.
 2. Configurar la utilizacion de `vue-toastification` en el archivo `resources/js/src/main.js`, como plugin de Vue.
 
 3. Agregar notificaciones en el interceptor de respuesta de axios en el archivo `resources/js/src/services/index.js` para errores de la aplicacion.
+
+### Agregar Roles de Usuarios
+
+1. Crear la migracion para agregar el campo `rol` a la tabla de usuarios, con los roles `administrador` y `personal` y el campo `rol` por defecto `personal` y ejecutar la migracion.
+
+2. Modificar el modelo de usuario `User` para agregar el campo `rol` que es el rol del usuario.
+
+3. En la definicion de las rutas en el archivo `resources/js/src/router/routes.js` se agrega la propiedad `meta` la llave `rolesAutorizados` que es un array de strings que contiene los roles autorizados para acceder a la ruta.
+
+4. Modificar el guard de navegacion en el archivo `resources/js/src/router/index.js` para que compruebe si el usuario esta autorizado para acceder a la ruta dependiendo de su rol.
+
+5. Agregar el modulo `rutasMenuNavegacion` en el archivo `resources/js/src/store/modules/rutasMenuNavegacion.js` que es el modulo que contiene las rutas del menu de navegacion y rutas autorizadas (`rutasPermitidasPorRol`) para cada rol.
+
+6. Modificar el componente `MenuNavegacion.vue` para que muestre las rutas del menu de navegacion dependiendo del rol del usuario.
+
+7. Agregar las vistas:
+
+-   `NoAutorizadoVista.vue` que es la vista que se muestra cuando el usuario no esta autorizado para acceder a la ruta.
+-   `DashboardVista.vue` que es la vista del dashboard de la aplicacion, que se muestra cuando el usuario esta autorizado con el rol `administrador`.

@@ -12,3 +12,8 @@ export const VUE_TOASTIFICATION_OPTIONS = {
     newestOnTop: true,
     maxToasts: 5,
 };
+
+export const ROLES = {
+    administrador: "administrador",
+    personal: "personal",
+};

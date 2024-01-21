@@ -1,4 +1,4 @@
-import { LAYOUTS } from "../utils/constantes";
+import { LAYOUTS, ROLES } from "../utils/constantes";
 
 export default [
     {
@@ -8,6 +8,17 @@ export default [
         meta: {
             layout: LAYOUTS.app,
             requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador, ROLES.personal],
+        },
+    },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: () => import("../views/principal/DashboardVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
         },
     },
     {
@@ -17,6 +28,7 @@ export default [
         meta: {
             layout: LAYOUTS.app,
             requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador, ROLES.personal],
         },
     },
     {
@@ -27,12 +39,22 @@ export default [
         meta: {
             layout: LAYOUTS.app,
             requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador, ROLES.personal],
         },
     },
     {
         path: "/autenticacion/login",
         name: "login",
         component: () => import("../views/autenticacion/LoginVista.vue"),
+        meta: {
+            layout: LAYOUTS.blank,
+            requiresAuth: false,
+        },
+    },
+    {
+        path: "/no-autorizado",
+        name: "no-autorizado",
+        component: () => import("../views/NoAutorizadoVista.vue"),
         meta: {
             layout: LAYOUTS.blank,
             requiresAuth: false,

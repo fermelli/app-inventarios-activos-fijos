@@ -1,4 +1,6 @@
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "MenuNavegacion",
     props: {
@@ -10,24 +12,10 @@ export default {
     data() {
         return {
             abierto: this.abiertoNavegacion,
-            rutas: [
-                {
-                    to: { name: "inicio" },
-                    icono: "mdi-home",
-                    texto: "Inicio",
-                },
-                {
-                    to: { name: "sobre-nosotros" },
-                    icono: "mdi-information",
-                    texto: "Sobre Nosotros",
-                },
-                {
-                    to: { name: "contacto-desarrollador" },
-                    icono: "mdi-account",
-                    texto: "Contacto Desarrollador",
-                },
-            ],
         };
+    },
+    computed: {
+        ...mapGetters("rutasMenuNavegacion", ["rutasPermitidasPorRol"]),
     },
     watch: {
         abiertoNavegacion(valor) {
@@ -45,7 +33,7 @@ export default {
             <v-divider />
 
             <v-list-item
-                v-for="(ruta, indice) in rutas"
+                v-for="(ruta, indice) in rutasPermitidasPorRol"
                 :key="indice"
                 link
                 :to="ruta.to"

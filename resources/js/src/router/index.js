@@ -10,23 +10,30 @@ const router = new createRouter({
 router.beforeEach(async (to, from, next) => {
     await store.dispatch("autenticacion/obtenerUsuarioAutenticado");
 
-    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+    const requiresAuth = to.matched.some((record) => record.meta?.requiresAuth);
     const usuarioAutenticado =
         store.getters["autenticacion/usuarioAutenticado"];
+    const rutaLogin = { name: "login", redirect: to.fullPath };
+    const rutaInicio = { name: "inicio", redirect: to.fullPath };
+    const rutaNoAutorizado = { name: "no-autorizado", redirect: to.fullPath };
 
     if (requiresAuth) {
         if (!usuarioAutenticado) {
-            next({ name: "login", redirect: to.fullPath });
+            next(rutaLogin);
         } else {
             if (to.name === "login") {
-                next({ name: "inicio", redirect: to.fullPath });
+                next(rutaInicio);
             } else {
-                next();
+                if (to.meta.rolesAutorizados.includes(usuarioAutenticado.rol)) {
+                    next();
+                } else {
+                    next(rutaNoAutorizado);
+                }
             }
         }
     } else {
         if (usuarioAutenticado && to.name === "login") {
-            next({ name: "inicio", redirect: to.fullPath });
+            next(rutaInicio);
         } else {
             next();
         }
