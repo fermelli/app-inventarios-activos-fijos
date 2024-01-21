@@ -20,20 +20,22 @@ service.interceptors.response.use(
     },
     (error) => {
         const toast = useToast();
+
         if (error.code === "ERR_BAD_RESPONSE") {
             toast.error("Error de respuesta del servidor.");
         } else if (error.code == "ECONNABORTED") {
             toast.error("Tiempo de espera agotado.");
         } else if (
             error.response &&
-            [401, 419].includes(error.response.status) &&
-            store.getters["autenticacion/usuarioAutenticado"]
+            [401, 419].includes(error.response.status)
         ) {
+            if (store.getters["autenticacion/usuarioAutenticado"]) {
+                store.dispatch("autenticacion/logout");
+            }
+
             toast.error(
                 "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
             );
-
-            store.dispatch("auth/logout");
         } else {
             toast.error("Se produjo un error inesperado");
         }
