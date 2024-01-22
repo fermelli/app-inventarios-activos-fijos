@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ActualizarCategoriaRequest;
+use App\Http\Requests\ConEliminadosOrdenDireccionRequest;
 use App\Http\Requests\CrearCategoriaRequest;
-use App\Http\Requests\OrdenDireccionRequest;
 use App\Models\Categoria;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -14,22 +15,48 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param OrdenDireccionRequest
+     * @param ConEliminadosOrdenDireccionRequest
      */
-    public function index(OrdenDireccionRequest $request)
+    public function index(ConEliminadosOrdenDireccionRequest $request)
     {
-        $ordenDireccion = $request->validated()['orden_direccion'];
-        $categorias = Categoria::with('categoriaPadre')->orderBy('id', $ordenDireccion)->get();
+        $parametros = $request->validated();
+        $queryBuilder = Categoria::with(['categoriaPadre' => function (Builder $query) {
+            $query->withTrashed();
+        }, 'categoriasHijas']);
+
+        if ($parametros['con_eliminados']) {
+            $queryBuilder->withTrashed();
+        }
+
+        $queryBuilder->orderBy('id', $parametros['orden_direccion']);
+
+        $categorias = $queryBuilder->get();
 
         return response()->jsonResponse('Categorías recuperadas', $categorias, 200);
     }
 
-    public function indexPadresConHijas(OrdenDireccionRequest $request)
+    public function indexPadresConHijas(ConEliminadosOrdenDireccionRequest $request)
     {
-        $ordenDireccion = $request->validated()['orden_direccion'];
-        $categoria = Categoria::with('categoriasHijas.categoriasHijas')
-                                ->where('categoria_padre_id', null)
-                                ->orderBy('id', $ordenDireccion)->get();
+        $parametros = $request->validated();
+        $queryBuilder = Categoria::with(['categoriasHijas' => function (Builder $query) use ($parametros) {
+            $query->with(['categoriasHijas' => function (Builder $query) use ($parametros) {
+                $query->withTrashed();
+
+                if ($parametros['con_eliminados']) {
+                    $query->withTrashed();
+                }
+
+                $query->orderBy('id', $parametros['orden_direccion']);
+            }]);
+        }]);
+
+        if ($parametros['con_eliminados']) {
+            $queryBuilder->withTrashed();
+        }
+        
+        $queryBuilder->where('categoria_padre_id', null)->orderBy('id', $parametros['orden_direccion']);
+        
+        $categoria = $queryBuilder->get();
 
         return response()->jsonResponse('Categoría recuperada', $categoria, 200);
     }
@@ -59,25 +86,11 @@ class CategoriaController extends Controller
     }
 
     /**
-     * Find the specified resource from storage.
-     */
-    protected function find(int $id): Categoria
-    {
-        $categoria = $this->findWithTrashed($id);
-
-        if ($categoria->trashed()) {
-            throw new BadRequestException('Categoría desactivada');
-        }
-
-        return $categoria;
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(int $id)
     {
-        $categoria = $this->find($id);
+        $categoria = $this->findWithTrashed($id);
 
         $categoria->load(['categoriaPadre', 'categoriasHijas.categoriasHijas']);
 
@@ -89,7 +102,7 @@ class CategoriaController extends Controller
      */
     public function update(ActualizarCategoriaRequest $request, int $id)
     {
-        $categoria = $this->find($id);
+        $categoria = $this->findWithTrashed($id);
 
         $categoria->update($request->validated());
 
@@ -117,7 +130,7 @@ class CategoriaController extends Controller
      */
     public function softDestroy(int $id)
     {
-        $categoria = $this->find($id);
+        $categoria = $this->findWithTrashed($id);
 
         $categoria->delete();
 
