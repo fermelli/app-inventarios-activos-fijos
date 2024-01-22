@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ActualizarCategoriaRequest;
 use App\Http\Requests\CrearCategoriaRequest;
+use App\Http\Requests\OrdenDireccionRequest;
 use App\Models\Categoria;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -12,23 +13,25 @@ class CategoriaController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @param OrdenDireccionRequest
      */
-    public function index()
+    public function index(OrdenDireccionRequest $request)
     {
-        $categorias = Categoria::with('categoriaPadre')->get();
+        $ordenDireccion = $request->validated()['orden_direccion'];
+        $categorias = Categoria::with('categoriaPadre')->orderBy('id', $ordenDireccion)->get();
 
-        return response()->json([
-            'categorias' => $categorias,
-        ]);
+        return response()->jsonResponse('Categorías recuperadas', $categorias, 200);
     }
 
-    public function indexPadresConHijas()
+    public function indexPadresConHijas(OrdenDireccionRequest $request)
     {
-        $categorias = Categoria::with('categoriasHijas.categoriasHijas')->where('categoria_padre_id', null)->get();
+        $ordenDireccion = $request->validated()['orden_direccion'];
+        $categoria = Categoria::with('categoriasHijas.categoriasHijas')
+                                ->where('categoria_padre_id', null)
+                                ->orderBy('id', $ordenDireccion)->get();
 
-        return response()->json([
-            'categorias' => $categorias,
-        ]);
+        return response()->jsonResponse('Categoría recuperada', $categoria, 200);
     }
 
     /**
@@ -38,9 +41,7 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::create($request->validated());
 
-        return response()->json([
-            'categoria' => $categoria,
-        ]);
+        return response()->jsonResponse('Categoría creada', $categoria, 201);
     }
 
     /**
@@ -80,9 +81,7 @@ class CategoriaController extends Controller
 
         $categoria->load(['categoriaPadre', 'categoriasHijas.categoriasHijas']);
 
-        return response()->json([
-            'categoria' => $categoria,
-        ]);
+        return response()->jsonResponse('Categoría recuperada', $categoria, 200);
     }
 
     /**
@@ -94,9 +93,7 @@ class CategoriaController extends Controller
 
         $categoria->update($request->validated());
 
-        return response()->json([
-            'categoria' => $categoria,
-        ]);
+        return response()->jsonResponse('Categoría actualizada', $categoria, 200);
     }
 
     /**
@@ -112,9 +109,7 @@ class CategoriaController extends Controller
 
         $categoria->forceDelete();
 
-        return response()->json([
-            'categoria' => $categoria,
-        ]);
+        return response()->jsonResponse('Categoría eliminada', $categoria, 200);
     }
 
     /**
@@ -126,9 +121,7 @@ class CategoriaController extends Controller
 
         $categoria->delete();
 
-        return response()->json([
-            'categoria' => $categoria,
-        ]);
+        return response()->jsonResponse('Categoría desactivada', $categoria, 200);
     }
 
     /**
@@ -140,8 +133,6 @@ class CategoriaController extends Controller
 
         $categoria->restore();
 
-        return response()->json([
-            'categoria' => $categoria,
-        ]);
+        return response()->jsonResponse('Categoría activada', $categoria, 200);
     }
 }

@@ -171,12 +171,18 @@
 							}
 						],
 						"url": {
-							"raw": "{{url_api}}/categorias",
+							"raw": "{{url_api}}/categorias?direccion_orden=desc",
 							"host": [
 								"{{url_api}}"
 							],
 							"path": [
 								"categorias"
+							],
+							"query": [
+								{
+									"key": "direccion_orden",
+									"value": "desc"
+								}
 							]
 						}
 					},
@@ -194,13 +200,19 @@
 							}
 						],
 						"url": {
-							"raw": "{{url_api}}/categorias/padres-con-hijas",
+							"raw": "{{url_api}}/categorias/padres-con-hijas?orden_direccion=asc",
 							"host": [
 								"{{url_api}}"
 							],
 							"path": [
 								"categorias",
 								"padres-con-hijas"
+							],
+							"query": [
+								{
+									"key": "orden_direccion",
+									"value": "asc"
+								}
 							]
 						}
 					},
@@ -219,7 +231,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Categoria {{$randomInt}}\",\r\n    \"categoria_padre_id\": 1\r\n}",
+							"raw": "{\r\n    \"nombre\": \"Categoria {{$randomInt}}\",\r\n    \"categoria_padre_id\": 1",
 							"options": {
 								"raw": {
 									"language": "json"
