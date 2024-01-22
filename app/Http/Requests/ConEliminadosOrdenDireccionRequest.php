@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class OrdenDireccionRequest extends FormRequest
+class ConEliminadosOrdenDireccionRequest extends FormRequest
 {
+    use ConEliminadosRequestTrait;
     use OrdenDireccionRequestTrait;
 
     /**
@@ -23,7 +24,10 @@ class OrdenDireccionRequest extends FormRequest
      */
     public function rules(): array
     {
-        return $this->ordenDireccionRules();
+        return array_merge(
+            $this->conEliminadosRules(),
+            $this->ordenDireccionRules()
+        );
     }
 
     /**
@@ -31,6 +35,7 @@ class OrdenDireccionRequest extends FormRequest
      */
     protected function prepareForValidation(): void
     {
+        $this->conEliminadosPrepareForValidation();
         $this->ordenDireccionPrepareForValidation();
     }
 }
