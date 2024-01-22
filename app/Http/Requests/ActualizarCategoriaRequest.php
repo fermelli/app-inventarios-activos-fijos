@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\CategoriaPadreActivaRule;
 use Closure;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +33,7 @@ class ActualizarCategoriaRequest extends FormRequest
             ],
             'categoria_padre_id' => [
                 'nullable',
-                new CategoriaPadreActivaRule(),
+                // new CategoriaPadreActivaRule(),
                 function (string $attribute, mixed $value, Closure $fail) {
                     if (!DB::table('categorias')->where('id', $value)->exists()) {
                         $fail("{$attribute} debe ser una categoría existente");
