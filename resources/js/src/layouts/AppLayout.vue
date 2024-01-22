@@ -23,7 +23,7 @@ export default {
 
         <MenuNavegacion :abierto-navegacion="abiertoNavegacion" />
 
-        <v-main>
+        <v-main scrollable>
             <v-container fluid>
                 <router-view />
             </v-container>
