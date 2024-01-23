@@ -40,7 +40,14 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									""
+									"pm.sendRequest({\r",
+									"    url: `${pm.collectionVariables.get('url')}/sanctum/csrf-cookie`,\r",
+									"    method: 'GET'\r",
+									"}, (err, res) => {\r",
+									"    if(!err) {\r",
+									"        console.log('Petición del CSRF Token')\r",
+									"    }\r",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -171,7 +178,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url_api}}/categorias?direccion_orden=desc",
+							"raw": "{{url_api}}/categorias?orden_direccion=asc&con_eliminados=1",
 							"host": [
 								"{{url_api}}"
 							],
@@ -180,8 +187,12 @@
 							],
 							"query": [
 								{
-									"key": "direccion_orden",
-									"value": "desc"
+									"key": "orden_direccion",
+									"value": "asc"
+								},
+								{
+									"key": "con_eliminados",
+									"value": "1"
 								}
 							]
 						}
@@ -200,7 +211,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url_api}}/categorias/padres-con-hijas?orden_direccion=asc",
+							"raw": "{{url_api}}/categorias/padres-con-hijas?orden_direccion=asc&con_eliminados=true",
 							"host": [
 								"{{url_api}}"
 							],
@@ -212,6 +223,10 @@
 								{
 									"key": "orden_direccion",
 									"value": "asc"
+								},
+								{
+									"key": "con_eliminados",
+									"value": "true"
 								}
 							]
 						}
