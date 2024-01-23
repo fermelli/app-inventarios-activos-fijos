@@ -22,6 +22,16 @@ export default [
         },
     },
     {
+        path: "/categorias",
+        name: "categorias",
+        component: () => import("../views/categorias/CategoriasVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),

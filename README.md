@@ -352,3 +352,15 @@ INFO  Running migrations.
     -   [x] Volver a probar los endpoints de `categorias` con la coleccion de postman y verificar que solo los usuarios autorizados por el rol `administrador` puedan acceder a los endpoints.
     -   Otras tareas de mejora -[x] Agreado un `macro` en el archivo `app/Providers/MacroServiceProvider.php` que es el que se encarga de formatear las respuestas de las peticiones de la API. Modificado el controlador de `CategoriaController` para que utilice dicho `macro`.
         -   [x] Agregado un `request` para la `query` `direccion_orden` para validar que sea `asc` o `desc` en el archivo `app/Http/Requests/OrdenarRequest.php` y modificado el controlador de `CategoriaController` para que utilice dicho `request` en los metodos `index` y `indexPadresConHijas`.
+
+-   Tareas del Frontend
+
+    -   [x] Crear el componente de vista `resources/js/src/views/categorias/CategoriasVista.vue` que es la vista de categorias.
+    -   [x] Crear la ruta `categorias` en el archivo `resources/js/src/router/routes.js` que apunta a la vista de categorias y agregar al menu de navegacion.
+    -   [x] Crear el servicio `categoriasService` en `resources/js/src/services/categorias.js` que es el servicio que se encarga de realizar las peticiones al backend con los metodos: `index`, `indexPadresConHijas`, `store`, `show`, `update`, `destroy`, `softDestroy` y `restore`.
+    -   [x] Crear el componente `TablaCategorias.vue` que es la tabla de categorias para visualizar los datos de las categorias.
+    -   [x] Implementar la funcionalidad de `listar` categorias consumiendo metodo `index` del servicio `categoriasService`.
+    -   [x] Crear el `formulario` para la `creacion` y `edicion` de categorias.
+    -   [x] Validar los campos del `formulario` de creacion y edicion de categorias.
+    -   [x] Implementar la funcionalidad de `crear`, `editar`, `eliminar`, `desactivar` y `activar` categorias consumiendo el metodo `store`, `update`, `destroy`, `softDestroy` y `restore` del servicio `categoriasService` segun corresponda
+    -   [x] Visualizacion de notificaciones de exito y error de las peticiones realizadas configurando los `interceptors` de `axios` en el archivo `resources/js/src/services/index.js`.

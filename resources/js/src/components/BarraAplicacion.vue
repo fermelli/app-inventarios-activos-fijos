@@ -19,7 +19,7 @@ export default {
 </script>
 
 <template>
-    <v-app-bar color="primary">
+    <v-app-bar color="primary" density="compact">
         <v-app-bar-nav-icon @click="abrirCerrarMenuNavegacion" />
 
         <v-app-bar-title>CASEGURAL</v-app-bar-title>
@@ -29,7 +29,7 @@ export default {
         <v-menu v-if="usuarioAutenticado" location="bottom">
             <template #activator="{ props }">
                 <v-btn v-bind="props" icon>
-                    <v-avatar size="45" color="primary">
+                    <v-avatar size="32" color="primary">
                         <v-icon icon="mdi-account-circle" />
                     </v-avatar>
                 </v-btn>

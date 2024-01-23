@@ -37,6 +37,7 @@ export default {
                 :key="indice"
                 link
                 :to="ruta.to"
+                density="compact"
             >
                 <template #prepend>
                     <v-icon :icon="ruta.icono" />

@@ -47,10 +47,10 @@ export default {
 
 <template>
     <v-row>
-        <v-col cols="12" md="4" offset-md="4">
-            <v-card class="mx-auto" max-width="460">
+        <v-col cols="12">
+            <v-card class="mx-auto my-4" max-width="440">
                 <v-card-title>
-                    <span class="text-h5">Iniciar Sesión</span>
+                    <span class="text-h6">Iniciar Sesión</span>
                 </v-card-title>
 
                 <v-card-text>
@@ -65,6 +65,7 @@ export default {
                             label="Correo electrónico"
                             name="correo_electronico"
                             type="email"
+                            density="compact"
                             :rules="[
                                 reglasValidacion.requerido,
                                 reglasValidacion.correoElectronico,
@@ -82,6 +83,7 @@ export default {
                             :append-inner-icon="
                                 passwordMostrado ? 'mdi-eye' : 'mdi-eye-off'
                             "
+                            density="compact"
                             :rules="[reglasValidacion.requerido]"
                             required
                             clearable
@@ -91,8 +93,10 @@ export default {
                         />
 
                         <v-btn
-                            type="submit"
                             color="primary"
+                            density="compact"
+                            prepend-icon="mdi-lock"
+                            type="submit"
                             :loading="enviandoFormulario"
                         >
                             Ingresar
@@ -103,6 +107,7 @@ export default {
                         <v-responsive class="text-center">
                             <v-btn
                                 color="primary"
+                                density="compact"
                                 variant="text"
                                 size="small"
                                 :to="{ name: 'inicio' }"
