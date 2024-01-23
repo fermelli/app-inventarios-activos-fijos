@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Categoria;
 use Closure;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -44,7 +46,38 @@ class ActualizarCategoriaRequest extends FormRequest
                         $fail("{$attribute} no puede ser la misma categoría");
                     }
                 },
+                function (string $attribute, mixed $value, Closure $fail) {
+                    $categoriaPadreConHijas = Categoria::with(['categoriasHijas' => function (Builder $query) {
+                            $query->withTrashed();
+                    }])->where('id', $this->route('categoria'))->first();
+
+                    $categoriasAplanadas = $this->aplanarCategoriasHijas($categoriaPadreConHijas);
+
+                    $collecionCategoriasAplanadas = collect($categoriasAplanadas);
+
+                    $idsCategoriaAplanadas = $collecionCategoriasAplanadas->pluck('id')->toArray();
+
+                    if (in_array($value, $idsCategoriaAplanadas)) {
+                        $fail("{$attribute} no puede ser una categoría descendiente de la categoría a actualizar");
+                    }
+                },
+                    
             ],
         ];
+    }
+
+    protected function aplanarCategoriasHijas(Categoria $categoria): array
+    {
+        $categorias = [];
+
+        if ($categoria->categoriasHijas->count() > 0) {
+            foreach ($categoria->categoriasHijas as $categoriaHija) {
+                unset($categoriaHija['categoriasHijas']);
+                $categorias[] = $categoriaHija->toArray();
+                $categorias = array_merge($categorias, $this->aplanarCategoriasHijas($categoriaHija));
+            }
+        }
+
+        return $categorias;
     }
 }
