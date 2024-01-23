@@ -27,6 +27,11 @@ class Categoria extends Model
 
     public function categoriasHijas()
     {
+        return $this->hasMany(Categoria::class, 'categoria_padre_id')->with('categoriasHijas');
+    }
+
+    public function categoriasHijasInmediatas()
+    {
         return $this->hasMany(Categoria::class, 'categoria_padre_id');
     }
 }

@@ -22,7 +22,11 @@ class CategoriaController extends Controller
         $parametros = $request->validated();
         $queryBuilder = Categoria::with(['categoriaPadre' => function (Builder $query) {
             $query->withTrashed();
-        }, 'categoriasHijas']);
+        }, 'categoriasHijasInmediatas' => function (Builder $query) use ($parametros) {
+            if ($parametros['con_eliminados']) {
+                $query->withTrashed();
+            }
+        }]);
 
         if ($parametros['con_eliminados']) {
             $queryBuilder->withTrashed();
@@ -39,22 +43,19 @@ class CategoriaController extends Controller
     {
         $parametros = $request->validated();
         $queryBuilder = Categoria::with(['categoriasHijas' => function (Builder $query) use ($parametros) {
-            $query->with(['categoriasHijas' => function (Builder $query) use ($parametros) {
+            if ($parametros['con_eliminados']) {
                 $query->withTrashed();
-
-                if ($parametros['con_eliminados']) {
-                    $query->withTrashed();
-                }
-
-                $query->orderBy('id', $parametros['orden_direccion']);
-            }]);
+            }
         }]);
+
+        $queryBuilder->where('categoria_padre_id', null);
 
         if ($parametros['con_eliminados']) {
             $queryBuilder->withTrashed();
         }
         
-        $queryBuilder->where('categoria_padre_id', null)->orderBy('id', $parametros['orden_direccion']);
+        $queryBuilder->orderBy('id', $parametros['orden_direccion']);
+
         
         $categoria = $queryBuilder->get();
 
