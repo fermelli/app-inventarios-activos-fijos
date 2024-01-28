@@ -1,34 +1,13 @@
 <script>
 import CategoriaService from "./../../services/categorias";
 import { useToast } from "vue-toastification";
-
-const aplanarCategorias = (
-    categorias,
-    categoriasPadresConHijasAplanadas,
-    nivel = 0,
-) => {
-    categorias.forEach((categoria) => {
-        categoriasPadresConHijasAplanadas.push({
-            id: categoria.id,
-            nombre: categoria.nombre,
-            nombre_mostrado: `${"…".repeat(nivel)} ${categoria.nombre}`,
-            categoria_padre_id: categoria.categoria_padre_id,
-            eliminado_en: categoria.eliminado_en,
-            nivel,
-        });
-
-        if (categoria.categorias_hijas?.length > 0) {
-            aplanarCategorias(
-                categoria.categorias_hijas,
-                categoriasPadresConHijasAplanadas,
-                nivel + 1,
-            );
-        }
-    });
-};
+import FormularioCategoria from "./components/FormularioCategoria.vue";
 
 export default {
     name: "CategoriasVista",
+    components: {
+        FormularioCategoria,
+    },
     setup() {
         const toast = useToast();
 
@@ -38,11 +17,8 @@ export default {
         return {
             categorias: [],
             cargandoCategorias: false,
-            categoriasPadresConHijasAplanadas: [],
-            cargandoCategoriasPadresConHijas: false,
-            formulario: this.crearObtetoFormulario(),
+            datosItem: this.crearDatosItem(),
             mostradoDialogoFormulario: false,
-            guardandoCategoria: false,
             categoriaSeleccionada: null,
             mensajeDialogoConfirmacion: null,
             mostradoDialogoConfirmacion: false,
@@ -77,29 +53,17 @@ export default {
                     localStorage.getItem(`itemsPorPagina-${this.$route.name}`),
                 ) || 10,
             paginaActual: 1,
-            reglasValidacionNombre: [
-                (valor) => !!valor || "El nombre es requerido",
-                (valor) =>
-                    (valor && valor.length <= 100) ||
-                    "El nombre debe tener menos de 100 caracteres",
-            ],
-            reglasValidacionCategoriaPadreId: [
-                (valor) =>
-                    !valor ||
-                    Number.isInteger(Number(valor)) ||
-                    "Debe ser un número",
-            ],
         };
     },
     computed: {
         tituloDialogoFormulario() {
-            return this.formulario.id
+            return this.datosItem.id
                 ? "Editar Categoría"
                 : "Registrar Categoría";
         },
     },
     created() {
-        this.recargarDatosCategorias();
+        this.obtenerCategorias();
     },
     methods: {
         async obtenerCategorias() {
@@ -125,53 +89,6 @@ export default {
                 this.cargandoCategorias = false;
             }
         },
-        async obtenerCategoriasPadresConHijas() {
-            this.cargandoCategoriasPadresConHijas = true;
-
-            try {
-                const { data } = await CategoriaService.indexPadresConHijas({
-                    params: { orden_direccion: "asc", con_eliminados: true },
-                });
-                const categoriasPadresConHijas = data.datos;
-
-                this.categoriasPadresConHijasAplanadas = [];
-
-                aplanarCategorias(
-                    categoriasPadresConHijas,
-                    this.categoriasPadresConHijasAplanadas,
-                );
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.cargandoCategoriasPadresConHijas = false;
-            }
-        },
-        async recargarDatosCategorias() {
-            await this.obtenerCategorias();
-            await this.obtenerCategoriasPadresConHijas();
-        },
-        async guardarCategoria() {
-            this.guardandoCategoria = true;
-
-            try {
-                if (this.formulario.id) {
-                    await CategoriaService.update(
-                        this.formulario.id,
-                        this.formulario,
-                    );
-                } else {
-                    await CategoriaService.store(this.formulario);
-                }
-
-                this.toast.success("Categoría guardada exitosamente");
-                this.recargarDatosCategorias();
-                this.cancelarGuardado();
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.guardandoCategoria = false;
-            }
-        },
         async accionCategoria(accion) {
             if (!["eliminar", "desactivar", "activar"].includes(accion)) {
                 return;
@@ -195,7 +112,7 @@ export default {
                 }
 
                 this.mostrarNotificacionAccionRealizada(accion);
-                this.recargarDatosCategorias();
+                this.obtenerCategorias();
                 this.cancelarAccion();
             } catch (error) {
                 console.log(error);
@@ -203,23 +120,24 @@ export default {
                 this.realizandoAccion = false;
             }
         },
-        crearObtetoFormulario() {
+        crearDatosItem() {
             return {
+                id: null,
                 nombre: null,
                 categoria_padre_id: null,
             };
         },
         mostrarDialogoFormulario(item) {
-            this.formulario = item
+            this.datosItem = item
                 ? {
                       ...item,
                   }
-                : this.crearObtetoFormulario();
+                : this.crearDatosItem();
             this.mostradoDialogoFormulario = true;
         },
         cancelarGuardado() {
             this.mostradoDialogoFormulario = false;
-            this.formulario = this.crearObtetoFormulario();
+            this.datosItem = this.crearDatosItem();
         },
         mostrarDialogoConfirmacion(item, accion) {
             switch (accion) {
@@ -289,7 +207,7 @@ export default {
                     density="compact"
                     prepend-icon="mdi-plus"
                     title="Registrar"
-                    @click="mostrarDialogoFormulario"
+                    @click="() => mostrarDialogoFormulario()"
                 >
                     Registrar
                 </v-btn>
@@ -302,7 +220,7 @@ export default {
                     :loading="cargandoCategorias"
                     :disabled="cargandoCategorias"
                     title="Recargar"
-                    @click="recargarDatosCategorias"
+                    @click="obtenerCategorias"
                 />
             </div>
         </v-col>
@@ -390,70 +308,11 @@ export default {
                 </v-card-title>
 
                 <v-card-text class="pa-4">
-                    <v-form
-                        :loading="guardandoCategoria"
-                        @submit.prevent="guardarCategoria"
-                    >
-                        <v-text-field
-                            v-model="formulario.nombre"
-                            class="mb-2"
-                            label="Nombre"
-                            name="nombre"
-                            type="text"
-                            density="compact"
-                            :rules="reglasValidacionNombre"
-                            required
-                            clearable
-                        />
-
-                        <v-autocomplete
-                            v-model="formulario.categoria_padre_id"
-                            class="mb-2"
-                            :items="categoriasPadresConHijasAplanadas"
-                            item-value="id"
-                            item-title="nombre_mostrado"
-                            label="Categoría Padre"
-                            name="categoria_padre_id"
-                            density="compact"
-                            clear-on-select
-                            clearable
-                            no-data-text="No hay ítems disponibles"
-                            :rules="reglasValidacionCategoriaPadreId"
-                        >
-                            <template #selection="{ item }">
-                                {{ item.raw.nombre }}
-                            </template>
-
-                            <template #item="{ item, props }">
-                                <v-list-item
-                                    v-bind="props"
-                                    :disabled="item.raw.id == formulario.id"
-                                />
-                            </template>
-                        </v-autocomplete>
-
-                        <v-btn
-                            color="primary"
-                            density="compact"
-                            prepend-icon="mdi-content-save"
-                            title="Guardar"
-                            type="submit"
-                            :disabled="guardandoCategoria"
-                        >
-                            Guardar
-                        </v-btn>
-
-                        <v-btn
-                            class="ml-2"
-                            color="blue-grey"
-                            density="compact"
-                            prepend-icon="mdi-close"
-                            title="Cancelar"
-                            @click="cancelarGuardado"
-                        >
-                            Cancelar
-                        </v-btn>
-                    </v-form>
+                    <FormularioCategoria
+                        :datos="datosItem"
+                        @actualizar-listado="obtenerCategorias"
+                        @cancelar-guardado="cancelarGuardado"
+                    />
                 </v-card-text>
             </v-card>
         </v-dialog>
