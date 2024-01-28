@@ -77,20 +77,18 @@ export default {
                     localStorage.getItem(`itemsPorPagina-${this.$route.name}`),
                 ) || 10,
             paginaActual: 1,
-            // reglasValidacionNombre: [
-            //     (valor) => !!valor || "El nombre es requerido",
-            //     (valor) =>
-            //         (valor && valor.length <= 100) ||
-            //         "El nombre debe tener menos de 100 caracteres",
-            // ],
-            // reglasValidacionCategoriaPadreId: [
-            //     (valor) =>
-            //         !valor ||
-            //         Number.isInteger(Number(valor)) ||
-            //         "Debe ser un número",
-            // ],
-            reglasValidacionNombre: [],
-            reglasValidacionCategoriaPadreId: [],
+            reglasValidacionNombre: [
+                (valor) => !!valor || "El nombre es requerido",
+                (valor) =>
+                    (valor && valor.length <= 100) ||
+                    "El nombre debe tener menos de 100 caracteres",
+            ],
+            reglasValidacionCategoriaPadreId: [
+                (valor) =>
+                    !valor ||
+                    Number.isInteger(Number(valor)) ||
+                    "Debe ser un número",
+            ],
         };
     },
     computed: {
