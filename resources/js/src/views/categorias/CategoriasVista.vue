@@ -3,12 +3,14 @@ import CategoriaService from "./../../services/categorias";
 import { useToast } from "vue-toastification";
 import FormularioCategoria from "./components/FormularioCategoria.vue";
 import DialogoConfirmacion from "../../components/DialogoConfirmacion.vue";
+import TablaDatosCategorias from "./components/TablaDatosCategorias.vue";
 
 export default {
     name: "CategoriasVista",
     components: {
         FormularioCategoria,
         DialogoConfirmacion,
+        TablaDatosCategorias,
     },
     setup() {
         const toast = useToast();
@@ -26,35 +28,6 @@ export default {
             mostradoDialogoConfirmacion: false,
             funcionDialogoConfirmacion: () => {},
             realizandoAccion: false,
-            busqueda: null,
-            headers: [
-                { title: "#", key: "nro", sortable: false, filterable: false },
-                { title: "Nombre", key: "nombre" },
-                { title: "Categoría Padre", key: "categoria_padre.nombre" },
-                {
-                    title: "Nro. de categorias hijas",
-                    key: "categorias_hijas.length",
-                    filterable: false,
-                },
-                {
-                    title: "Acciones",
-                    key: "acciones",
-                    sortable: false,
-                    filterable: false,
-                },
-            ],
-            itemsPorPaginaOpciones: [
-                { value: 10, title: "10" },
-                { value: 15, title: "15" },
-                { value: 30, title: "30" },
-                { value: 50, title: "50" },
-                { value: -1, title: "Todos" },
-            ],
-            itemsPorPagina:
-                Number(
-                    localStorage.getItem(`itemsPorPagina-${this.$route.name}`),
-                ) || 10,
-            paginaActual: 1,
         };
     },
     computed: {
@@ -185,14 +158,6 @@ export default {
 
             this.toast.success(`Categoría ${accionRealizada} exitosamente`);
         },
-        actualizarItemsPorPagina(itemsPorPagina) {
-            localStorage.setItem(
-                `itemsPorPagina-${this.$route.name}`,
-                itemsPorPagina,
-            );
-
-            this.itemsPorPagina = itemsPorPagina;
-        },
     },
 };
 </script>
@@ -228,79 +193,12 @@ export default {
         </v-col>
 
         <v-col cols="12">
-            <v-data-table
-                :headers="headers"
-                :items="categorias"
-                :search="busqueda"
-                item-key="id"
-                no-data-text="No hay ítems disponibles"
-                items-per-page-text="Ítems por página"
-                loading-text="Cargando ítems..."
-                :items-per-page="itemsPorPagina"
-                page-text="{0}-{1} de {2}"
-                :items-per-page-options="itemsPorPaginaOpciones"
-                density="compact"
-                :loading="cargandoCategorias"
-                @update:items-per-page="actualizarItemsPorPagina"
-                @update:page="paginaActual = $event"
-            >
-                <template #top>
-                    <v-text-field
-                        v-model="busqueda"
-                        class="mb-2"
-                        density="compact"
-                        label="Buscar"
-                        name="buscar"
-                        type="text"
-                        prepend-icon="mdi-magnify"
-                        clearable
-                    />
-                </template>
-
-                <template #[`item.nro`]="{ index }">
-                    {{ index + 1 + itemsPorPagina * (paginaActual - 1) }}
-                </template>
-
-                <template #[`item.acciones`]="{ item }">
-                    <v-btn
-                        color="primary"
-                        density="compact"
-                        icon="mdi-pencil"
-                        title="Editar"
-                        @click="mostrarDialogoFormulario(item)"
-                    />
-
-                    <v-btn
-                        class="ml-2"
-                        color="error"
-                        density="compact"
-                        icon="mdi-trash-can"
-                        title="Eliminar"
-                        :disabled="item.categorias_hijas.length > 0"
-                        @click="mostrarDialogoConfirmacion(item, 'eliminar')"
-                    />
-
-                    <v-btn
-                        v-if="!item.eliminado_en"
-                        class="ml-2"
-                        color="error"
-                        density="compact"
-                        icon="mdi-cancel"
-                        title="Desactivar"
-                        @click="mostrarDialogoConfirmacion(item, 'desactivar')"
-                    />
-
-                    <v-btn
-                        v-else
-                        class="ml-2"
-                        color="success"
-                        density="compact"
-                        icon="mdi-check"
-                        title="Activar"
-                        @click="mostrarDialogoConfirmacion(item, 'activar')"
-                    />
-                </template>
-            </v-data-table>
+            <TablaDatosCategorias
+                :categorias="categorias"
+                :cargando-categorias="cargandoCategorias"
+                @mostrar-formulario="mostrarDialogoFormulario"
+                @mostrar-confirmacion="mostrarDialogoConfirmacion"
+            />
         </v-col>
 
         <v-dialog v-model="mostradoDialogoFormulario" persistent width="440">
