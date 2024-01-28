@@ -406,59 +406,31 @@ export default {
                             clearable
                         />
 
-                        <div class="d-flex align-start">
-                            <v-autocomplete
-                                v-model="formulario.categoria_padre_id"
-                                class="mb-2"
-                                :items="categoriasPadresConHijasAplanadas"
-                                item-value="id"
-                                item-title="nombre_mostrado"
-                                label="Categoría Padre"
-                                name="categoria_padre_id"
-                                density="compact"
-                                clear-on-select
-                                clearable
-                                no-data-text="No hay ítems disponibles"
-                                :rules="reglasValidacionCategoriaPadreId"
-                            >
-                                <template #selection="{ item }">
-                                    {{ item.raw.nombre }}
-                                </template>
+                        <v-autocomplete
+                            v-model="formulario.categoria_padre_id"
+                            class="mb-2"
+                            :items="categoriasPadresConHijasAplanadas"
+                            item-value="id"
+                            item-title="nombre_mostrado"
+                            label="Categoría Padre"
+                            name="categoria_padre_id"
+                            density="compact"
+                            clear-on-select
+                            clearable
+                            no-data-text="No hay ítems disponibles"
+                            :rules="reglasValidacionCategoriaPadreId"
+                        >
+                            <template #selection="{ item }">
+                                {{ item.raw.nombre }}
+                            </template>
 
-                                <template #item="{ item, props }">
-                                    <v-list-item
-                                        v-bind="props"
-                                        :disabled="item.raw.id == formulario.id"
-                                    />
-                                </template>
-                            </v-autocomplete>
-
-                            <v-menu location="bottom right">
-                                <template #activator="{ props }">
-                                    <v-btn
-                                        class="ml-2"
-                                        color="primary"
-                                        icon="mdi-menu-down"
-                                        size="small"
-                                        v-bind="props"
-                                    />
-                                </template>
-
-                                <v-list density="compact">
-                                    <v-list-item link>
-                                        <v-list-item-title>
-                                            Nuevo
-                                        </v-list-item-title>
-                                    </v-list-item>
-
-                                    <v-list-item link>
-                                        <v-list-item-title>
-                                            Editar
-                                        </v-list-item-title>
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
-                        </div>
+                            <template #item="{ item, props }">
+                                <v-list-item
+                                    v-bind="props"
+                                    :disabled="item.raw.id == formulario.id"
+                                />
+                            </template>
+                        </v-autocomplete>
 
                         <v-btn
                             color="primary"
