@@ -2,11 +2,13 @@
 import CategoriaService from "./../../services/categorias";
 import { useToast } from "vue-toastification";
 import FormularioCategoria from "./components/FormularioCategoria.vue";
+import DialogoConfirmacion from "../../components/DialogoConfirmacion.vue";
 
 export default {
     name: "CategoriasVista",
     components: {
         FormularioCategoria,
+        DialogoConfirmacion,
     },
     setup() {
         const toast = useToast();
@@ -20,7 +22,7 @@ export default {
             datosItem: this.crearDatosItem(),
             mostradoDialogoFormulario: false,
             categoriaSeleccionada: null,
-            mensajeDialogoConfirmacion: null,
+            mensajeDialogoConfirmacion: "",
             mostradoDialogoConfirmacion: false,
             funcionDialogoConfirmacion: () => {},
             realizandoAccion: false,
@@ -317,43 +319,12 @@ export default {
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="mostradoDialogoConfirmacion" persistent width="440">
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">Confirmación de acción</span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <!-- eslint-disable-next-line vue/no-v-html -->
-                    <p v-html="mensajeDialogoConfirmacion" />
-                </v-card-text>
-
-                <v-card-actions>
-                    <v-btn
-                        color="primary"
-                        density="compact"
-                        prepend-icon="mdi-check"
-                        title="Aceptar"
-                        :loading="realizandoAccion"
-                        :disabled="realizandoAccion"
-                        @click="funcionDialogoConfirmacion"
-                    >
-                        Aceptar
-                    </v-btn>
-
-                    <v-btn
-                        class="ml-2"
-                        color="blue-grey"
-                        density="compact"
-                        prepend-icon="mdi-close"
-                        title="Cancelar"
-                        :disabled="realizandoAccion"
-                        @click="cancelarAccion"
-                    >
-                        Cancelar
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <DialogoConfirmacion
+            v-model="mostradoDialogoConfirmacion"
+            :mensaje="mensajeDialogoConfirmacion"
+            :realizando-accion="realizandoAccion"
+            @aceptar="funcionDialogoConfirmacion"
+            @cancelar="cancelarAccion"
+        />
     </v-row>
 </template>
