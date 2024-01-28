@@ -51,14 +51,16 @@ class ActualizarCategoriaRequest extends FormRequest
                             $query->withTrashed();
                     }])->where('id', $this->route('categoria'))->first();
 
-                    $categoriasAplanadas = $this->aplanarCategoriasHijas($categoriaPadreConHijas);
-
-                    $collecionCategoriasAplanadas = collect($categoriasAplanadas);
-
-                    $idsCategoriaAplanadas = $collecionCategoriasAplanadas->pluck('id')->toArray();
-
-                    if (in_array($value, $idsCategoriaAplanadas)) {
-                        $fail("{$attribute} no puede ser una categoría descendiente de la categoría a actualizar");
+                    if (!is_null($categoriaPadreConHijas)) {
+                        $categoriasAplanadas = $this->aplanarCategoriasHijas($categoriaPadreConHijas);
+    
+                        $collecionCategoriasAplanadas = collect($categoriasAplanadas);
+    
+                        $idsCategoriaAplanadas = $collecionCategoriasAplanadas->pluck('id')->toArray();
+    
+                        if (in_array($value, $idsCategoriaAplanadas)) {
+                            $fail("{$attribute} no puede ser una categoría descendiente de la categoría a actualizar");
+                        }
                     }
                 },
                     
