@@ -32,6 +32,16 @@ export default [
         },
     },
     {
+        path: "/unidades",
+        name: "unidades",
+        component: () => import("../views/unidades/UnidadesVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),
