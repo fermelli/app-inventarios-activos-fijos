@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,4 +57,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::apiResource('unidades', UnidadController::class, ['only' => ['index', 'show']])
                                             ->parameters(['unidades' => 'unidad']);
+
+    // Rutas para ubicaciones
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::apiResource(
+            'ubicaciones',
+            UbicacionController::class,
+            ['only' => ['store', 'update', 'destroy']]
+        )->parameters(['ubicaciones' => 'ubicacion']);
+    });
+    Route::apiResource('ubicaciones', UbicacionController::class, ['only' => ['index', 'show']])
+                                            ->parameters(['ubicaciones' => 'ubicacion']);
 });
