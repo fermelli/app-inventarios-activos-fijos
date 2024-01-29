@@ -42,6 +42,16 @@ export default [
         },
     },
     {
+        path: "/ubicaciones",
+        name: "ubicaciones",
+        component: () => import("../views/ubicaciones/UbicacionesVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),
