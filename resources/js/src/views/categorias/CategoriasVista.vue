@@ -2,16 +2,16 @@
 import CategoriaService from "./../../services/categorias";
 import { useToast } from "vue-toastification";
 import FormularioCategoria from "./components/FormularioCategoria.vue";
-import DialogoConfirmacion from "../../components/DialogoConfirmacion.vue";
 import TablaDatosCategorias from "./components/TablaDatosCategorias.vue";
+import vistaMixin from "../../mixins/vista.mixin";
 
 export default {
     name: "CategoriasVista",
     components: {
         FormularioCategoria,
-        DialogoConfirmacion,
         TablaDatosCategorias,
     },
+    mixins: [vistaMixin],
     setup() {
         const toast = useToast();
 
@@ -19,37 +19,22 @@ export default {
     },
     data() {
         return {
-            categorias: [],
-            cargandoCategorias: false,
-            datosItem: this.crearDatosItem(),
-            mostradoDialogoFormulario: false,
-            categoriaSeleccionada: null,
-            mensajeDialogoConfirmacion: "",
-            mostradoDialogoConfirmacion: false,
-            funcionDialogoConfirmacion: () => {},
-            realizandoAccion: false,
+            nombreItem: "Categoría",
         };
-    },
-    computed: {
-        tituloDialogoFormulario() {
-            return this.datosItem.id
-                ? "Editar Categoría"
-                : "Registrar Categoría";
-        },
     },
     created() {
         this.obtenerCategorias();
     },
     methods: {
         async obtenerCategorias() {
-            this.cargandoCategorias = true;
+            this.cargandoItems = true;
 
             try {
                 const { data } = await CategoriaService.index({
                     params: { orden_direccion: "desc", con_eliminados: true },
                 });
 
-                this.categorias = data.datos.map((categoria) => {
+                this.items = data.datos.map((categoria) => {
                     const { categorias_hijas_inmediatas, ...datosCategoria } =
                         categoria;
 
@@ -61,10 +46,10 @@ export default {
             } catch (error) {
                 console.log(error);
             } finally {
-                this.cargandoCategorias = false;
+                this.cargandoItems = false;
             }
         },
-        async accionCategoria(accion) {
+        async accionItem(accion) {
             if (!["eliminar", "desactivar", "activar"].includes(accion)) {
                 return;
             }
@@ -73,17 +58,13 @@ export default {
 
             try {
                 if (accion === "eliminar") {
-                    await CategoriaService.destroy(
-                        this.categoriaSeleccionada.id,
-                    );
+                    await CategoriaService.destroy(this.itemSeleccionado.id);
                 } else if (accion === "desactivar") {
                     await CategoriaService.softDestroy(
-                        this.categoriaSeleccionada.id,
+                        this.itemSeleccionado.id,
                     );
                 } else if (accion === "activar") {
-                    await CategoriaService.restore(
-                        this.categoriaSeleccionada.id,
-                    );
+                    await CategoriaService.restore(this.itemSeleccionado.id);
                 }
 
                 this.mostrarNotificacionAccionRealizada(accion);
@@ -101,62 +82,6 @@ export default {
                 nombre: null,
                 categoria_padre_id: null,
             };
-        },
-        mostrarDialogoFormulario(item) {
-            this.datosItem = item
-                ? {
-                      ...item,
-                  }
-                : this.crearDatosItem();
-            this.mostradoDialogoFormulario = true;
-        },
-        cancelarGuardado() {
-            this.mostradoDialogoFormulario = false;
-            this.datosItem = this.crearDatosItem();
-        },
-        mostrarDialogoConfirmacion(item, accion) {
-            switch (accion) {
-                case "eliminar":
-                    this.mensajeDialogoConfirmacion = `
-                        ¿Está seguro de eliminar la categoria
-                        <strong>${item.nombre}</strong>. Esta acción no se puede deshacer.
-                    `;
-                    break;
-                case "desactivar":
-                    this.mensajeDialogoConfirmacion = `
-                        ¿Está seguro de desactivar la categoria
-                        <strong>${item.nombre}</strong>?.
-                    `;
-                    break;
-                case "activar":
-                    this.mensajeDialogoConfirmacion = `
-                        ¿Está seguro de activar la categoria
-                        <strong>${item.nombre}</strong>?.
-                    `;
-                    break;
-                default:
-                    break;
-            }
-            this.funcionDialogoConfirmacion = () =>
-                this.accionCategoria(accion);
-            this.categoriaSeleccionada = item;
-            this.mostradoDialogoConfirmacion = true;
-        },
-        cancelarAccion() {
-            this.mostradoDialogoConfirmacion = false;
-            this.mensajeDialogoConfirmacion = null;
-            this.funcionDialogoConfirmacion = () => {};
-            this.categoriaSeleccionada = null;
-        },
-        mostrarNotificacionAccionRealizada(accion) {
-            const accionRealizada =
-                accion === "eliminar"
-                    ? "eliminada"
-                    : accion === "desactivar"
-                      ? "desactivada"
-                      : "activada";
-
-            this.toast.success(`Categoría ${accionRealizada} exitosamente`);
         },
     },
 };
@@ -184,8 +109,8 @@ export default {
                     color="primary"
                     density="compact"
                     icon="mdi-reload"
-                    :loading="cargandoCategorias"
-                    :disabled="cargandoCategorias"
+                    :loading="cargandoItems"
+                    :disabled="cargandoItems"
                     title="Recargar"
                     @click="obtenerCategorias"
                 />
@@ -194,8 +119,8 @@ export default {
 
         <v-col cols="12">
             <TablaDatosCategorias
-                :categorias="categorias"
-                :cargando-categorias="cargandoCategorias"
+                :items="items"
+                :cargando-items="cargandoItems"
                 @mostrar-formulario="mostrarDialogoFormulario"
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
             />
@@ -210,6 +135,7 @@ export default {
                 <v-card-text class="pa-4">
                     <FormularioCategoria
                         :datos="datosItem"
+                        :nombre-item="nombreItem"
                         @actualizar-listado="obtenerCategorias"
                         @cancelar-guardado="cancelarGuardado"
                     />

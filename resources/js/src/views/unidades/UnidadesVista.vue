@@ -2,16 +2,16 @@
 import UnidadService from "./../../services/unidades";
 import { useToast } from "vue-toastification";
 import FormularioUnidad from "./components/FormularioUnidad.vue";
-import DialogoConfirmacion from "../../components/DialogoConfirmacion.vue";
 import TablaDatosUnidades from "./components/TablaDatosUnidades.vue";
+import vistaMixin from "../../mixins/vista.mixin";
 
 export default {
     name: "UnidadesVista",
     components: {
         FormularioUnidad,
-        DialogoConfirmacion,
         TablaDatosUnidades,
     },
+    mixins: [vistaMixin],
     setup() {
         const toast = useToast();
 
@@ -19,42 +19,29 @@ export default {
     },
     data() {
         return {
-            unidades: [],
-            cargandoUnidades: false,
-            datosItem: this.crearDatosItem(),
-            mostradoDialogoFormulario: false,
-            unidadSeleccionada: null,
-            mensajeDialogoConfirmacion: "",
-            mostradoDialogoConfirmacion: false,
-            funcionDialogoConfirmacion: () => {},
-            realizandoAccion: false,
+            nombreItem: "Unidad",
         };
-    },
-    computed: {
-        tituloDialogoFormulario() {
-            return this.datosItem.id ? "Editar Unidad" : "Registrar Unidad";
-        },
     },
     created() {
         this.obtenerUnidades();
     },
     methods: {
         async obtenerUnidades() {
-            this.cargandoUnidades = true;
+            this.cargandoItems = true;
 
             try {
                 const { data } = await UnidadService.index({
                     params: { orden_direccion: "desc" },
                 });
 
-                this.unidades = data.datos;
+                this.items = data.datos;
             } catch (error) {
                 console.log(error);
             } finally {
-                this.cargandoUnidades = false;
+                this.cargandoItems = false;
             }
         },
-        async accionUnidad(accion) {
+        async accionItem(accion) {
             if (!["eliminar"].includes(accion)) {
                 return;
             }
@@ -63,7 +50,7 @@ export default {
 
             try {
                 if (accion === "eliminar") {
-                    await UnidadService.destroy(this.unidadSeleccionada.id);
+                    await UnidadService.destroy(this.itemSeleccionado.id);
                 }
 
                 this.mostrarNotificacionAccionRealizada(accion);
@@ -80,61 +67,6 @@ export default {
                 id: null,
                 nombre: null,
             };
-        },
-        mostrarDialogoFormulario(item) {
-            this.datosItem = item
-                ? {
-                      ...item,
-                  }
-                : this.crearDatosItem();
-            this.mostradoDialogoFormulario = true;
-        },
-        cancelarGuardado() {
-            this.mostradoDialogoFormulario = false;
-            this.datosItem = this.crearDatosItem();
-        },
-        mostrarDialogoConfirmacion(item, accion) {
-            switch (accion) {
-                case "eliminar":
-                    this.mensajeDialogoConfirmacion = `
-                        ¿Está seguro de eliminar la unidad
-                        <strong>${item.nombre}</strong>. Esta acción no se puede deshacer.
-                    `;
-                    break;
-                case "desactivar":
-                    this.mensajeDialogoConfirmacion = `
-                        ¿Está seguro de desactivar la unidad
-                        <strong>${item.nombre}</strong>?.
-                    `;
-                    break;
-                case "activar":
-                    this.mensajeDialogoConfirmacion = `
-                        ¿Está seguro de activar la unidad
-                        <strong>${item.nombre}</strong>?.
-                    `;
-                    break;
-                default:
-                    break;
-            }
-            this.funcionDialogoConfirmacion = () => this.accionUnidad(accion);
-            this.unidadSeleccionada = item;
-            this.mostradoDialogoConfirmacion = true;
-        },
-        cancelarAccion() {
-            this.mostradoDialogoConfirmacion = false;
-            this.mensajeDialogoConfirmacion = null;
-            this.funcionDialogoConfirmacion = () => {};
-            this.unidadSeleccionada = null;
-        },
-        mostrarNotificacionAccionRealizada(accion) {
-            const accionRealizada =
-                accion === "eliminar"
-                    ? "eliminada"
-                    : accion === "desactivar"
-                      ? "desactivada"
-                      : "activada";
-
-            this.toast.success(`Unidad ${accionRealizada} exitosamente`);
         },
     },
 };
@@ -162,8 +94,8 @@ export default {
                     color="primary"
                     density="compact"
                     icon="mdi-reload"
-                    :loading="cargandoUnidades"
-                    :disabled="cargandoUnidades"
+                    :loading="cargandoItems"
+                    :disabled="cargandoItems"
                     title="Recargar"
                     @click="obtenerUnidades"
                 />
@@ -172,8 +104,8 @@ export default {
 
         <v-col cols="12">
             <TablaDatosUnidades
-                :unidades="unidades"
-                :cargando-unidades="cargandoUnidades"
+                :items="items"
+                :cargando-items="cargandoItems"
                 @mostrar-formulario="mostrarDialogoFormulario"
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
             />
@@ -188,6 +120,7 @@ export default {
                 <v-card-text class="pa-4">
                     <FormularioUnidad
                         :datos="datosItem"
+                        :nombre-item="nombreItem"
                         @actualizar-listado="obtenerUnidades"
                         @cancelar-guardado="cancelarGuardado"
                     />

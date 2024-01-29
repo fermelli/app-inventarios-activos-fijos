@@ -2,9 +2,11 @@
 import CategoriaService from "./../../../services/categorias";
 import { useToast } from "vue-toastification";
 import { aplanarCategorias } from "./../../../utils/funciones";
+import formularioMixin from "../../../mixins/formulario.mixin";
 
 export default {
     name: "FormularioCategoria",
+    mixins: [formularioMixin],
     props: {
         datos: {
             type: Object,
@@ -18,7 +20,6 @@ export default {
             },
         },
     },
-    emits: ["actualizarListado", "cancelarGuardado"],
     setup() {
         const toast = useToast();
 
@@ -26,9 +27,8 @@ export default {
     },
     data() {
         return {
-            formulario: this.datos,
-            formularioValido: false,
-            guardandoCategoria: false,
+            metodoStore: CategoriaService.store,
+            metodoUpdate: CategoriaService.update,
             categoriasPadresConHijasAplanadas: [],
             cargandoCategoriasPadresConHijas: false,
             reglasValidacionNombre: [
@@ -70,33 +70,6 @@ export default {
                 this.cargandoCategoriasPadresConHijas = false;
             }
         },
-        async guardarCategoria() {
-            if (!this.formularioValido) {
-                return;
-            }
-
-            this.guardandoCategoria = true;
-
-            try {
-                if (this.formulario.id) {
-                    await CategoriaService.update(
-                        this.formulario.id,
-                        this.formulario,
-                    );
-                } else {
-                    await CategoriaService.store(this.formulario);
-                }
-
-                this.toast.success("Categoría guardada exitosamente");
-                this.$emit("actualizarListado");
-                this.obtenerCategoriasPadresConHijas();
-                this.$emit("cancelarGuardado");
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.guardandoCategoria = false;
-            }
-        },
     },
 };
 </script>
@@ -104,8 +77,8 @@ export default {
 <template>
     <v-form
         v-model="formularioValido"
-        :loading="guardandoCategoria"
-        @submit.prevent="guardarCategoria"
+        :loading="guardandoItem"
+        @submit.prevent="guardarItem"
     >
         <v-text-field
             v-model="formulario.nombre"
@@ -151,7 +124,7 @@ export default {
             prepend-icon="mdi-content-save"
             title="Guardar"
             type="submit"
-            :disabled="guardandoCategoria"
+            :disabled="guardandoItem"
         >
             Guardar
         </v-btn>
@@ -162,7 +135,7 @@ export default {
             density="compact"
             prepend-icon="mdi-close"
             title="Cancelar"
-            @click="$emit('cancelarGuardado')"
+            @click="emitCancelarGuardado"
         >
             Cancelar
         </v-btn>

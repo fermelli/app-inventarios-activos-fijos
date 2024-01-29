@@ -1,9 +1,11 @@
 <script>
+import formularioMixin from "../../../mixins/formulario.mixin";
 import UnidadService from "./../../../services/unidades";
 import { useToast } from "vue-toastification";
 
 export default {
     name: "FormularioUnidad",
+    mixins: [formularioMixin],
     props: {
         datos: {
             type: Object,
@@ -13,7 +15,6 @@ export default {
             },
         },
     },
-    emits: ["actualizarListado", "cancelarGuardado"],
     setup() {
         const toast = useToast();
 
@@ -21,9 +22,8 @@ export default {
     },
     data() {
         return {
-            formulario: this.datos,
-            formularioValido: false,
-            guardandoUnidad: false,
+            metodoStore: UnidadService.store,
+            metodoUpdate: UnidadService.update,
             reglasValidacionNombre: [
                 (valor) => !!valor || "El nombre es requerido",
                 (valor) =>
@@ -32,43 +32,14 @@ export default {
             ],
         };
     },
-
-    methods: {
-        async guardarUnidad() {
-            if (!this.formularioValido) {
-                return;
-            }
-
-            this.guardandoUnidad = true;
-
-            try {
-                if (this.formulario.id) {
-                    await UnidadService.update(
-                        this.formulario.id,
-                        this.formulario,
-                    );
-                } else {
-                    await UnidadService.store(this.formulario);
-                }
-
-                this.toast.success("Unidad guardada exitosamente");
-                this.$emit("actualizarListado");
-                this.$emit("cancelarGuardado");
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.guardandoUnidad = false;
-            }
-        },
-    },
 };
 </script>
 
 <template>
     <v-form
         v-model="formularioValido"
-        :loading="guardandoUnidad"
-        @submit.prevent="guardarUnidad"
+        :loading="guardandoItem"
+        @submit.prevent="guardarItem"
     >
         <v-text-field
             v-model="formulario.nombre"
@@ -88,7 +59,7 @@ export default {
             prepend-icon="mdi-content-save"
             title="Guardar"
             type="submit"
-            :disabled="guardandoUnidad"
+            :disabled="guardandoItem"
         >
             Guardar
         </v-btn>
@@ -99,7 +70,7 @@ export default {
             density="compact"
             prepend-icon="mdi-close"
             title="Cancelar"
-            @click="$emit('cancelarGuardado')"
+            @click="emitCancelarGuardado"
         >
             Cancelar
         </v-btn>
