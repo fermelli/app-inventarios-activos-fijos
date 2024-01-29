@@ -75,7 +75,7 @@ class CategoriaController extends Controller
     /**
      * Find with trashed the specified resource from storage.
      */
-    public function findWithTrashed(int $id)
+    protected function findWithTrashed(int $id)
     {
         $categoria = Categoria::withTrashed()->find($id);
 
