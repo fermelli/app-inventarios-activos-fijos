@@ -397,6 +397,141 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Unidades",
+			"item": [
+				{
+					"name": "Index Unidades",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/unidades",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"unidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store Unidades",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Unidades\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/unidades",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"unidades"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Unidades",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/unidades/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"unidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Unidades",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Piezas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/unidades/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"unidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Unidades",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url_api}}/unidades/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"unidades",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

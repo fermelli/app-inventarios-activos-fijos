@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\UnidadController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -44,4 +45,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
         );
     });
     Route::apiResource('categorias', CategoriaController::class, ['only' => ['index', 'show']]);
+
+    // Rutas para unidades
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::apiResource(
+            'unidades',
+            UnidadController::class,
+            ['only' => ['store', 'update', 'destroy']]
+        )->parameters(['unidades' => 'unidad']);
+    });
+    Route::apiResource('unidades', UnidadController::class, ['only' => ['index', 'show']])
+                                            ->parameters(['unidades' => 'unidad']);
 });
