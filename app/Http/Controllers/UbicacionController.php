@@ -6,6 +6,7 @@ use App\Http\Requests\ActualizarUbicacionRequest;
 use App\Http\Requests\CrearUbicacionRequest;
 use App\Http\Requests\OrdenDireccionRequest;
 use App\Models\Ubicacion;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UbicacionController extends Controller
@@ -70,6 +71,10 @@ class UbicacionController extends Controller
     public function destroy(string $id)
     {
         $ubicacion = $this->find($id);
+
+        if ($ubicacion->contador_articulos > 0) {
+            throw new BadRequestException('No se puede eliminar una ubicación que tiene artículos');
+        }
 
         $ubicacion->delete();
 

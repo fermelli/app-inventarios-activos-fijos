@@ -34,4 +34,14 @@ class Categoria extends Model
     {
         return $this->hasMany(Categoria::class, 'categoria_padre_id');
     }
+
+    public function articulos()
+    {
+        return $this->hasMany(Articulo::class, 'categoria_id');
+    }
+
+    public function getContadorArticulosAttribute()
+    {
+        return $this->articulos()->count();
+    }
 }

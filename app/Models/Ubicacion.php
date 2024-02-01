@@ -13,4 +13,14 @@ class Ubicacion extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function articulos()
+    {
+        return $this->hasMany(Articulo::class, 'ubicacion_id');
+    }
+
+    public function getContadorArticulosAttribute()
+    {
+        return $this->articulos()->count();
+    }
 }

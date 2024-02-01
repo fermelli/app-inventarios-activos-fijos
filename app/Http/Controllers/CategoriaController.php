@@ -121,6 +121,10 @@ class CategoriaController extends Controller
             throw new BadRequestException('No se puede eliminar una categoría que tiene categorías hijas');
         }
 
+        if ($categoria->contador_articulos > 0) {
+            throw new BadRequestException('No se puede eliminar una categoría que tiene artículos');
+        }
+
         $categoria->forceDelete();
 
         return response()->jsonResponse('Categoría eliminada', $categoria, 200);

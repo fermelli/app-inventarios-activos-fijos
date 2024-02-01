@@ -6,6 +6,7 @@ use App\Http\Requests\ActualizarUnidadRequest;
 use App\Http\Requests\CrearUnidadRequest;
 use App\Http\Requests\OrdenDireccionRequest;
 use App\Models\Unidad;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UnidadController extends Controller
@@ -70,6 +71,10 @@ class UnidadController extends Controller
     public function destroy(string $id)
     {
         $unidad = $this->find($id);
+
+        if ($unidad->contador_articulos > 0) {
+            throw new BadRequestException('No se puede eliminar una unidad que tiene artículos');
+        }
 
         $unidad->delete();
 
