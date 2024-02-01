@@ -23,7 +23,16 @@ service.interceptors.response.use(
         const toast = useToast();
 
         if (error.code === "ERR_BAD_RESPONSE") {
-            toast.error("Error de respuesta del servidor.");
+            console.log(error.response);
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error("Error de respuesta del servidor.");
+            }
         } else if (error.code == "ECONNABORTED") {
             toast.error("Tiempo de espera agotado.");
         } else if (

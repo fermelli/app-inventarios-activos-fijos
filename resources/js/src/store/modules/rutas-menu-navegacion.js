@@ -36,6 +36,12 @@ const rutasMenuNavegacionStore = {
                     rolesAutorizados: [ROLES.administrador],
                 },
                 {
+                    to: { name: "articulos" },
+                    icono: "mdi-package-variant-closed",
+                    texto: "Artículos",
+                    rolesAutorizados: [ROLES.administrador],
+                },
+                {
                     to: { name: "sobre-nosotros" },
                     icono: "mdi-information",
                     texto: "Sobre Nosotros",
