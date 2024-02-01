@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
@@ -68,4 +69,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::apiResource('ubicaciones', UbicacionController::class, ['only' => ['index', 'show']])
                                             ->parameters(['ubicaciones' => 'ubicacion']);
+
+    // Rutas para articulos
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::match(
+            ['put', 'patch'],
+            'articulos/{articulo}/desactivar',
+            [ArticuloController::class, 'softDestroy']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'articulos/{articulo}/activar',
+            [ArticuloController::class, 'restore']
+        );
+        Route::apiResource(
+            'articulos',
+            ArticuloController::class,
+            ['only' => ['store', 'update', 'destroy']]
+        );
+    });
+    Route::apiResource('articulos', ArticuloController::class, ['only' => ['index', 'show']]);
 });
