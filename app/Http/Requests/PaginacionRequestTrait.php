@@ -8,7 +8,7 @@ trait PaginacionRequestTrait
     {
         return [
             'pagina' => ['required', 'integer', 'min:1'],
-            'por_pagina' => ['required', 'integer', 'min:1'],
+            'items_por_pagina' => ['required', 'integer', 'min:1'],
         ];
     }
 
@@ -18,9 +18,9 @@ trait PaginacionRequestTrait
             'pagina' => !array_key_exists('pagina', $this->all()) ?
             1 :
             $this->pagina,
-            'por_pagina' => !array_key_exists('por_pagina', $this->all()) ?
+            'items_por_pagina' => !array_key_exists('items_por_pagina', $this->all()) ?
             10 :
-            $this->por_pagina,
+            $this->items_por_pagina,
         ]);
     }
 }
