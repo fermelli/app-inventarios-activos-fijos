@@ -25,7 +25,7 @@ class Articulo extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'categoria_id');
+        return $this->belongsTo(Categoria::class, 'categoria_id')->withTrashed();
     }
 
     public function unidad()
