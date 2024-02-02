@@ -5,6 +5,7 @@ export default {
     name: "LoginVista",
     data() {
         return {
+            formularioValido: false,
             enviandoFormulario: false,
             passwordMostrado: false,
             formulario: {
@@ -23,6 +24,10 @@ export default {
     },
     methods: {
         async loguearUsuario() {
+            if (!this.formularioValido) {
+                return;
+            }
+
             this.enviandoFormulario = true;
 
             try {
@@ -55,6 +60,7 @@ export default {
 
                 <v-card-text>
                     <v-form
+                        v-model="formularioValido"
                         autocomplete="off"
                         :disabled="enviandoFormulario"
                         @submit.prevent="loguearUsuario"
@@ -101,20 +107,6 @@ export default {
                         >
                             Ingresar
                         </v-btn>
-
-                        <v-divider class="my-4" />
-
-                        <v-responsive class="text-center">
-                            <v-btn
-                                color="primary"
-                                density="compact"
-                                variant="text"
-                                size="small"
-                                :to="{ name: 'inicio' }"
-                            >
-                                Ir a la página principal
-                            </v-btn>
-                        </v-responsive>
                     </v-form>
                 </v-card-text>
             </v-card>
