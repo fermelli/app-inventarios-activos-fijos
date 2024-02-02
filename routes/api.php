@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
+use App\Http\Controllers\UsuarioController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -111,4 +112,28 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
     Route::apiResource('instituciones', InstitucionController::class, ['only' => ['index', 'show']])
                                             ->parameters(['instituciones' => 'institucion']);
+
+    // Rutas para usuarios
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::match(
+            ['put', 'patch'],
+            'usuarios/{usuario}/desactivar',
+            [UsuarioController::class, 'softDestroy']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'usuarios/{usuario}/activar',
+            [UsuarioController::class, 'restore']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'usuarios/{usuario}/cambiar-rol',
+            [UsuarioController::class, 'cambiarRol']
+        );
+        Route::apiResource(
+            'usuarios',
+            UsuarioController::class,
+            ['only' => ['index', 'show', 'destroy']]
+        );
+    });
 });

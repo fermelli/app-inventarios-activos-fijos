@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,6 +13,7 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The table associated with the model.
@@ -25,6 +27,7 @@ class User extends Authenticatable
      */
     public const CREATED_AT = 'creado_en';
     public const UPDATED_AT = 'actualizado_en';
+    public const DELETED_AT = 'eliminado_en';
 
     /**
      * The attributes that are mass assignable.
@@ -60,4 +63,9 @@ class User extends Authenticatable
     
     public const ROL_ADMINISTRADOR = 'administrador';
     public const ROL_PERSONAL = 'personal';
+
+    public function estaActivo(): bool
+    {
+        return is_null($this->eliminado_en);
+    }
 }
