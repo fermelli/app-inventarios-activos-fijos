@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\PaginacionRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaginacionRequest extends FormRequest

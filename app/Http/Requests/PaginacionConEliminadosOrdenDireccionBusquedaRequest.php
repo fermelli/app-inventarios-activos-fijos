@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\BusquedaRequestTrait;
+use App\Http\Requests\Traits\ConEliminadosRequestTrait;
+use App\Http\Requests\Traits\OrdenDireccionRequestTrait;
+use App\Http\Requests\Traits\PaginacionRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaginacionConEliminadosOrdenDireccionBusquedaRequest extends FormRequest

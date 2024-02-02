@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\OrdenDireccionRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OrdenDireccionRequest extends FormRequest

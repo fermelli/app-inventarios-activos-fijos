@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\BusquedaRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BusquedaRequest extends FormRequest

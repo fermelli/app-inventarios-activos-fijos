@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Traits\ConEliminadosRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ConEliminadosRequest extends FormRequest
