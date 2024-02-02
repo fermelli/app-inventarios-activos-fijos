@@ -103,6 +103,15 @@ export default [
         },
     },
     {
+        path: "/autenticacion/registrarse",
+        name: "registrarse",
+        component: () => import("../views/autenticacion/RegistrarseVista.vue"),
+        meta: {
+            layout: LAYOUTS.blank,
+            requiresAuth: false,
+        },
+    },
+    {
         path: "/no-autorizado",
         name: "no-autorizado",
         component: () => import("../views/NoAutorizadoVista.vue"),

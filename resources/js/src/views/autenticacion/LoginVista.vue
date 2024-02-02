@@ -107,6 +107,16 @@ export default {
                         >
                             Ingresar
                         </v-btn>
+
+                        <v-btn
+                            color="primary"
+                            density="compact"
+                            variant="text"
+                            size="small"
+                            :to="{ name: 'registrarse' }"
+                        >
+                            Registrarse
+                        </v-btn>
                     </v-form>
                 </v-card-text>
             </v-card>

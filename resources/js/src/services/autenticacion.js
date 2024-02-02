@@ -13,4 +13,7 @@ export default {
     async logout() {
         return await service.post("/logout");
     },
+    async register(datos) {
+        return await service.post("/register", datos);
+    },
 };
