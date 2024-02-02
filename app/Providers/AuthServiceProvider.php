@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(User::ROL_ADMINISTRADOR, function (User $usuario) {
             return $usuario->rol == User::ROL_ADMINISTRADOR
                                 ? Response::allow()
-                                : Response::denyWithStatus(403, 'No tienes permiso para crear categorias');
+                                : Response::denyWithStatus(403, 'No tienes permiso para proceder con esta acción.');
         });
     }
 }
