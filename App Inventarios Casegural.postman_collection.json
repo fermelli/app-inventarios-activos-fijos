@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7a18bba9-5033-4e06-b56a-d610f8c0f77c",
+		"_postman_id": "67ed94ff-74b9-438d-83f7-dc8ea1d02179",
 		"name": "App Inventarios Casegural",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8046053"
@@ -526,6 +526,211 @@
 							"path": [
 								"unidades",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Articulos",
+			"item": [
+				{
+					"name": "Index Articulos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos?conEliminados=true&pagina=1&por_pagina=20",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos"
+							],
+							"query": [
+								{
+									"key": "conEliminados",
+									"value": "true"
+								},
+								{
+									"key": "pagina",
+									"value": "1"
+								},
+								{
+									"key": "por_pagina",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store Articulos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoria_id\": 1,\r\n    \"unidad_id\": 1,\r\n    \"ubicacion_id\": 1,\r\n    \"codigo\": \"{{$randomWord}}-{{$randomInt}}\",\r\n    \"nombre\": \"{{$randomProduct}} {{$randomInt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/articulos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show Articulos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Articulos",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoria_id\": 1,\r\n    \"unidad_id\": 1,\r\n    \"ubicacion_id\": 1,\r\n    \"codigo\": \"{{$randomWord}}-{{$randomInt}}\",\r\n    \"nombre\": \"{{$randomProduct}} {{$randomInt}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/articulos/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy Articulos",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "softDestroy Articulos",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/2/desactivar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"2",
+								"desactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restore Articulos",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/2/activar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"2",
+								"activar"
 							]
 						}
 					},
