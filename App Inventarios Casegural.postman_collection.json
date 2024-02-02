@@ -737,6 +737,203 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Instituciones",
+			"item": [
+				{
+					"name": "Index Instituciones",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/instituciones?con_eliminados=true",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones"
+							],
+							"query": [
+								{
+									"key": "con_eliminados",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store Instituciones",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"{{$randomCompanyName}}\",\r\n    \"direccion\": \"{{$randomStreetAddress}}\",\r\n    \"telefono\": \"{{$randomPhoneNumber}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/instituciones",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Instituciones",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/instituciones/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Instituciones",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"{{$randomCompanyName}}\",\r\n    \"direccion\": \"{{$randomStreetAddress}}\",\r\n    \"telefono\": \"{{$randomPhoneNumber}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/instituciones/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Instituciones",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/instituciones/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SoftDestroy Instituciones",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/instituciones/2/desactivar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones",
+								"2",
+								"desactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore Instituciones",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/instituciones/2/activar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"instituciones",
+								"2",
+								"activar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [

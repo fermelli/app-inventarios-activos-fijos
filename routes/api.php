@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
 use App\Models\User;
@@ -89,4 +90,25 @@ Route::middleware(['auth:sanctum'])->group(function () {
         );
     });
     Route::apiResource('articulos', ArticuloController::class, ['only' => ['index', 'show']]);
+
+    // Rutas para instituciones
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::match(
+            ['put', 'patch'],
+            'instituciones/{institucion}/desactivar',
+            [InstitucionController::class, 'softDestroy']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'instituciones/{institucion}/activar',
+            [InstitucionController::class, 'restore']
+        );
+        Route::apiResource(
+            'instituciones',
+            InstitucionController::class,
+            ['only' => ['store', 'update', 'destroy']]
+        )->parameters(['instituciones' => 'institucion']);
+    });
+    Route::apiResource('instituciones', InstitucionController::class, ['only' => ['index', 'show']])
+                                            ->parameters(['instituciones' => 'institucion']);
 });
