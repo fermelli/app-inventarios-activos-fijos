@@ -73,6 +73,16 @@ export default [
         },
     },
     {
+        path: "/usuarios",
+        name: "usuarios",
+        component: () => import("../views/usuarios/UsuariosVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),
