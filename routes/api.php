@@ -133,7 +133,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource(
             'usuarios',
             UsuarioController::class,
-            ['only' => ['index', 'show', 'destroy']]
+            ['only' => ['destroy']]
         );
     });
+    Route::apiResource('usuarios', UsuarioController::class, ['only' => ['index', 'show']]);
 });
