@@ -61,6 +61,8 @@ service.interceptors.response.use(
             } else {
                 toast.error(data.message);
             }
+        } else if (error.response && error.response.status === 403) {
+            toast.error(error.response.data.message);
         } else {
             toast.error("Se produjo un error inesperado");
         }
