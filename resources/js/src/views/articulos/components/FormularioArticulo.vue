@@ -51,7 +51,7 @@ export default {
                 (valor) => !!valor || "El nombre es requerido",
                 (valor) =>
                     (valor && valor.length <= 255) ||
-                    "El nombre debe tener menos de 100 caracteres",
+                    "El nombre debe tener menos de 255 caracteres",
             ],
             reglasValidacionCategoriaId: [
                 (valor) => !!valor || "La categoría es requerida",
