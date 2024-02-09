@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\EntradaArticuloController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
@@ -137,4 +138,23 @@ Route::middleware(['auth:sanctum'])->group(function () {
         );
     });
     Route::apiResource('usuarios', UsuarioController::class, ['only' => ['index', 'show']]);
+
+    // Rutas para entradas de articulos
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::match(
+            ['put', 'patch'],
+            'entradas-articulos/{entradaArticulo}/desactivar',
+            [EntradaArticuloController::class, 'softDestroy']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'entradas-articulos/{entradaArticulo}/activar',
+            [EntradaArticuloController::class, 'restore']
+        );
+        Route::apiResource(
+            'entradas-articulos',
+            EntradaArticuloController::class,
+            ['only' => ['index', 'store']]
+        );
+    });
 });

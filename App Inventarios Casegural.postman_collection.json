@@ -934,6 +934,155 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "cambiarRol Usuarios",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rol\": \"administrador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/usuarios/2/cambiar-rol",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"usuarios",
+								"2",
+								"cambiar-rol"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entradas",
+			"item": [
+				{
+					"name": "Create Entradas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"institucion_id\": 2,\r\n    \"fecha\": \"2024-02-06\",\r\n    \"comprobante\": \"factura\",\r\n    \"numero_comprobante\": \"123\",\r\n    \"detalles_transacciones\": [\r\n        {\r\n            \"articulo_id\": 2,\r\n            \"cantidad\": {{$randomInt}},\r\n            \"lote\": null,\r\n            \"fecha_vencimiento\": null\r\n        },\r\n        {\r\n            \"articulo_id\": 3,\r\n            \"cantidad\": {{$randomInt}},\r\n            \"articulo_lote\": {\r\n                \"lote\": \"000{{$randomInt}}\",\r\n                \"fecha_vencimiento\": null\r\n            }\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index Entradas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SoftDestroy Entradas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/2/desactivar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"2",
+								"desactivar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore Entradas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/2/activar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"2",
+								"activar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
