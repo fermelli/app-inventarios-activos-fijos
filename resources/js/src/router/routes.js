@@ -83,6 +83,16 @@ export default [
         },
     },
     {
+        path: "/entradas",
+        name: "entradas",
+        component: () => import("../views/entradas/EntradasVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador, ROLES.personal],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),

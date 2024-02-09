@@ -4,7 +4,18 @@ import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin"
 export default {
     name: "TablaDatosServidorArticulos",
     mixins: [tablaDatosServidorMixin],
-    emits: ["mostrarFormulario", "mostrarConfirmacion", "cargarItems"],
+    props: {
+        soloSeleccionItems: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    emits: [
+        "mostrarFormulario",
+        "mostrarConfirmacion",
+        "cargarItems",
+        "seleccionarItem",
+    ],
     data() {
         return {
             headers: [
@@ -67,62 +78,73 @@ export default {
 
         <template #[`item.acciones`]="{ item }">
             <v-btn
+                v-if="soloSeleccionItems"
                 color="primary"
                 density="compact"
-                icon="mdi-pencil"
-                title="Editar"
-                @click="$emit('mostrarFormulario', item)"
+                icon="mdi-plus"
+                title="Seleccionar"
+                @click="$emit('seleccionarItem', item)"
             />
 
-            <v-btn
-                class="ml-2"
-                color="error"
-                density="compact"
-                icon="mdi-trash-can"
-                title="Eliminar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'eliminar',
-                        `${item.nombre}`,
-                    )
-                "
-            />
+            <template v-else>
+                <v-btn
+                    color="primary"
+                    density="compact"
+                    icon="mdi-pencil"
+                    title="Editar"
+                    @click="$emit('mostrarFormulario', item)"
+                />
 
-            <v-btn
-                v-if="!item.eliminado_en"
-                class="ml-2"
-                color="error"
-                density="compact"
-                icon="mdi-cancel"
-                title="Desactivar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'desactivar',
-                        `${item.nombre}`,
-                    )
-                "
-            />
+                <v-btn
+                    class="ml-2"
+                    color="error"
+                    density="compact"
+                    icon="mdi-trash-can"
+                    title="Eliminar"
+                    @click="
+                        $emit(
+                            'mostrarConfirmacion',
+                            item,
+                            'eliminar',
+                            `${item.nombre}`,
+                        )
+                    "
+                />
 
-            <v-btn
-                v-else
-                class="ml-2"
-                color="success"
-                density="compact"
-                icon="mdi-check"
-                title="Activar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'activar',
-                        `${item.nombre}`,
-                    )
-                "
-            />
+                <v-btn
+                    v-if="!item.eliminado_en"
+                    class="ml-2"
+                    color="error"
+                    density="compact"
+                    icon="mdi-cancel"
+                    title="Desactivar"
+                    @click="
+                        $emit(
+                            'mostrarConfirmacion',
+                            item,
+                            'desactivar',
+                            `${item.nombre}`,
+                        )
+                    "
+                />
+
+                <v-btn
+                    v-else
+                    class="ml-2"
+                    color="success"
+                    density="compact"
+                    icon="mdi-check"
+                    title="Activar"
+                    @click="
+                        $emit(
+                            'mostrarConfirmacion',
+                            item,
+                            'activar',
+                            `${item.nombre}`,
+                        )
+                    "
+                />
+            </template>
         </template>
     </v-data-table-server>
 </template>
