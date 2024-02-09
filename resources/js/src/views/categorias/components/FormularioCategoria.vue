@@ -103,7 +103,6 @@ export default {
             density="compact"
             clear-on-select
             clearable
-            no-data-text="No hay ítems disponibles"
             :rules="reglasValidacionCategoriaPadreId"
         >
             <template #selection="{ item }">
