@@ -45,6 +45,7 @@ export default {
             class="mb-2"
             label="Rol"
             name="rol"
+            density="compact"
             :items="[
                 { title: 'Administrador', value: 'administrador' },
                 { title: 'Personal', value: 'personal' },
