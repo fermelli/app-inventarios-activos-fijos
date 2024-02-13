@@ -12,6 +12,26 @@ export default {
         },
     },
     emits: ["quitarDetalleTransaccion"],
+    data() {
+        return {
+            reglasCantidad: [
+                (valor) => !!valor || "La cantidad es requerida",
+                (valor) =>
+                    !valor || valor > 0 || "La cantidad debe ser mayor a cero",
+            ],
+        };
+    },
+    methods: {
+        reglaCantidadMaxima(indice) {
+            return (valor) =>
+                !valor ||
+                valor <=
+                    Number(
+                        this.detallesTransacciones[indice].articulo.cantidad,
+                    ) ||
+                "La cantidad no debe ser mayor al stock";
+        },
+    },
 };
 </script>
 
@@ -22,10 +42,11 @@ export default {
                 <th class="text-left" style="width: 5%">#</th>
                 <th
                     class="text-left"
-                    :style="{ width: editable ? '65%' : '70%' }"
+                    :style="{ width: editable ? '50%' : '55%' }"
                 >
                     Artículo
                 </th>
+                <th class="text-left" style="width: 15%">Stock</th>
                 <th class="text-left" style="width: 15%">Unidad</th>
                 <th class="text-left" style="width: 15%">Cantidad</th>
                 <th v-if="editable" class="text-center" style="width: 5%" />
@@ -34,7 +55,7 @@ export default {
 
         <tbody>
             <tr v-if="detallesTransacciones.length === 0">
-                <td colspan="5" class="text-center">No hay detalles</td>
+                <td colspan="6" class="text-center">No hay detalles</td>
             </tr>
 
             <tr
@@ -44,6 +65,8 @@ export default {
                 <td>{{ indice + 1 }}</td>
 
                 <td>{{ detalle.articulo.nombre }}</td>
+
+                <td class="text-right">{{ detalle.articulo.cantidad }}</td>
 
                 <td>{{ detalle.articulo.unidad.nombre }}</td>
 
@@ -61,6 +84,11 @@ export default {
                             single-line
                             hide-details
                             clearable
+                            required
+                            :rules="[
+                                ...reglasCantidad,
+                                reglaCantidadMaxima(indice),
+                            ]"
                         />
                     </td>
 

@@ -86,6 +86,12 @@ export default {
             return {};
         },
         seleccionarItem(item) {
+            if (item.cantidad <= 0) {
+                this.toast.error("El artículo no tiene stock");
+
+                return;
+            }
+
             const indiceItemExistente =
                 this.formulario.detalles_transacciones.findIndex(
                     (detalle) => detalle.articulo_id === item.id,

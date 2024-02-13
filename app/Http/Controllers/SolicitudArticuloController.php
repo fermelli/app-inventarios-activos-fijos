@@ -47,7 +47,13 @@ class SolicitudArticuloController extends Controller
         $queryBuilder = Transaccion::with([
             'solicitante',
             'detallesTransacciones.articulo' => function (Builder $query) {
-                $query->withTrashed();
+                $query->withTrashed()
+                    ->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
+                    ->select([
+                        'articulos.*',
+                        DB::raw('SUM(articulos_lotes.cantidad) as cantidad'),
+                    ])
+                    ->groupBy('articulos.id');
             },
             'detallesTransacciones.articulo.unidad',
         ]);
