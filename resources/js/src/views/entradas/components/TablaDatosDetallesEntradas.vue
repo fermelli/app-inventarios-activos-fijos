@@ -19,6 +19,15 @@ export default {
 
         return { date };
     },
+    data() {
+        return {
+            reglasCantidad: [
+                (valor) => !!valor || "La cantidad es requerida",
+                (valor) =>
+                    !valor || valor > 0 || "La cantidad debe ser mayor a cero",
+            ],
+        };
+    },
     methods: {
         formatearFecha(fecha) {
             if (!fecha) {
@@ -158,6 +167,8 @@ export default {
                             single-line
                             hide-details
                             clearable
+                            required
+                            :rules="reglasCantidad"
                         />
                     </td>
 
