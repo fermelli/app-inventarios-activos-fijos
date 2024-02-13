@@ -18,17 +18,21 @@ class Transaccion extends Model
     protected $fillable = [
         'usuario_id',
         'institucion_id',
+        'solicitante_id',
         'fecha',
         'tipo',
         'comprobante',
         'numero_comprobante',
+        'numero_solicitud',
         'observacion',
     ];
 
     public const TIPO_ENTRADA = 'entrada';
+    public const TIPO_SOLICITUD = 'solicitud';
 
     public const TIPOS = [
         self::TIPO_ENTRADA,
+        self::TIPO_SOLICITUD,
     ];
 
     public const COMPROBANTES = [
@@ -52,5 +56,10 @@ class Transaccion extends Model
     public function detallesTransacciones()
     {
         return $this->hasMany(DetalleTransaccion::class, 'transaccion_id');
+    }
+
+    public function solicitante()
+    {
+        return $this->belongsTo(User::class, 'solicitante_id');
     }
 }

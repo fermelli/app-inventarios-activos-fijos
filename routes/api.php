@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EntradaArticuloController;
 use App\Http\Controllers\InstitucionController;
+use App\Http\Controllers\SolicitudArticuloController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
 use App\Http\Controllers\UsuarioController;
@@ -157,4 +158,32 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ['only' => ['index', 'store']]
         );
     });
+
+    // Rutas para solicitudes de articulos
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::apiResource(
+            'solicitudes-articulos',
+            SolicitudArticuloController::class,
+            ['only' => ['index']]
+        );
+    });
+    Route::match(
+        ['put', 'patch'],
+        'solicitudes-articulos/{solicitudArticulo}/desactivar',
+        [SolicitudArticuloController::class, 'softDestroy']
+    );
+    Route::match(
+        ['put', 'patch'],
+        'solicitudes-articulos/{solicitudArticulo}/activar',
+        [SolicitudArticuloController::class, 'restore']
+    );
+    Route::get(
+        'solicitudes-articulos/usuario',
+        [SolicitudArticuloController::class, 'indexUsuario']
+    );
+    Route::apiResource(
+        'solicitudes-articulos',
+        SolicitudArticuloController::class,
+        ['only' => ['store']]
+    );
 });
