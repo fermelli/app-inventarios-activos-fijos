@@ -20,6 +20,8 @@ export default {
     methods: {
         async guardarItem() {
             if (!this.formularioValido) {
+                this.toast.error("Corrija los errores en el formulario");
+
                 return;
             }
 
