@@ -6,6 +6,8 @@ use App\Http\Requests\ActualizarArticuloRequest;
 use App\Http\Requests\CrearArticuloRequest;
 use App\Http\Requests\PaginacionConEliminadosOrdenDireccionBusquedaRequest;
 use App\Models\Articulo;
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticuloController extends Controller
@@ -16,7 +18,12 @@ class ArticuloController extends Controller
     public function index(PaginacionConEliminadosOrdenDireccionBusquedaRequest $request)
     {
         $parametros = $request->validated();
-        $queryBuilder = Articulo::with(['categoria', 'unidad', 'ubicacion']);
+        $queryBuilder = Articulo::with(['categoria', 'unidad', 'ubicacion', 'articulosLotes' => function (Builder $query) {
+            $query->where('cantidad', '>', 0)
+                ->orderBy('fecha_vencimiento', 'asc');
+        }])->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
+            ->select('articulos.*', DB::raw('IFNULL(SUM(articulos_lotes.cantidad), 0) as cantidad'))
+            ->groupBy('articulos.id');
 
         if (isset($parametros['con_eliminados'])) {
             $queryBuilder->withTrashed();

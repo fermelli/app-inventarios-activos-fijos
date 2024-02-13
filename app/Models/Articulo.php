@@ -37,4 +37,9 @@ class Articulo extends Model
     {
         return $this->belongsTo(Ubicacion::class, 'ubicacion_id');
     }
+
+    public function articulosLotes()
+    {
+        return $this->hasMany(ArticuloLote::class, 'articulo_id');
+    }
 }

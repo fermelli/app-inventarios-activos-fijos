@@ -1,8 +1,12 @@
 <script>
 import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin";
+import TablaDatosLotes from "./TablaDatosLotes.vue";
 
 export default {
     name: "TablaDatosServidorArticulos",
+    components: {
+        TablaDatosLotes,
+    },
     mixins: [tablaDatosServidorMixin],
     props: {
         soloSeleccionItems: {
@@ -22,6 +26,7 @@ export default {
                 { title: "#", key: "nro", sortable: false, filterable: false },
                 { title: "Código", key: "codigo" },
                 { title: "Nombre", key: "nombre" },
+                { title: "Cantidad", key: "cantidad" },
                 { title: "Categoría", key: "categoria.nombre" },
                 { title: "Unidad", key: "unidad.nombre" },
                 { title: "Ubicación", key: "ubicacion.nombre" },
@@ -32,7 +37,19 @@ export default {
                     filterable: false,
                 },
             ],
+            mostradoDialogoLotes: false,
+            lotesItemSeleccionado: [],
         };
+    },
+    methods: {
+        mostrarDialogoLotes(item) {
+            this.lotesItemSeleccionado = item.articulos_lotes;
+            this.mostradoDialogoLotes = true;
+        },
+        cerrarDialogoLotes() {
+            this.mostradoDialogoLotes = false;
+            this.lotesItemSeleccionado = [];
+        },
     },
 };
 </script>
@@ -70,6 +87,22 @@ export default {
 
         <template #[`item.nro`]="{ index }">
             {{ index + 1 + itemsPorPagina * (paginaActual - 1) }}
+        </template>
+
+        <template #[`item.cantidad`]="{ item }">
+            <v-chip
+                v-if="item.cantidad > 0"
+                color="success"
+                small
+                append-icon="mdi-open-in-new"
+                @click="mostrarDialogoLotes(item)"
+            >
+                {{ item.cantidad }}
+            </v-chip>
+
+            <v-chip v-else color="error" small>
+                {{ item.cantidad }}
+            </v-chip>
         </template>
 
         <template #[`item.acciones`]="{ item }">
@@ -143,4 +176,18 @@ export default {
             </template>
         </template>
     </v-data-table-server>
+
+    <v-dialog v-model="mostradoDialogoLotes" width="500px">
+        <v-card>
+            <v-card-text>
+                <TablaDatosLotes :lotes="lotesItemSeleccionado" />
+            </v-card-text>
+
+            <v-card-actions>
+                <v-btn color="primary" @click="cerrarDialogoLotes">
+                    Cerrar
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
 </template>

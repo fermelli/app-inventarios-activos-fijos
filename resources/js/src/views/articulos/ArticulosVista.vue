@@ -88,6 +88,8 @@ export default {
                 ubicacion_id: null,
                 codigo: null,
                 nombre: null,
+                cantidad: null,
+                articulos_lotes: [],
             };
         },
     },
