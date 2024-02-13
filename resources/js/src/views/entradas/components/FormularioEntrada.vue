@@ -10,7 +10,7 @@ import { useDate } from "vuetify";
 import TablaDatosDetallesEntradas from "./TablaDatosDetallesEntradas.vue";
 
 export default {
-    name: "FormularioEntradas",
+    name: "FormularioEntrada",
     components: {
         TablaDatosServidorArticulos,
         TablaDatosDetallesEntradas,
