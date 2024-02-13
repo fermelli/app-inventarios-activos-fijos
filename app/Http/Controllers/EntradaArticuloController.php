@@ -98,7 +98,7 @@ class EntradaArticuloController extends Controller
      */
     protected function findWithTrashed(string $id)
     {
-        $transaccion = Transaccion::withTrashed()->find($id);
+        $transaccion = Transaccion::withTrashed()->where('tipo', Transaccion::TIPO_ENTRADA)->find($id);
 
         if (is_null($transaccion)) {
             throw new NotFoundHttpException('Entrada de artículos no encontrada');

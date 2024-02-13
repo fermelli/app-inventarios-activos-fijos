@@ -117,7 +117,7 @@ class SolicitudArticuloController extends Controller
      */
     protected function findWithTrashed(string $id)
     {
-        $transaccion = Transaccion::withTrashed()->find($id);
+        $transaccion = Transaccion::withTrashed()->where('tipo', Transaccion::TIPO_SOLICITUD)->find($id);
 
         if (is_null($transaccion)) {
             throw new NotFoundHttpException('Solicitud de artículo no encontrada');
