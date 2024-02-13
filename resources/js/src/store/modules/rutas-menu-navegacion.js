@@ -60,6 +60,18 @@ const rutasMenuNavegacionStore = {
                     rolesAutorizados: [ROLES.administrador],
                 },
                 {
+                    to: { name: "solicitudes" },
+                    icono: "mdi-file-document-multiple-outline",
+                    texto: "Solicitudes",
+                    rolesAutorizados: [ROLES.administrador],
+                },
+                {
+                    to: { name: "solicitudes-usuario" },
+                    icono: "mdi-file-document-outline",
+                    texto: "Mis Solicitudes",
+                    rolesAutorizados: [ROLES.administrador, ROLES.personal],
+                },
+                {
                     to: { name: "sobre-nosotros" },
                     icono: "mdi-information",
                     texto: "Sobre Nosotros",

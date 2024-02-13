@@ -93,6 +93,28 @@ export default [
         },
     },
     {
+        path: "/solicitudes",
+        name: "solicitudes",
+        component: () =>
+            import("../views/solicitudes/SolicitudesTodasVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
+        },
+    },
+    {
+        path: "/solicitudes/usuario",
+        name: "solicitudes-usuario",
+        component: () =>
+            import("../views/solicitudes/SolicitudesUsuarioVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador, ROLES.personal],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),
