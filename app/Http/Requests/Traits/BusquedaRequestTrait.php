@@ -7,7 +7,7 @@ trait BusquedaRequestTrait
     protected function busquedaRules(): array
     {
         return [
-            'busqueda' => ['string'],
+            'busqueda' => ['nullable', 'string'],
         ];
     }
 }
