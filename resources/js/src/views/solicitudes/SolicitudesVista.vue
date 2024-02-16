@@ -57,7 +57,7 @@ export default {
                 },
                 {
                     titulo: "Solicitante",
-                    subtitulo: this.itemSeleccionado.solicitante.nombre,
+                    subtitulo: this.itemSeleccionado.solicitante?.nombre,
                 },
                 {
                     titulo: "N° de Artículos",
@@ -138,9 +138,19 @@ export default {
                 detalles_transacciones: [],
             };
         },
-        mostrarItem(item) {
-            this.itemSeleccionado = item;
-            this.mostradoDialogoMostrarItem = true;
+        async mostrarItem(itemId) {
+            try {
+                const { data } = await SolicitudArticuloService.show(itemId);
+
+                this.itemSeleccionado = data.datos;
+                this.mostradoDialogoMostrarItem = true;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        cerrarDialogoMostrarItem() {
+            this.mostradoDialogoMostrarItem = false;
+            this.itemSeleccionado = this.crearDatosItem();
         },
     },
 };
@@ -249,11 +259,11 @@ export default {
 
                 <v-card-actions>
                     <v-btn
-                        color="blue-grey"
+                        color="secondary"
                         density="compact"
                         prepend-icon="mdi-close"
                         title="Cerrar"
-                        @click="mostradoDialogoMostrarItem = false"
+                        @click="cerrarDialogoMostrarItem"
                     >
                         Cerrar
                     </v-btn>

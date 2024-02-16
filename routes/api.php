@@ -160,6 +160,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     // Rutas para solicitudes de articulos
+    Route::get(
+        'solicitudes-articulos/usuario',
+        [SolicitudArticuloController::class, 'indexUsuario']
+    );
+    Route::apiResource(
+        'solicitudes-articulos',
+        SolicitudArticuloController::class,
+        ['only' => ['show']]
+    )->parameters(['solicitudes-articulos' => 'solicitudArticulo']);
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
         Route::apiResource(
             'solicitudes-articulos',
@@ -176,10 +185,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         ['put', 'patch'],
         'solicitudes-articulos/{solicitudArticulo}/activar',
         [SolicitudArticuloController::class, 'restore']
-    );
-    Route::get(
-        'solicitudes-articulos/usuario',
-        [SolicitudArticuloController::class, 'indexUsuario']
     );
     Route::apiResource(
         'solicitudes-articulos',

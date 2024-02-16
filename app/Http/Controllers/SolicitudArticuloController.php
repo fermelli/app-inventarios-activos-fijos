@@ -7,6 +7,7 @@ use App\Http\Requests\PaginacionConEliminadosOrdenDireccionBusquedaRequest;
 use App\Models\Transaccion;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SolicitudArticuloController extends Controller
@@ -116,6 +117,34 @@ class SolicitudArticuloController extends Controller
 
             throw $e;
         }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $transaccion = $this->findWithTrashed($id);
+
+        if (!is_null($transaccion->eliminado_en)) {
+            throw new BadRequestHttpException('Solicitud de artículo está desactivada');
+        }
+
+        $transaccion->load([
+            'solicitante',
+            'detallesTransacciones.articulo.unidad',
+            'detallesTransacciones.articulo' => function (Builder $query) {
+                $query->withTrashed()
+                    ->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
+                    ->select([
+                        'articulos.*',
+                        DB::raw('SUM(articulos_lotes.cantidad) as cantidad'),
+                    ])
+                    ->groupBy('articulos.id');
+            },
+        ]);
+
+        return response()->jsonResponse('Solicitud de artículo recuperada', $transaccion, 200);
     }
 
     /**
