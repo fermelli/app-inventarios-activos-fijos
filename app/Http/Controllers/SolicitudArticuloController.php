@@ -104,6 +104,7 @@ class SolicitudArticuloController extends Controller
                 'tipo' => Transaccion::TIPO_SOLICITUD,
                 'solicitante_id' => $request->user()->id,
                 'numero_solicitud' => $numeroSolicitud,
+                'estado_solicitud' => Transaccion::ESTADO_SOLICITUD_PENDIENTE,
             ]);
             $datosDetallesTransacciones = $datos['detalles_transacciones'];
 

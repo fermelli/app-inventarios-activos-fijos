@@ -17,6 +17,7 @@ export default {
                 { title: "N° Solicitud", key: "numero_solicitud" },
                 { title: "Solicitante", key: "solicitante.nombre" },
                 { title: "Observación", key: "observacion" },
+                { title: "Estado", key: "estado_solicitud" },
                 {
                     title: "Acciones",
                     key: "acciones",

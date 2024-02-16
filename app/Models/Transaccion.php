@@ -24,6 +24,7 @@ class Transaccion extends Model
         'comprobante',
         'numero_comprobante',
         'numero_solicitud',
+        'estado_solicitud',
         'observacion',
     ];
 
@@ -42,6 +43,8 @@ class Transaccion extends Model
         'boleta',
         'otro',
     ];
+
+    public const ESTADO_SOLICITUD_PENDIENTE = 'pendiente';
 
     public function usuario()
     {
