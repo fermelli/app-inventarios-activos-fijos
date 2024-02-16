@@ -70,6 +70,9 @@ export default {
             <tr
                 v-for="(detalle, indice) in detallesTransacciones"
                 :key="indice"
+                :class="{
+                    'text-red': detalle.cantidad <= 0,
+                }"
             >
                 <td>{{ indice + 1 }}</td>
 
