@@ -5,6 +5,7 @@
         "vue.volar",
         "xdebug.php-pack",
         "wongjn.php-sniffer",
-        "bmewburn.vscode-intelephense-client"
+        "bmewburn.vscode-intelephense-client",
+        "tobermory.es6-string-html"
     ]
 }
