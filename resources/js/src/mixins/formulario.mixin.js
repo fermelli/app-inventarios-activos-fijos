@@ -28,16 +28,22 @@ export default {
             this.guardandoItem = true;
 
             try {
+                let response = null;
+
                 if (this.formulario.id) {
-                    await this.metodoUpdate(
+                    response = await this.metodoUpdate(
                         this.formulario.id,
                         this.formulario,
                     );
                 } else {
-                    await this.metodoStore(this.formulario);
+                    response = await this.metodoStore(this.formulario);
                 }
 
-                this.toast.success(`${this.nombreItem} guardada exitosamente`);
+                const data = response.data;
+                const mensaje =
+                    data?.mensaje || `${this.nombreItem} guardada exitosamente`;
+
+                this.toast.success(mensaje);
                 this.emitActualizarListado();
                 this.emitCancelarGuardado();
             } catch (error) {

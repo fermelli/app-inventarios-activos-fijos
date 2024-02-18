@@ -27,9 +27,9 @@ service.interceptors.response.use(
             if (
                 error.response &&
                 error.response.data &&
-                error.response.data.message
+                error.response.data.mensaje
             ) {
-                toast.error(error.response.data.message);
+                toast.error(error.response.data.mensaje);
             } else {
                 toast.error("Error de respuesta del servidor.");
             }
@@ -49,20 +49,25 @@ service.interceptors.response.use(
         } else if (error.response && error.response.status === 422) {
             const { data } = error.response;
 
-            if (data.errors && Object.keys(data.errors).length > 0) {
-                const errors = Object.values(data.errors).flat();
+            if (data.errores && Object.keys(data.errores).length > 0) {
+                const errores = Object.values(data.errores).flat();
 
                 toast.error({
                     component: ListaErroresValidacion,
                     props: {
-                        errores: errors,
+                        errores,
                     },
                 });
             } else {
                 toast.error(data.message);
             }
-        } else if (error.response && error.response.status === 403) {
-            toast.error(error.response.data.message);
+        } else if (
+            error.response &&
+            (error.response.status === 403 ||
+                error.response.status === 400 ||
+                error.response.status === 404)
+        ) {
+            toast.error(error.response.data.mensaje);
         } else {
             toast.error("Se produjo un error inesperado");
         }
