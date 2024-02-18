@@ -1,5 +1,6 @@
 <script>
 import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin";
+import { COLORES_ESTADOS_ENTRADAS } from "../../../utils/constantes";
 
 export default {
     name: "TablaDatosServidorEntradas",
@@ -17,6 +18,7 @@ export default {
                 { title: "Fecha", key: "fecha" },
                 { title: "Comprobante", key: "comprobante" },
                 { title: "N° Comprobante", key: "numero_comprobante" },
+                { title: "Estado", key: "estado_entrada" },
                 { title: "Institución", key: "institucion.nombre" },
                 { title: "Registrado por", key: "usuario.nombre" },
                 {
@@ -26,6 +28,7 @@ export default {
                     filterable: false,
                 },
             ],
+            coloresEstadosEntradas: COLORES_ESTADOS_ENTRADAS,
         };
     },
 };
@@ -64,6 +67,16 @@ export default {
 
         <template #[`item.nro`]="{ index }">
             {{ index + 1 + itemsPorPagina * (paginaActual - 1) }}
+        </template>
+
+        <template #[`item.estado_entrada`]="{ item }">
+            <v-chip
+                :color="coloresEstadosEntradas[item.estado_entrada] || 'grey'"
+                class="text-capitalize"
+                small
+            >
+                {{ item.estado_entrada }}
+            </v-chip>
         </template>
 
         <template #[`item.acciones`]="{ item }">

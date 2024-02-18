@@ -15,4 +15,7 @@ export default {
     async restore(id) {
         return await service.patch(`/entradas-articulos/${id}/activar`);
     },
+    async anular(id) {
+        return await service.patch(`/entradas-articulos/${id}/anular`);
+    },
 };

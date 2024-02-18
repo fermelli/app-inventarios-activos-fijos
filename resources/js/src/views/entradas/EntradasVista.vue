@@ -5,6 +5,7 @@ import FormularioEntrada from "./components/FormularioEntrada.vue";
 import TablaDatosServidorEntradas from "./components/TablaDatosServidorEntradas.vue";
 import vistaMixin from "../../mixins/vista.mixin";
 import TablaDatosDetallesEntradas from "./components/TablaDatosDetallesEntradas.vue";
+import { ESTADOS_ENTRADAS, ROLES } from "../../utils/constantes";
 
 export default {
     name: "EntradasVista",
@@ -30,6 +31,8 @@ export default {
             busqueda: null,
             totalItems: 0,
             mostradoDialogoMostrarItem: false,
+            roles: ROLES,
+            estadosEntradas: ESTADOS_ENTRADAS,
         };
     },
     computed: {
@@ -38,7 +41,7 @@ export default {
                 return [];
             }
 
-            return [
+            const listado = [
                 {
                     titulo: "Fecha",
                     subtitulo: this.itemSeleccionado.fecha,
@@ -52,16 +55,16 @@ export default {
                     subtitulo: this.itemSeleccionado.numero_comprobante,
                 },
                 {
+                    titulo: "Estado",
+                    subtitulo: this.itemSeleccionado.estado_entrada,
+                },
+                {
                     titulo: "Institución",
-                    subtitulo: this.itemSeleccionado.institucion.nombre,
+                    subtitulo: this.itemSeleccionado.institucion?.nombre,
                 },
                 {
                     titulo: "Registrado por",
-                    subtitulo: this.itemSeleccionado.usuario.nombre,
-                },
-                {
-                    titulo: "Observación",
-                    subtitulo: this.itemSeleccionado.observacion || "-",
+                    subtitulo: this.itemSeleccionado.usuario?.nombre,
                 },
                 {
                     titulo: "N° de Artículos",
@@ -73,6 +76,40 @@ export default {
                     subtitulo: this.itemSeleccionado.creado_en,
                 },
             ];
+
+            if (
+                this.itemSeleccionado.estado_entrada ===
+                this.estadosEntradas.anulada
+            ) {
+                listado.splice(
+                    listado.length - 1,
+                    0,
+                    {
+                        titulo: "Anulada por",
+                        subtitulo: this.itemSeleccionado.anulador?.nombre,
+                    },
+                    {
+                        titulo: "Fecha Hora Anulación",
+                        subtitulo: this.itemSeleccionado.fecha_hora_anulacion,
+                    },
+                );
+            }
+
+            return listado;
+        },
+        botonAnularDeshabilitado() {
+            return (
+                this.itemSeleccionado?.detalles_transacciones.length == 0 ||
+                this.itemSeleccionado?.detalles_transacciones.some(
+                    (detalle) =>
+                        Number(detalle.cantidad) <= 0 ||
+                        Number(detalle.cantidad) >
+                            Number(detalle.articulo_lote.cantidad),
+                ) ||
+                this.itemSeleccionado?.estado_entrada !==
+                    this.estadosEntradas.valida ||
+                this.realizandoAccion
+            );
         },
     },
     methods: {
@@ -132,9 +169,16 @@ export default {
             return {
                 id: null,
                 institucion_id: null,
+                institucion: null,
                 fecha: null,
                 comprobante: null,
                 numero_comprobante: null,
+                estado_entrada: null,
+                usuario_id: null,
+                usuario: null,
+                anulador_id: null,
+                anulador: null,
+                fecha_hora_anulacion: null,
                 observacion: null,
                 detalles_transacciones: [],
             };
@@ -142,6 +186,42 @@ export default {
         mostrarItem(item) {
             this.itemSeleccionado = item;
             this.mostradoDialogoMostrarItem = true;
+        },
+        cerrarDialogoMostrarItem() {
+            this.mostradoDialogoMostrarItem = false;
+            this.itemSeleccionado = this.crearDatosItem();
+        },
+        confirmarAtencion(accion) {
+            if (!["anular"].includes(accion)) {
+                return;
+            }
+
+            this.mensajeDialogoConfirmacion = /*html */ `¿Está seguro que desea <strong>${accion.toUpperCase()}</strong> la entrada de artículos con N° de ${this.itemSeleccionado.comprobante.toUpperCase()} <strong>${this.itemSeleccionado.numero_comprobante}</strong> registrado por <strong>${this.itemSeleccionado.usuario?.nombre}</strong>?`;
+            this.funcionDialogoConfirmacion = () =>
+                this.anularEntradaArticulos();
+            this.mostradoDialogoConfirmacion = true;
+        },
+        async anularEntradaArticulos() {
+            this.realizandoAccion = true;
+
+            try {
+                await EntradaArticuloService.anular(this.itemSeleccionado.id);
+
+                this.toast.success("Entrada de Artículos anulada exitosamente");
+                this.cancelarAccion();
+                this.obtenerEntradasArticulos();
+                this.cerrarDialogoMostrarItem();
+            } catch (error) {
+                console.log(error);
+
+                const mensaje =
+                    error.response?.data?.mensaje ||
+                    "Ocurrió un error al anular la entrada de artículos";
+
+                this.toast.error(mensaje);
+            } finally {
+                this.realizandoAccion = false;
+            }
         },
     },
 };
@@ -230,6 +310,18 @@ export default {
                             </v-list>
                         </v-col>
 
+                        <v-col cols="12" class="py-0">
+                            <v-list lines="three">
+                                <v-list-item
+                                    class="py-0"
+                                    title="Observación"
+                                    :subtitle="
+                                        itemSeleccionado?.observacion || '-'
+                                    "
+                                />
+                            </v-list>
+                        </v-col>
+
                         <v-col cols="12">
                             <TablaDatosDetallesEntradas
                                 :detalles-transacciones="
@@ -242,6 +334,17 @@ export default {
                 </v-card-text>
 
                 <v-card-actions>
+                    <v-btn
+                        color="error"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Anular Entrada de Artículos"
+                        :disabled="botonAnularDeshabilitado"
+                        @click="() => confirmarAtencion('anular')"
+                    >
+                        Anular Entrada de Artículos
+                    </v-btn>
+
                     <v-btn
                         color="blue-grey"
                         density="compact"

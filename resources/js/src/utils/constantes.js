@@ -33,3 +33,13 @@ export const COLORES_ESTADOS_SOLICITUDES = {
     entregada: "primary",
     anulada: "secondary",
 };
+
+export const ESTADOS_ENTRADAS = {
+    valida: "valida",
+    anulada: "anulada",
+};
+
+export const COLORES_ESTADOS_ENTRADAS = {
+    valida: "success",
+    anulada: "error",
+};

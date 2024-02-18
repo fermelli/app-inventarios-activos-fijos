@@ -39,6 +39,17 @@ export default {
 
             return `${anio}-${mes}-${dia}`;
         },
+        claseCeldaCantidadLote(detalle) {
+            const condicion =
+                Number(detalle.cantidad) <= 0 ||
+                Number(detalle.cantidad) >
+                    Number(detalle.articulo_lote.cantidad);
+
+            return {
+                "text-red": condicion,
+                "text-success": !condicion,
+            };
+        },
     },
 };
 </script>
@@ -50,12 +61,15 @@ export default {
                 <th class="text-left" style="width: 5%">#</th>
                 <th
                     class="text-left"
-                    :style="{ width: editable ? '30%' : '35%' }"
+                    :style="{ width: editable ? '30%' : '20%' }"
                 >
                     Artículo
                 </th>
                 <th class="text-left" style="width: 15%">Unidad</th>
                 <th class="text-left" style="width: 15%">Lote</th>
+                <th v-if="!editable" class="text-left" style="width: 15%">
+                    Cant. Lote
+                </th>
                 <th class="text-left" style="width: 20%">Fecha Vencimiento</th>
                 <th class="text-left" style="width: 15%">Cantidad</th>
                 <th v-if="editable" class="text-center" style="width: 5%" />
@@ -64,14 +78,16 @@ export default {
 
         <tbody>
             <tr v-if="detallesTransacciones.length === 0">
-                <td colspan="7" class="text-center">No hay detalles</td>
+                <td :colspan="editable ? 6 : 7" class="text-center">
+                    No hay detalles
+                </td>
             </tr>
 
             <tr
                 v-for="(detalle, indice) in detallesTransacciones"
                 :key="indice"
                 :class="{
-                    'text-red': detalle.cantidad <= 0,
+                    'text-red': Number(detalle.cantidad) <= 0,
                 }"
             >
                 <td>{{ indice + 1 }}</td>
@@ -188,6 +204,13 @@ export default {
 
                 <template v-else>
                     <td>{{ detalle.articulo_lote.lote || "-" }}</td>
+
+                    <td
+                        class="text-right"
+                        :class="claseCeldaCantidadLote(detalle)"
+                    >
+                        {{ detalle.articulo_lote.cantidad || "-" }}
+                    </td>
 
                     <td>
                         {{ detalle.articulo_lote.fecha_vencimiento || "-" }}
