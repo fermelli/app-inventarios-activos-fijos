@@ -155,20 +155,23 @@ export default {
                         <v-col
                             v-for="(dato, indice) in listadoDatos"
                             :key="indice"
+                            class="py-0"
                             cols="12"
                             lg="3"
                         >
                             <v-list lines="two">
                                 <v-list-item
+                                    class="py-0"
                                     :title="dato.titulo"
                                     :subtitle="dato.subtitulo"
                                 />
                             </v-list>
                         </v-col>
 
-                        <v-col cols="12">
+                        <v-col cols="12" class="py-0">
                             <v-list lines="three">
                                 <v-list-item
+                                    class="py-0"
                                     title="Observación"
                                     :subtitle="itemSeleccionado?.observacion"
                                 />

@@ -217,11 +217,13 @@ export default {
                         <v-col
                             v-for="(dato, indice) in listadoDatos"
                             :key="indice"
+                            class="py-0"
                             cols="12"
                             lg="3"
                         >
                             <v-list lines="two">
                                 <v-list-item
+                                    class="py-0"
                                     :title="dato.titulo"
                                     :subtitle="dato.subtitulo"
                                 />
