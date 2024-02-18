@@ -97,6 +97,33 @@ class EntradaArticuloController extends Controller
         }
     }
 
+     /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $transaccion = $this->findWithTrashed($id);
+
+        if (!is_null($transaccion->eliminado_en)) {
+            throw new BadRequestHttpException('Entrada de artículos está desactivada');
+        }
+
+        $transaccion->load([
+            'usuario',
+            'anulador',
+            'institucion' => function (Builder $query) {
+                $query->withTrashed();
+            },
+            'detallesTransacciones.articulo' => function (Builder $query) {
+                $query->withTrashed();
+            },
+            'detallesTransacciones.articulo.unidad',
+            'detallesTransacciones.articuloLote',
+        ]);
+
+        return response()->jsonResponse('Entrada de artículos recuperada', $transaccion, 200);
+    }
+
     /**
      * Find with trashed the specified resource from storage.
      */

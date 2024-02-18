@@ -161,8 +161,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource(
             'entradas-articulos',
             EntradaArticuloController::class,
-            ['only' => ['index', 'store']]
-        );
+            ['only' => ['index', 'store', 'show']]
+        )->parameters(['entradas-articulos' => 'entradaArticulo']);
     });
 
     // Rutas para solicitudes de articulos
