@@ -66,5 +66,43 @@ class AppServiceProvider extends ServiceProvider
                 ], $codigoEstado);
             }
         );
+
+        Response::macro(
+            'jsonResponseError',
+            /**
+             * Return a new JSON response from the application.
+             *
+             * @param string $mensaje
+             * @param int $codigoEstado
+             */
+            function (string $mensaje, int $codigoEstado) {
+
+                return Response::json([
+                    'mensaje' => $mensaje,
+                    'datos' => null,
+                    'codigo_estado' => $codigoEstado,
+                ], $codigoEstado);
+            }
+        );
+
+        Response::macro(
+            'jsonResponseValidacionError',
+            /**
+             * Return a new JSON response from the application.
+             *
+             * @param string $mensaje
+             * @param int $codigoEstado
+             * @param array $errores
+             */
+            function (string $mensaje, int $codigoEstado, array $errores) {
+
+                return Response::json([
+                    'mensaje' => $mensaje,
+                    'datos' => null,
+                    'codigo_estado' => $codigoEstado,
+                    'errores' => $errores,
+                ], $codigoEstado);
+            }
+        );
     }
 }
