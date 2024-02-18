@@ -29,7 +29,7 @@ export default {
                 ? "Mis Solicitudes de Artículos"
                 : "Solicitudes de Artículos";
         },
-        botonAprobarORechazarSalidaDeshabilitado() {
+        botonAprobarSalidaDeshabilitado() {
             return (
                 this.itemSeleccionado?.detalles_transacciones.length == 0 ||
                 this.itemSeleccionado?.detalles_transacciones.some(
@@ -40,6 +40,12 @@ export default {
                 this.itemSeleccionado?.estado_solicitud !==
                     this.estadosSolicitudes.pendiente ||
                 this.realizandoAccion
+            );
+        },
+        botonRechazarSalidaDeshabilitado() {
+            return (
+                this.itemSeleccionado?.estado_solicitud !==
+                    this.estadosSolicitudes.pendiente || this.realizandoAccion
             );
         },
     },
@@ -257,7 +263,7 @@ export default {
                         density="compact"
                         prepend-icon="mdi-check"
                         title="Aprobar Salida de Artículos"
-                        :disabled="botonAprobarORechazarSalidaDeshabilitado"
+                        :disabled="botonAprobarSalidaDeshabilitado"
                         @click="() => confirmarAtencion('aprobar')"
                     >
                         Aprobar Salida
@@ -269,7 +275,7 @@ export default {
                         density="compact"
                         prepend-icon="mdi-close"
                         title="Rechazar Salida de Artículos"
-                        :disabled="botonAprobarORechazarSalidaDeshabilitado"
+                        :disabled="botonRechazarSalidaDeshabilitado"
                         @click="() => confirmarAtencion('rechazar')"
                     >
                         Rechazar Salida
