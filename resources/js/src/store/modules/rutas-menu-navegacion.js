@@ -69,7 +69,7 @@ const rutasMenuNavegacionStore = {
                     to: { name: "solicitudes-usuario" },
                     icono: "mdi-file-document-outline",
                     texto: "Mis Solicitudes",
-                    rolesAutorizados: [ROLES.administrador, ROLES.personal],
+                    rolesAutorizados: [ROLES.personal],
                 },
                 {
                     to: { name: "salidas" },
@@ -81,7 +81,7 @@ const rutasMenuNavegacionStore = {
                     to: { name: "salidas-usuario" },
                     icono: "mdi-clipboard-arrow-left-outline",
                     texto: "Mis Salidas",
-                    rolesAutorizados: [ROLES.administrador, ROLES.personal],
+                    rolesAutorizados: [ROLES.personal],
                 },
                 {
                     to: { name: "sobre-nosotros" },
