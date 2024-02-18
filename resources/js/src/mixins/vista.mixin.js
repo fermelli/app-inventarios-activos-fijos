@@ -80,7 +80,6 @@ export default {
             this.mostradoDialogoConfirmacion = false;
             this.mensajeDialogoConfirmacion = null;
             this.funcionDialogoConfirmacion = () => {};
-            this.itemSeleccionado = null;
         },
     },
 };

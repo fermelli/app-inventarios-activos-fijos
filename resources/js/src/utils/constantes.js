@@ -17,3 +17,19 @@ export const ROLES = {
     administrador: "administrador",
     personal: "personal",
 };
+
+export const ESTADOS_SOLICITUDES = {
+    pendiente: "pendiente",
+    aprobada: "aprobada",
+    rechazada: "rechazada",
+    entregada: "entregada",
+    anulada: "anulada",
+};
+
+export const COLORES_ESTADOS_SOLICITUDES = {
+    pendiente: "warning",
+    aprobada: "success",
+    rechazada: "error",
+    entregada: "primary",
+    anulada: "secondary",
+};

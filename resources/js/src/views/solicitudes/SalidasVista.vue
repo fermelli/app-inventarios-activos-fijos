@@ -1,17 +1,12 @@
 <script>
-import SolicitudArticuloService from "./../../services/solicitudes-articulos";
+import SalidaArticuloService from "./../../services/salidas-articulos";
 import { useToast } from "vue-toastification";
-import FormularioSolicitud from "./components/FormularioSolicitud.vue";
 import vistaMixin from "../../mixins/vista.mixin";
 import { ESTADOS_SOLICITUDES } from "../../utils/constantes";
-import SalidaArticuloService from "../../services/salidas-articulos";
 import solicitudesSalidasVistaMixin from "./mixins/solicitudes-salidas-vista.mixin";
 
 export default {
-    name: "SolicitudesVista",
-    components: {
-        FormularioSolicitud,
-    },
+    name: "SalidasVista",
     mixins: [vistaMixin, solicitudesSalidasVistaMixin],
     setup() {
         const toast = useToast();
@@ -20,32 +15,30 @@ export default {
     },
     data() {
         return {
-            nombreItem: "Solicitud Artículos",
-            metodoServicioObtenerItem: SolicitudArticuloService.show,
+            nombreItem: "Salida Artículos",
+            metodoServicioObtenerItem: SalidaArticuloService.show,
         };
     },
     computed: {
         titulo() {
             return this.tipo === "usuario"
-                ? "Mis Solicitudes de Artículos"
-                : "Solicitudes de Artículos";
+                ? "Mis Salidas de Artículos"
+                : "Salidas de Artículos";
         },
-        botonAprobarORechazarSalidaDeshabilitado() {
+        botonEntregarOAnularDeshabilitado() {
             return (
                 this.itemSeleccionado?.detalles_transacciones.length == 0 ||
                 this.itemSeleccionado?.detalles_transacciones.some(
-                    (detalle) =>
-                        Number(detalle.cantidad) >
-                        Number(detalle.articulo.cantidad),
+                    (detalle) => Number(detalle.cantidad) <= 0,
                 ) ||
                 this.itemSeleccionado?.estado_solicitud !==
-                    ESTADOS_SOLICITUDES.pendiente ||
+                    ESTADOS_SOLICITUDES.aprobada ||
                 this.realizandoAccion
             );
         },
     },
     methods: {
-        async obtenerSolicitudesArticulos(payload) {
+        async obtenerSalidasArticulos(payload) {
             this.cargandoItems = true;
             this.pagina = payload?.page || this.pagina;
             this.itemsPorPagina = payload?.itemsPerPage || this.itemsPorPagina;
@@ -54,8 +47,8 @@ export default {
             try {
                 const servicio =
                     this.tipo === "usuario"
-                        ? SolicitudArticuloService.indexUsuario
-                        : SolicitudArticuloService.index;
+                        ? SalidaArticuloService.indexUsuario
+                        : SalidaArticuloService.index;
                 const { data } = await servicio({
                     params: {
                         orden_direccion: "desc",
@@ -74,68 +67,43 @@ export default {
                 this.cargandoItems = false;
             }
         },
-        async accionItem(accion) {
-            if (!["desactivar", "activar"].includes(accion)) {
-                return;
-            }
-
-            this.realizandoAccion = true;
-
-            try {
-                if (accion === "desactivar") {
-                    await SolicitudArticuloService.softDestroy(
-                        this.itemSeleccionado.id,
-                    );
-                } else if (accion === "activar") {
-                    await SolicitudArticuloService.restore(
-                        this.itemSeleccionado.id,
-                    );
-                }
-
-                this.mostrarNotificacionAccionRealizada(accion);
-                this.obtenerSolicitudesArticulos();
-                this.cancelarAccion();
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.realizandoAccion = false;
-            }
-        },
         confirmarAtencion(accion) {
-            if (!["aprobar", "rechazar"].includes(accion)) {
+            if (!["entregar", "anular"].includes(accion)) {
                 return;
             }
 
             this.manejarDialogoConfirmacionAccion(accion);
         },
         async atenderSalidaArticulos(accion) {
-            if (!["aprobar", "rechazar"].includes(accion)) {
+            if (!["entregar", "anular"].includes(accion)) {
                 return;
             }
 
             this.realizandoAccion = true;
 
             try {
-                if (accion === "aprobar") {
-                    await SalidaArticuloService.aprobar(
+                if (accion === "entregar") {
+                    await SalidaArticuloService.entregar(
                         this.itemSeleccionado.id,
                     );
-                } else if (accion === "rechazar") {
-                    await SalidaArticuloService.rechazar(
+                } else if (accion === "anular") {
+                    await SalidaArticuloService.anular(
                         this.itemSeleccionado.id,
                     );
                 }
 
-                this.toast.success("Salida de Artículos atendida exitosamente");
+                this.toast.success(
+                    "Salida de Artículos entregada exitosamente",
+                );
                 this.cancelarAccion();
-                this.obtenerSolicitudesArticulos();
+                this.obtenerSalidasArticulos();
                 this.cerrarDialogoMostrarItem();
             } catch (error) {
                 console.log(error);
 
                 const mensaje =
                     error.response?.data?.mensaje ||
-                    "Ocurrió un error al atender la salida de artículos";
+                    "Ocurrió un error al entregar la salida de artículos";
 
                 this.toast.error(mensaje);
             } finally {
@@ -154,24 +122,13 @@ export default {
 
                 <v-btn
                     class="ml-2"
-                    color="success"
-                    density="compact"
-                    prepend-icon="mdi-plus"
-                    title="Registrar"
-                    @click="() => mostrarDialogoFormulario()"
-                >
-                    Registrar
-                </v-btn>
-
-                <v-btn
-                    class="ml-2"
                     color="primary"
                     density="compact"
                     icon="mdi-reload"
                     :loading="cargandoItems"
                     :disabled="cargandoItems"
                     title="Recargar"
-                    @click="obtenerSolicitudesArticulos"
+                    @click="obtenerSalidasArticulos"
                 />
             </div>
         </v-col>
@@ -181,29 +138,11 @@ export default {
                 :items="items"
                 :total-items="totalItems"
                 :cargando-items="cargandoItems"
-                @mostrar-formulario="mostrarDialogoFormulario"
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
-                @cargar-items="obtenerSolicitudesArticulos"
+                @cargar-items="obtenerSalidasArticulos"
                 @mostrar-item="mostrarItem"
             />
         </v-col>
-
-        <v-dialog v-model="mostradoDialogoFormulario" persistent width="1200">
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">{{ tituloDialogoFormulario }}</span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioSolicitud
-                        :datos="datosItem"
-                        :nombre-item="nombreItem"
-                        @actualizar-listado="obtenerSolicitudesArticulos"
-                        @cancelar-guardado="cancelarGuardado"
-                    />
-                </v-card-text>
-            </v-card>
-        </v-dialog>
 
         <v-dialog v-model="mostradoDialogoMostrarItem" width="1200">
             <v-card>
@@ -253,11 +192,11 @@ export default {
                         color="success"
                         density="compact"
                         prepend-icon="mdi-check"
-                        title="Aprobar Salida de Artículos"
-                        :disabled="botonAprobarORechazarSalidaDeshabilitado"
-                        @click="() => confirmarAtencion('aprobar')"
+                        title="Entregar Salida de Artículos"
+                        :disabled="botonEntregarOAnularDeshabilitado"
+                        @click="() => confirmarAtencion('entregar')"
                     >
-                        Aprobar Salida
+                        Entregar Salida de Artículos
                     </v-btn>
 
                     <v-btn
@@ -265,11 +204,11 @@ export default {
                         color="error"
                         density="compact"
                         prepend-icon="mdi-close"
-                        title="Rechazar Salida de Artículos"
-                        :disabled="botonAprobarORechazarSalidaDeshabilitado"
-                        @click="() => confirmarAtencion('rechazar')"
+                        title="Anular Salida de Artículos"
+                        :disabled="botonEntregarOAnularDeshabilitado"
+                        @click="() => confirmarAtencion('anular')"
                     >
-                        Rechazar Salida
+                        Anular Salida de Artículos
                     </v-btn>
 
                     <v-btn

@@ -1,5 +1,6 @@
 <script>
 import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin";
+import { COLORES_ESTADOS_SOLICITUDES } from "../../../utils/constantes";
 
 export default {
     name: "TablaDatosServidorSolicitudes",
@@ -25,6 +26,7 @@ export default {
                     filterable: false,
                 },
             ],
+            coloresEstadosSolicitudes: COLORES_ESTADOS_SOLICITUDES,
         };
     },
 };
@@ -63,6 +65,18 @@ export default {
 
         <template #[`item.nro`]="{ index }">
             {{ index + 1 + itemsPorPagina * (paginaActual - 1) }}
+        </template>
+
+        <template #[`item.estado_solicitud`]="{ item }">
+            <v-chip
+                :color="
+                    coloresEstadosSolicitudes[item.estado_solicitud] || 'grey'
+                "
+                class="text-capitalize"
+                small
+            >
+                {{ item.estado_solicitud }}
+            </v-chip>
         </template>
 
         <template #[`item.acciones`]="{ item }">
