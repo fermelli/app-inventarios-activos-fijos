@@ -28,6 +28,7 @@ export default {
             mostradoDialogoMostrarItem: false,
             accion: null,
             roles: ROLES,
+            estadosSolicitudes: ESTADOS_SOLICITUDES,
         };
     },
     computed: {
@@ -62,7 +63,7 @@ export default {
 
             if (
                 this.itemSeleccionado.estado_solicitud !==
-                ESTADOS_SOLICITUDES.pendiente
+                this.estadosSolicitudes.pendiente
             ) {
                 listado.splice(
                     listado.length - 1,
@@ -79,7 +80,7 @@ export default {
 
                 if (
                     this.itemSeleccionado.estado_solicitud ===
-                    ESTADOS_SOLICITUDES.entregada
+                    this.estadosSolicitudes.entregada
                 ) {
                     listado.splice(
                         listado.length - 1,
@@ -98,7 +99,7 @@ export default {
 
                 if (
                     this.itemSeleccionado.estado_solicitud ===
-                    ESTADOS_SOLICITUDES.anulada
+                    this.estadosSolicitudes.anulada
                 ) {
                     listado.splice(
                         listado.length - 1,
@@ -123,6 +124,12 @@ export default {
             return (
                 this.usuarioAutenticado.rol === this.roles.administrador &&
                 this.tipo === "todas"
+            );
+        },
+        mostradoStock() {
+            return (
+                this.itemSeleccionado?.estado_solicitud ===
+                this.estadosSolicitudes.pendiente
             );
         },
     },

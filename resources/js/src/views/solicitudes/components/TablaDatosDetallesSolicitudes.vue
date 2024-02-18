@@ -10,6 +10,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        mostradoStock: {
+            type: Boolean,
+            default: true,
+        },
     },
     emits: ["quitarDetalleTransaccion"],
     data() {
@@ -21,6 +25,13 @@ export default {
             ],
         };
     },
+    computed: {
+        estilosColumnaNombreArticulo() {
+            return this.mostradoStock
+                ? { width: this.editable ? "50%" : "55%" }
+                : { width: this.editable ? "65%" : "70%" };
+        },
+    },
     methods: {
         reglaCantidadMaxima(indice) {
             return (valor) =>
@@ -31,6 +42,14 @@ export default {
                     ) ||
                 "La cantidad no debe ser mayor al stock";
         },
+        claseFilaDetalleTransaccion(detalle) {
+            return {
+                "text-red":
+                    (detalle.cantidad <= 0 ||
+                        detalle.cantidad > Number(detalle.articulo.cantidad)) &&
+                    this.mostradoStock,
+            };
+        },
     },
 };
 </script>
@@ -40,13 +59,12 @@ export default {
         <thead>
             <tr>
                 <th class="text-left" style="width: 5%">#</th>
-                <th
-                    class="text-left"
-                    :style="{ width: editable ? '50%' : '55%' }"
-                >
+                <th class="text-left" :style="estilosColumnaNombreArticulo">
                     Artículo
                 </th>
-                <th class="text-left" style="width: 15%">Stock</th>
+                <th v-if="mostradoStock" class="text-left" style="width: 15%">
+                    Stock
+                </th>
                 <th class="text-left" style="width: 15%">Unidad</th>
                 <th class="text-left" style="width: 15%">Cantidad</th>
                 <th v-if="editable" class="text-center" style="width: 5%" />
@@ -61,17 +79,15 @@ export default {
             <tr
                 v-for="(detalle, indice) in detallesTransacciones"
                 :key="indice"
-                :class="{
-                    'text-red':
-                        detalle.cantidad <= 0 ||
-                        detalle.cantidad > Number(detalle.articulo.cantidad),
-                }"
+                :class="claseFilaDetalleTransaccion(detalle)"
             >
                 <td>{{ indice + 1 }}</td>
 
                 <td>{{ detalle.articulo.nombre }}</td>
 
-                <td class="text-right">{{ detalle.articulo.cantidad }}</td>
+                <td v-if="mostradoStock" class="text-right">
+                    {{ detalle.articulo.cantidad }}
+                </td>
 
                 <td>{{ detalle.articulo.unidad.nombre }}</td>
 

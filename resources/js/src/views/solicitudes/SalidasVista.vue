@@ -2,7 +2,6 @@
 import SalidaArticuloService from "./../../services/salidas-articulos";
 import { useToast } from "vue-toastification";
 import vistaMixin from "../../mixins/vista.mixin";
-import { ESTADOS_SOLICITUDES } from "../../utils/constantes";
 import solicitudesSalidasVistaMixin from "./mixins/solicitudes-salidas-vista.mixin";
 
 export default {
@@ -32,7 +31,7 @@ export default {
                     (detalle) => Number(detalle.cantidad) <= 0,
                 ) ||
                 this.itemSeleccionado?.estado_solicitud !==
-                    ESTADOS_SOLICITUDES.aprobada ||
+                    this.estadosSolicitudes.aprobada ||
                 this.realizandoAccion
             );
         },
@@ -184,6 +183,7 @@ export default {
                                     itemSeleccionado.detalles_transacciones
                                 "
                                 :editable="false"
+                                :mostrado-stock="mostradoStock"
                             />
                         </v-col>
                     </v-row>

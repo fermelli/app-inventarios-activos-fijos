@@ -3,7 +3,6 @@ import SolicitudArticuloService from "./../../services/solicitudes-articulos";
 import { useToast } from "vue-toastification";
 import FormularioSolicitud from "./components/FormularioSolicitud.vue";
 import vistaMixin from "../../mixins/vista.mixin";
-import { ESTADOS_SOLICITUDES } from "../../utils/constantes";
 import SalidaArticuloService from "../../services/salidas-articulos";
 import solicitudesSalidasVistaMixin from "./mixins/solicitudes-salidas-vista.mixin";
 
@@ -39,7 +38,7 @@ export default {
                         Number(detalle.articulo.cantidad),
                 ) ||
                 this.itemSeleccionado?.estado_solicitud !==
-                    ESTADOS_SOLICITUDES.pendiente ||
+                    this.estadosSolicitudes.pendiente ||
                 this.realizandoAccion
             );
         },
@@ -245,6 +244,7 @@ export default {
                                     itemSeleccionado.detalles_transacciones
                                 "
                                 :editable="false"
+                                :mostrado-stock="mostradoStock"
                             />
                         </v-col>
                     </v-row>
