@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EntradaArticuloController;
 use App\Http\Controllers\InstitucionController;
+use App\Http\Controllers\SalidaArticuloController;
 use App\Http\Controllers\SolicitudArticuloController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
@@ -191,4 +192,42 @@ Route::middleware(['auth:sanctum'])->group(function () {
         SolicitudArticuloController::class,
         ['only' => ['store']]
     );
+
+    // Rutas para salidas de articulos
+    Route::get(
+        'salidas-articulos/usuario',
+        [SalidaArticuloController::class, 'indexUsuario']
+    );
+    Route::apiResource(
+        'salidas-articulos',
+        SalidaArticuloController::class,
+        ['only' => ['show']]
+    )->parameters(['salidas-articulos' => 'salidaArticulo']);
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::match(
+            ['put', 'patch'],
+            'salidas-articulos/{salidaArticulo}/aprobar',
+            [SalidaArticuloController::class, 'aprobar']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'salidas-articulos/{salidaArticulo}/rechazar',
+            [SalidaArticuloController::class, 'rechazar']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'salidas-articulos/{salidaArticulo}/entregar',
+            [SalidaArticuloController::class, 'entregar']
+        );
+        Route::match(
+            ['put', 'patch'],
+            'salidas-articulos/{salidaArticulo}/anular',
+            [SalidaArticuloController::class, 'anular']
+        );
+        Route::apiResource(
+            'salidas-articulos',
+            SalidaArticuloController::class,
+            ['only' => ['index']]
+        );
+    });
 });

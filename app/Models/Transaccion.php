@@ -25,6 +25,11 @@ class Transaccion extends Model
         'numero_comprobante',
         'numero_solicitud',
         'estado_solicitud',
+        'fecha_hora_atencion',
+        'despachante_id',
+        'fecha_hora_entrega',
+        'anulador_id',
+        'fecha_hora_anulacion',
         'observacion',
     ];
 
@@ -45,6 +50,10 @@ class Transaccion extends Model
     ];
 
     public const ESTADO_SOLICITUD_PENDIENTE = 'pendiente';
+    public const ESTADO_SOLICITUD_APROBADA = 'aprobada';
+    public const ESTADO_SOLICITUD_RECHAZADA = 'rechazada';
+    public const ESTADO_SOLICITUD_ENTREGADA = 'entregada';
+    public const ESTADO_SOLICITUD_ANULADA = 'anulada';
 
     public function usuario()
     {
@@ -64,5 +73,15 @@ class Transaccion extends Model
     public function solicitante()
     {
         return $this->belongsTo(User::class, 'solicitante_id');
+    }
+
+    public function despachante()
+    {
+        return $this->belongsTo(User::class, 'despachante_id');
+    }
+
+    public function anulador()
+    {
+        return $this->belongsTo(User::class, 'anulador_id');
     }
 }

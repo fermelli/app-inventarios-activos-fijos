@@ -30,4 +30,10 @@ class DetalleTransaccion extends Model
     {
         return $this->hasOne(ArticuloLote::class, 'detalle_transaccion_id');
     }
+
+    public function articulosLotes()
+    {
+        return $this->belongsToMany(ArticuloLote::class, 'articulos_lotes_detalles_transacciones', 'detalle_transaccion_id', 'articulo_lote_id')
+                ->withPivot('cantidad');
+    }
 }

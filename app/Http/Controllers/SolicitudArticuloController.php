@@ -46,7 +46,10 @@ class SolicitudArticuloController extends Controller
     {
         $parametros = $request->validated();
         $queryBuilder = Transaccion::with([
+            'usuario',
             'solicitante',
+            'despachante',
+            'anulador',
             'detallesTransacciones.articulo' => function (Builder $query) {
                 $query->withTrashed()
                     ->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
@@ -132,7 +135,10 @@ class SolicitudArticuloController extends Controller
         }
 
         $transaccion->load([
+            'usuario',
             'solicitante',
+            'despachante',
+            'anulador',
             'detallesTransacciones.articulo.unidad',
             'detallesTransacciones.articulo' => function (Builder $query) {
                 $query->withTrashed()
