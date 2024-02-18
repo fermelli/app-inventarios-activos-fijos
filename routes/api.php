@@ -153,6 +153,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'entradas-articulos/{entradaArticulo}/activar',
             [EntradaArticuloController::class, 'restore']
         );
+        Route::match(
+            ['put', 'patch'],
+            'entradas-articulos/{entradaArticulo}/anular',
+            [EntradaArticuloController::class, 'anular']
+        );
         Route::apiResource(
             'entradas-articulos',
             EntradaArticuloController::class,

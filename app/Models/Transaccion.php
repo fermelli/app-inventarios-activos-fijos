@@ -23,6 +23,7 @@ class Transaccion extends Model
         'tipo',
         'comprobante',
         'numero_comprobante',
+        'estado_entrada',
         'numero_solicitud',
         'estado_solicitud',
         'fecha_hora_atencion',
@@ -48,6 +49,9 @@ class Transaccion extends Model
         'boleta',
         'otro',
     ];
+
+    public const ESTADO_ENTRADA_VALIDA = 'valida';
+    public const ESTADO_ENTRADA_ANULADA = 'anulada';
 
     public const ESTADO_SOLICITUD_PENDIENTE = 'pendiente';
     public const ESTADO_SOLICITUD_APROBADA = 'aprobada';

@@ -6,7 +6,9 @@ use App\Http\Requests\CrearEntradaArticulosRequest;
 use App\Http\Requests\PaginacionConEliminadosOrdenDireccionBusquedaRequest;
 use App\Models\Transaccion;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EntradaArticuloController extends Controller
@@ -19,6 +21,7 @@ class EntradaArticuloController extends Controller
         $parametros = $request->validated();
         $queryBuilder = Transaccion::with([
             'usuario',
+            'anulador',
             'institucion' => function (Builder $query) {
                 $query->withTrashed();
             },
@@ -66,6 +69,7 @@ class EntradaArticuloController extends Controller
                 ...$datos,
                 'tipo' => Transaccion::TIPO_ENTRADA,
                 'usuario_id' => $request->user()->id,
+                'estado_entrada' => Transaccion::ESTADO_ENTRADA_VALIDA,
             ]);
             $datosDetallesTransacciones = $datos['detalles_transacciones'];
             
@@ -129,5 +133,54 @@ class EntradaArticuloController extends Controller
         $transaccion->restore();
 
         return response()->jsonResponse('Entrada de artículos activada', $transaccion, 200);
+    }
+
+    /**
+     * Anular la transacción de entrada de artículos.
+     */
+    public function anular(string $id, Request $request)
+    {
+        $transaccion = $this->findWithTrashed($id);
+
+        if ($transaccion->estado_entrada === Transaccion::ESTADO_ENTRADA_ANULADA) {
+            throw new BadRequestHttpException('La entrada de artículos ya está anulada');
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $transaccion->load('detallesTransacciones.articuloLote.articulo');
+
+            $transaccion->update([
+                'estado_entrada' => Transaccion::ESTADO_ENTRADA_ANULADA,
+                'anulador_id' => $request->user()->id,
+                'fecha_hora_anulacion' => now(),
+            ]);
+
+            $detallesTransacciones = $transaccion->detallesTransacciones;
+
+            foreach ($detallesTransacciones as $detalleTransaccion) {
+                $articuloLote = $detalleTransaccion->articuloLote;
+
+                if ($articuloLote->cantidad == 0 || $detalleTransaccion->cantidad > $articuloLote->cantidad) {
+                    $articulo = $articuloLote->articulo;
+                    $mensaje = "No se puede anular la entrada de artículos, el artículo {$articulo->nombre} no tiene suficiente cantidad";
+
+                    throw new BadRequestHttpException($mensaje);
+                }
+
+                $detalleTransaccion->articuloLote->update([
+                    'cantidad' => $articuloLote->cantidad - $detalleTransaccion->cantidad,
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+
+        return response()->jsonResponse('Entrada de artículos anulada', $transaccion, 200);
     }
 }
