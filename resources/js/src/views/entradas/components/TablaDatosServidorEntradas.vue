@@ -85,7 +85,7 @@ export default {
                 density="compact"
                 icon="mdi-eye"
                 title="Ver"
-                @click="$emit('mostrarItem', item)"
+                @click="$emit('mostrarItem', item.id)"
             />
 
             <v-btn

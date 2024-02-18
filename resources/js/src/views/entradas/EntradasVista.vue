@@ -183,9 +183,15 @@ export default {
                 detalles_transacciones: [],
             };
         },
-        mostrarItem(item) {
-            this.itemSeleccionado = item;
-            this.mostradoDialogoMostrarItem = true;
+        async mostrarItem(itemId) {
+            try {
+                const { data } = await EntradaArticuloService.show(itemId);
+
+                this.itemSeleccionado = data.datos;
+                this.mostradoDialogoMostrarItem = true;
+            } catch (error) {
+                console.log(error);
+            }
         },
         cerrarDialogoMostrarItem() {
             this.mostradoDialogoMostrarItem = false;

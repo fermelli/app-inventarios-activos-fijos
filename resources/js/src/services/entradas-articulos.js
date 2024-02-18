@@ -9,6 +9,9 @@ export default {
     async store(datos) {
         return await service.post("/entradas-articulos", datos);
     },
+    async show(id) {
+        return await service.get(`/entradas-articulos/${id}`);
+    },
     async softDestroy(id) {
         return await service.patch(`/entradas-articulos/${id}/desactivar`);
     },
