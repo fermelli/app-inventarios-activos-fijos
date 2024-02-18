@@ -1033,6 +1033,30 @@
 					"response": []
 				},
 				{
+					"name": "Show Entradas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "SoftDestroy Entradas",
 					"request": {
 						"method": "PATCH",
@@ -1077,6 +1101,243 @@
 								"entradas-articulos",
 								"2",
 								"activar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anular Entradas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/9/anular",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"9",
+								"anular"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Solicitudes",
+			"item": [
+				{
+					"name": "Store Solicitudes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/solicitudes-articulos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"solicitudes-articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index Solicitudes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/solicitudes-articulos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"solicitudes-articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Solicitudes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/solicitudes-articulos/9",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"solicitudes-articulos",
+								"9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Salidas",
+			"item": [
+				{
+					"name": "Index Salidas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/salidas-articulos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"salidas-articulos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aprobar Salidas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/salidas-articulos/2/aprobar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"salidas-articulos",
+								"2",
+								"aprobar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rechazar Salidas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/salidas-articulos/2/rechazar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"salidas-articulos",
+								"2",
+								"rechazar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entregar Salidas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/salidas-articulos/2/entregar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"salidas-articulos",
+								"2",
+								"entregar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Salidas",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/salidas-articulos/5/devolver",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"salidas-articulos",
+								"5",
+								"devolver"
 							]
 						}
 					},
