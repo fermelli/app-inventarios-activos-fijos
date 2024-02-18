@@ -73,7 +73,9 @@ export default {
 
         <tbody>
             <tr v-if="detallesTransacciones.length === 0">
-                <td colspan="6" class="text-center">No hay detalles</td>
+                <td :colspan="mostradoStock ? 6 : 5" class="text-center">
+                    No hay detalles
+                </td>
             </tr>
 
             <tr
