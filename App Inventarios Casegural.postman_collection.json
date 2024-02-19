@@ -246,7 +246,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"Categoria {{$randomInt}}\",\r\n    \"categoria_padre_id\": 1",
+							"raw": "{\r\n    \"nombre\": \"Categoria {{$randomInt}}\",\r\n    \"categoria_padre_id\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1130,6 +1130,31 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Show Reporte Entradas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/8/reporte-pdf",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"8",
+								"reporte-pdf"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1210,6 +1235,31 @@
 							"path": [
 								"solicitudes-articulos",
 								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Reporte Solicitudes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/solicitudes-articulos/6/reporte-pdf",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"solicitudes-articulos",
+								"6",
+								"reporte-pdf"
 							]
 						}
 					},
@@ -1338,6 +1388,31 @@
 								"salidas-articulos",
 								"5",
 								"devolver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Reporte Salidas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/salidas-articulos/6/reporte-pdf",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"salidas-articulos",
+								"6",
+								"reporte-pdf"
 							]
 						}
 					},

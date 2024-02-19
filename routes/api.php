@@ -3,9 +3,12 @@
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\EntradaArticuloController;
+use App\Http\Controllers\EntradaArticuloReportePdfController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\SalidaArticuloController;
+use App\Http\Controllers\SalidaArticuloReportePdfController;
 use App\Http\Controllers\SolicitudArticuloController;
+use App\Http\Controllers\SolicitudArticuloReportePdfController;
 use App\Http\Controllers\UbicacionController;
 use App\Http\Controllers\UnidadController;
 use App\Http\Controllers\UsuarioController;
@@ -163,6 +166,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
             EntradaArticuloController::class,
             ['only' => ['index', 'store', 'show']]
         )->parameters(['entradas-articulos' => 'entradaArticulo']);
+        Route::get(
+            'entradas-articulos/{entradaArticulo}/reporte-pdf',
+            [EntradaArticuloReportePdfController::class, 'show']
+        );
     });
 
     // Rutas para solicitudes de articulos
@@ -175,6 +182,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         SolicitudArticuloController::class,
         ['only' => ['show']]
     )->parameters(['solicitudes-articulos' => 'solicitudArticulo']);
+    Route::get(
+        'solicitudes-articulos/{solicitudArticulo}/reporte-pdf',
+        [SolicitudArticuloReportePdfController::class, 'show']
+    );
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
         Route::apiResource(
             'solicitudes-articulos',
@@ -208,6 +219,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         SalidaArticuloController::class,
         ['only' => ['show']]
     )->parameters(['salidas-articulos' => 'salidaArticulo']);
+    Route::get(
+        'salidas-articulos/{salidaArticulo}/reporte-pdf',
+        [SalidaArticuloReportePdfController::class, 'show']
+    );
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
         Route::match(
             ['put', 'patch'],
