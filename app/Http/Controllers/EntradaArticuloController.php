@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\EntradaArticuloControllerTrait;
 use App\Http\Requests\CrearEntradaArticulosRequest;
 use App\Http\Requests\PaginacionConEliminadosOrdenDireccionBusquedaRequest;
 use App\Models\Transaccion;
@@ -9,10 +10,11 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EntradaArticuloController extends Controller
 {
+    use EntradaArticuloControllerTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -102,40 +104,9 @@ class EntradaArticuloController extends Controller
      */
     public function show(string $id)
     {
-        $transaccion = $this->findWithTrashed($id);
-
-        if (!is_null($transaccion->eliminado_en)) {
-            throw new BadRequestHttpException('Entrada de artículos está desactivada');
-        }
-
-        $transaccion->load([
-            'usuario',
-            'anulador',
-            'institucion' => function (Builder $query) {
-                $query->withTrashed();
-            },
-            'detallesTransacciones.articulo' => function (Builder $query) {
-                $query->withTrashed();
-            },
-            'detallesTransacciones.articulo.unidad',
-            'detallesTransacciones.articuloLote',
-        ]);
+        $transaccion = $this->showDatos($id);
 
         return response()->jsonResponse('Entrada de artículos recuperada', $transaccion, 200);
-    }
-
-    /**
-     * Find with trashed the specified resource from storage.
-     */
-    protected function findWithTrashed(string $id)
-    {
-        $transaccion = Transaccion::withTrashed()->where('tipo', Transaccion::TIPO_ENTRADA)->find($id);
-
-        if (is_null($transaccion)) {
-            throw new NotFoundHttpException('Entrada de artículos no encontrada');
-        }
-
-        return $transaccion;
     }
 
     /**
