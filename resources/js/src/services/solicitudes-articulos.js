@@ -23,4 +23,7 @@ export default {
     async restore(id) {
         return await service.patch(`/solicitudes-articulos/${id}/activar`);
     },
+    async showReportePdf(id) {
+        return await service.get(`/solicitudes-articulos/${id}/reporte-pdf`);
+    },
 };

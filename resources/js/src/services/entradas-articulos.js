@@ -21,4 +21,7 @@ export default {
     async anular(id) {
         return await service.patch(`/entradas-articulos/${id}/anular`);
     },
+    async showReportePdf(id) {
+        return await service.get(`/entradas-articulos/${id}/reporte-pdf`);
+    },
 };

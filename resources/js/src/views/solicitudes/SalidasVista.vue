@@ -3,10 +3,11 @@ import SalidaArticuloService from "./../../services/salidas-articulos";
 import { useToast } from "vue-toastification";
 import vistaMixin from "../../mixins/vista.mixin";
 import solicitudesSalidasVistaMixin from "./mixins/solicitudes-salidas-vista.mixin";
+import reportePdfMixin from "../../mixins/reporte-pdf.mixin";
 
 export default {
     name: "SalidasVista",
-    mixins: [vistaMixin, solicitudesSalidasVistaMixin],
+    mixins: [vistaMixin, solicitudesSalidasVistaMixin, reportePdfMixin],
     setup() {
         const toast = useToast();
 
@@ -16,6 +17,8 @@ export default {
         return {
             nombreItem: "Salida Artículos",
             metodoServicioObtenerItem: SalidaArticuloService.show,
+            metodoServicioObtenerReportePdf:
+                SalidaArticuloService.showReportePdf,
         };
     },
     computed: {
@@ -216,6 +219,17 @@ export default {
 
                     <v-btn
                         class="ml-2"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-printer"
+                        title="Reporte PDF"
+                        @click="mostrarReportePdf"
+                    >
+                        Reporte PDF
+                    </v-btn>
+
+                    <v-btn
+                        class="ml-2"
                         color="secondary"
                         density="compact"
                         prepend-icon="mdi-close"
@@ -234,6 +248,12 @@ export default {
             :realizando-accion="realizandoAccion"
             @aceptar="funcionDialogoConfirmacion"
             @cancelar="cancelarAccion"
+        />
+
+        <DialogoReportePdf
+            v-model="mostradoDialogoReportePdf"
+            :pdf-src="pdfSrc"
+            @cerrar="mostradoDialogoReportePdf = false"
         />
     </v-row>
 </template>

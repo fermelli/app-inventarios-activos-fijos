@@ -6,6 +6,7 @@ import TablaDatosServidorEntradas from "./components/TablaDatosServidorEntradas.
 import vistaMixin from "../../mixins/vista.mixin";
 import TablaDatosDetallesEntradas from "./components/TablaDatosDetallesEntradas.vue";
 import { ESTADOS_ENTRADAS, ROLES } from "../../utils/constantes";
+import reportePdfMixin from "../../mixins/reporte-pdf.mixin";
 
 export default {
     name: "EntradasVista",
@@ -14,7 +15,7 @@ export default {
         TablaDatosServidorEntradas,
         TablaDatosDetallesEntradas,
     },
-    mixins: [vistaMixin],
+    mixins: [vistaMixin, reportePdfMixin],
     setup() {
         const toast = useToast();
 
@@ -33,6 +34,8 @@ export default {
             mostradoDialogoMostrarItem: false,
             roles: ROLES,
             estadosEntradas: ESTADOS_ENTRADAS,
+            metodoServicioObtenerReportePdf:
+                EntradaArticuloService.showReportePdf,
         };
     },
     computed: {
@@ -352,6 +355,17 @@ export default {
                     </v-btn>
 
                     <v-btn
+                        class="ml-2"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-printer"
+                        title="Reporte PDF"
+                        @click="mostrarReportePdf"
+                    >
+                        Reporte PDF
+                    </v-btn>
+
+                    <v-btn
                         color="blue-grey"
                         density="compact"
                         prepend-icon="mdi-close"
@@ -370,6 +384,12 @@ export default {
             :realizando-accion="realizandoAccion"
             @aceptar="funcionDialogoConfirmacion"
             @cancelar="cancelarAccion"
+        />
+
+        <DialogoReportePdf
+            v-model="mostradoDialogoReportePdf"
+            :pdf-src="pdfSrc"
+            @cerrar="mostradoDialogoReportePdf = false"
         />
     </v-row>
 </template>
