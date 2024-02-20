@@ -24,9 +24,7 @@ class EntradaArticuloReportePdfController extends Controller
         ]);
         $pdfBase64 = base64_encode($pdf->output());
 
-        return response(null, null, [
-            'Content-Disposition' => 'attachment; filename="Reporte de entrada de artículos.pdf"',
-        ])->jsonResponse(
+        return response()->jsonResponse(
             'Reporte de entrada de artículos generado exitosamente',
             ['pdf' => $pdfBase64 , 'nombre' => 'Reporte de entrada de artículos'],
             200
