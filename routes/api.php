@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntradaArticuloController;
 use App\Http\Controllers\EntradaArticuloReportePdfController;
 use App\Http\Controllers\InstitucionController;
@@ -248,6 +249,26 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'salidas-articulos',
             SalidaArticuloController::class,
             ['only' => ['index']]
+        );
+    });
+
+    // Rutas para dashboard
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::get(
+            'dashboard/cantidad-registros',
+            [DashboardController::class, 'cantidadRegistros']
+        );
+        Route::get(
+            'dashboard/articulos-con-stock-minimo',
+            [DashboardController::class, 'articulosConStockMinimo']
+        );
+        Route::get(
+            'dashboard/articulos-recientemente-vencidos',
+            [DashboardController::class, 'articulosRecientementeVencidos']
+        );
+        Route::get(
+            'dashboard/articulos-proximos-vencer',
+            [DashboardController::class, 'articulosProximosVencer']
         );
     });
 });

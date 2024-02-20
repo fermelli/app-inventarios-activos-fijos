@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection as SupportCollection;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
              * @param array|\Illuminate\Database\Eloquent\Collection $data
              * @param int $codigoEstado
              */
-            function (string $mensaje, Collection | Model | array  $datos, int $codigoEstado) {
+            function (string $mensaje, Collection | Model | SupportCollection | array  $datos, int $codigoEstado) {
 
                 return Response::json([
                     'mensaje' => $mensaje,
