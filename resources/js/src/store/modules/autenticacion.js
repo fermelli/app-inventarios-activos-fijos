@@ -29,7 +29,8 @@ const autenticacionStore = {
         async logout({ commit }) {
             return AutenticacionService.logout()
                 .then(() => {
-                    commit("SET_USER", null);
+                    commit("setUsuario", null);
+
                     if (router.currentRoute.name !== "login") {
                         router.push({ name: "login" });
                     }
