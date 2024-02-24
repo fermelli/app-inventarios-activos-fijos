@@ -87,40 +87,6 @@ export default {
                 title="Ver"
                 @click="$emit('mostrarItem', item.id)"
             />
-
-            <v-btn
-                v-if="!item.eliminado_en"
-                class="ml-2"
-                color="error"
-                density="compact"
-                icon="mdi-cancel"
-                title="Desactivar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'desactivar',
-                        `de N° de Solicitud ${item.numero_solicitud} del Solicitante ${item.solicitante.nombre}`,
-                    )
-                "
-            />
-
-            <v-btn
-                v-else
-                class="ml-2"
-                color="success"
-                density="compact"
-                icon="mdi-check"
-                title="Activar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'activar',
-                        `de N° de Solicitud ${item.numero_solicitud} del Solicitante ${item.solicitante.nombre}`,
-                    )
-                "
-            />
         </template>
     </v-data-table-server>
 </template>

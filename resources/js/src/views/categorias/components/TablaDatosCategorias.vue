@@ -83,40 +83,6 @@ export default {
                     )
                 "
             />
-
-            <v-btn
-                v-if="!item.eliminado_en"
-                class="ml-2"
-                color="error"
-                density="compact"
-                icon="mdi-cancel"
-                title="Desactivar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'desactivar',
-                        `${item.nombre}`,
-                    )
-                "
-            />
-
-            <v-btn
-                v-else
-                class="ml-2"
-                color="success"
-                density="compact"
-                icon="mdi-check"
-                title="Activar"
-                @click="
-                    $emit(
-                        'mostrarConfirmacion',
-                        item,
-                        'activar',
-                        `${item.nombre}`,
-                    )
-                "
-            />
         </template>
     </v-data-table>
 </template>
