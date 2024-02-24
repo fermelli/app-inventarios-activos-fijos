@@ -4,21 +4,11 @@ export default [
     {
         path: "/",
         name: "inicio",
-        component: () => import("../views/principal/InicioVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador, ROLES.personal],
-        },
-    },
-    {
-        path: "/dashboard",
-        name: "dashboard",
         component: () => import("../views/principal/DashboardVista.vue"),
         meta: {
             layout: LAYOUTS.app,
             requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador],
+            rolesAutorizados: [ROLES.administrador, ROLES.personal],
         },
     },
     {

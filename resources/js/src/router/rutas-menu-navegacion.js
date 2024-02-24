@@ -3,15 +3,9 @@ import { ROLES } from "../utils/constantes";
 export default [
     {
         to: { name: "inicio" },
-        icono: "mdi-home",
-        texto: "Inicio",
-        rolesAutorizados: [ROLES.administrador, ROLES.personal],
-    },
-    {
-        to: { name: "dashboard" },
         icono: "mdi-view-dashboard",
         texto: "Dashboard",
-        rolesAutorizados: [ROLES.administrador],
+        rolesAutorizados: [ROLES.administrador, ROLES.personal],
     },
     {
         to: { name: "categorias" },
