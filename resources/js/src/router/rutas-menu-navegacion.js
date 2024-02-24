@@ -8,28 +8,36 @@ export default [
         rolesAutorizados: [ROLES.administrador, ROLES.personal],
     },
     {
-        to: { name: "categorias" },
-        icono: "mdi-tag",
-        texto: "Categorías",
+        to: null,
+        icono: "mdi-store",
+        texto: "Inventario",
         rolesAutorizados: [ROLES.administrador],
-    },
-    {
-        to: { name: "unidades" },
-        icono: "mdi-ruler",
-        texto: "Unidades",
-        rolesAutorizados: [ROLES.administrador],
-    },
-    {
-        to: { name: "ubicaciones" },
-        icono: "mdi-library-shelves",
-        texto: "Ubicaciones",
-        rolesAutorizados: [ROLES.administrador],
-    },
-    {
-        to: { name: "articulos" },
-        icono: "mdi-package-variant-closed",
-        texto: "Artículos",
-        rolesAutorizados: [ROLES.administrador],
+        rutasHijas: [
+            {
+                to: { name: "categorias" },
+                icono: "mdi-tag",
+                texto: "Categorías",
+                rolesAutorizados: [ROLES.administrador],
+            },
+            {
+                to: { name: "unidades" },
+                icono: "mdi-ruler",
+                texto: "Unidades",
+                rolesAutorizados: [ROLES.administrador],
+            },
+            {
+                to: { name: "ubicaciones" },
+                icono: "mdi-library-shelves",
+                texto: "Ubicaciones",
+                rolesAutorizados: [ROLES.administrador],
+            },
+            {
+                to: { name: "articulos" },
+                icono: "mdi-package-variant-closed",
+                texto: "Artículos",
+                rolesAutorizados: [ROLES.administrador],
+            },
+        ],
     },
     {
         to: { name: "instituciones" },

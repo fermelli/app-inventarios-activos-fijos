@@ -32,19 +32,41 @@ export default {
 
             <v-divider />
 
-            <v-list-item
+            <template
                 v-for="(ruta, indice) in rutasPermitidasPorRol"
                 :key="indice"
-                link
-                :to="ruta.to"
-                density="compact"
             >
-                <template #prepend>
-                    <v-icon :icon="ruta.icono" />
-                </template>
+                <v-list-group v-if="'rutasHijas' in ruta" :value="ruta.texto">
+                    <template #activator="{ props }">
+                        <v-list-item
+                            v-bind="props"
+                            density="compact"
+                            :prepend-icon="ruta.icono"
+                            :title="ruta.texto"
+                        />
+                    </template>
 
-                <v-list-item-title>{{ ruta.texto }}</v-list-item-title>
-            </v-list-item>
+                    <v-list-item
+                        v-for="(rutaHija, indiceHija) in ruta.rutasHijas"
+                        :key="indiceHija"
+                        link
+                        density="compact"
+                        :to="rutaHija.to"
+                        :prepend-icon="rutaHija.icono"
+                        :title="rutaHija.texto"
+                    />
+                </v-list-group>
+
+                <v-list-item
+                    v-else
+                    :key="indice"
+                    link
+                    :to="ruta.to"
+                    density="compact"
+                    :prepend-icon="ruta.icono"
+                    :title="ruta.texto"
+                />
+            </template>
         </v-list>
     </v-navigation-drawer>
 </template>
