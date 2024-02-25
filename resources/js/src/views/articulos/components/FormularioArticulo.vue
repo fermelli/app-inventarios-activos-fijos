@@ -146,7 +146,7 @@ export default {
         <v-text-field
             v-model="formulario.codigo"
             class="mb-2"
-            label="Código"
+            label="Código SIGMA"
             name="codigo"
             type="text"
             density="compact"

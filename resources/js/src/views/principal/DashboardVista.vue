@@ -69,7 +69,7 @@ export default {
                 cargando: false,
                 cabeceras: [
                     { title: "#", key: "index", filterable: false },
-                    { title: "Código", key: "codigo" },
+                    { title: "Código SIGMA", key: "codigo" },
                     { title: "Artículo", key: "nombre" },
                     { title: "Unidad", key: "unidad" },
                     { title: "Cantidad", key: "stock" },
@@ -83,7 +83,7 @@ export default {
                 cargando: false,
                 cabeceras: [
                     { title: "#", key: "index", filterable: false },
-                    { title: "Código", key: "codigo" },
+                    { title: "Código SIGMA", key: "codigo" },
                     { title: "Artículo", key: "nombre" },
                     { title: "Unidad", key: "unidad" },
                     { title: "Cantidad", key: "cantidad" },
@@ -98,7 +98,7 @@ export default {
                 cargando: false,
                 cabeceras: [
                     { title: "#", key: "index", filterable: false },
-                    { title: "Código", key: "codigo" },
+                    { title: "Código SIGMA", key: "codigo" },
                     { title: "Artículo", key: "nombre" },
                     { title: "Unidad", key: "unidad" },
                     { title: "Cantidad", key: "cantidad" },
