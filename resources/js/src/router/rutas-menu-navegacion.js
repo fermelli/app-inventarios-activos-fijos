@@ -90,6 +90,12 @@ export default [
         ],
     },
     {
+        to: { name: "activos-fijos" },
+        icono: "mdi-archive-arrow-down",
+        texto: "Activos Fijos",
+        rolesAutorizados: [ROLES.administrador],
+    },
+    {
         to: { name: "sobre-nosotros" },
         icono: "mdi-information",
         texto: "Sobre Nosotros",

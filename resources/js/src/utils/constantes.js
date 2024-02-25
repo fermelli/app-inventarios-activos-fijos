@@ -43,3 +43,15 @@ export const COLORES_ESTADOS_ENTRADAS = {
     valida: "success",
     anulada: "error",
 };
+
+export const ESTADOS_ACTIVOS_FIJOS = {
+    activo: "activo",
+    en_mantenimiento: "en mantenimiento",
+    de_baja: "de baja",
+};
+
+export const COLORES_ESTADOS_ACTIVOS_FIJOS = {
+    activo: "success",
+    en_mantenimiento: "warning",
+    de_baja: "error",
+};

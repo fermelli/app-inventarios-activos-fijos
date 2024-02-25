@@ -125,6 +125,16 @@ export default [
         },
     },
     {
+        path: "/activos-fijos",
+        name: "activos-fijos",
+        component: () => import("../views/activos-fijos/ActivosFijosVista.vue"),
+        meta: {
+            layout: LAYOUTS.app,
+            requiresAuth: true,
+            rolesAutorizados: [ROLES.administrador],
+        },
+    },
+    {
         path: "/sobre-nosotros",
         name: "sobre-nosotros",
         component: () => import("../views/principal/SobreNosotrosVista.vue"),
