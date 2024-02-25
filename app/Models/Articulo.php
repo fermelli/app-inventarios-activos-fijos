@@ -28,6 +28,7 @@ class Articulo extends Model
         'ubicacion_id',
         'codigo',
         'nombre',
+        'institucion_id',
         'tipo',
         'estado_activo_fijo',
         'descripcion',
@@ -52,5 +53,10 @@ class Articulo extends Model
     public function articulosLotes()
     {
         return $this->hasMany(ArticuloLote::class, 'articulo_id');
+    }
+
+    public function institucion()
+    {
+        return $this->belongsTo(Institucion::class, 'institucion_id');
     }
 }

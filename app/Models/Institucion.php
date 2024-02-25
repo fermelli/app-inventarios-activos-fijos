@@ -20,4 +20,9 @@ class Institucion extends Model
         'direccion',
         'telefono',
     ];
+
+    public function articulos()
+    {
+        return $this->hasMany(Articulo::class, 'institucion_id');
+    }
 }

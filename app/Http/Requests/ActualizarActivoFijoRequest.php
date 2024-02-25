@@ -25,6 +25,7 @@ class ActualizarActivoFijoRequest extends FormRequest
     {
         return [
             'categoria_id' => ['present', 'exists:categorias,id'],
+            'institucion_id' => ['present', 'exists:instituciones,id'],
             'codigo' => [
                 'present',
                 'string',

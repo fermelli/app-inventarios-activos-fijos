@@ -25,6 +25,7 @@ class CrearActivoFijoRequest extends FormRequest
     {
         return [
             'categoria_id' => ['required', 'exists:categorias,id'],
+            'institucion_id' => ['required', 'exists:instituciones,id'],
             'codigo' => ['required', 'string', 'max:100', 'unique:articulos,codigo'],
             'nombre' => [
                 'required',
