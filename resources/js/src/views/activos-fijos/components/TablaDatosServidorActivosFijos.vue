@@ -18,6 +18,9 @@ export default {
         "mostrarConfirmacion",
         "cargarItems",
         "seleccionarItem",
+        "mostrarItem",
+        "mostrarFormularioAsignacion",
+        "mostrarFormularioDevolucion",
     ],
     data() {
         return {
@@ -26,6 +29,10 @@ export default {
                 { title: "Código SIGMA", key: "codigo" },
                 { title: "Nombre", key: "nombre" },
                 { title: "Estado", key: "estado_activo_fijo" },
+                {
+                    title: "Está asignado",
+                    key: "asignacion_activo_fijo_actual",
+                },
                 { title: "Categoría", key: "categoria.nombre" },
                 { title: "Institución", key: "institucion.nombre" },
                 { title: "Descripción", key: "descripcion" },
@@ -145,6 +152,18 @@ export default {
             </v-chip>
         </template>
 
+        <template #[`item.asignacion_activo_fijo_actual`]="{ item }">
+            <v-chip
+                class="text-capitalize"
+                :color="
+                    !!item.asignacion_activo_fijo_actual ? 'success' : 'error'
+                "
+                small
+            >
+                {{ item.asignacion_activo_fijo_actual ? "Sí" : "No" }}
+            </v-chip>
+        </template>
+
         <template #[`item.acciones`]="{ item }">
             <v-btn
                 v-if="soloSeleccionItems"
@@ -157,6 +176,35 @@ export default {
 
             <template v-else>
                 <v-btn
+                    color="green"
+                    density="compact"
+                    icon="mdi-eye"
+                    title="Ver"
+                    @click="$emit('mostrarItem', item.id)"
+                />
+
+                <v-btn
+                    v-if="!item.asignacion_activo_fijo_actual"
+                    class="ml-2"
+                    color="success"
+                    density="compact"
+                    icon="mdi-account-plus"
+                    title="Asignar"
+                    @click="$emit('mostrarFormularioAsignacion', item)"
+                />
+
+                <v-btn
+                    v-else
+                    class="ml-2"
+                    color="error"
+                    density="compact"
+                    icon="mdi-account-minus"
+                    title="Devolución"
+                    @click="$emit('mostrarFormularioDevolucion', item)"
+                />
+
+                <v-btn
+                    class="ml-2"
                     color="primary"
                     density="compact"
                     icon="mdi-pencil"

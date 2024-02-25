@@ -4,12 +4,16 @@ import { useToast } from "vue-toastification";
 import TablaDatosServidorActivosFijos from "./components/TablaDatosServidorActivosFijos.vue";
 import FormularioActivoFijo from "./components/FormularioActivoFijo.vue";
 import vistaMixin from "../../mixins/vista.mixin";
+import FormularioAsignacionActivoFijo from "./components/FormularioAsignacionActivoFijo.vue";
+import FormularioDevolucionActivoFijo from "./components/FormularioDevolucionActivoFijo.vue";
 
 export default {
     name: "ActivosFijosVista",
     components: {
         TablaDatosServidorActivosFijos,
         FormularioActivoFijo,
+        FormularioAsignacionActivoFijo,
+        FormularioDevolucionActivoFijo,
     },
     mixins: [vistaMixin],
     setup() {
@@ -28,7 +32,49 @@ export default {
             totalItems: 0,
             busqueda: null,
             categoria_id: null,
+            asignacionActivoFijo: this.crearAsignacionActivoFijo(),
+            mostradoDialogoFormularioAsignacion: false,
+            devolucionActivoFijo: this.crearDevolucionActivoFijo(),
+            mostradoDialogoFormularioDevolucion: false,
+            mostradoDialogoMostrarItem: false,
         };
+    },
+    computed: {
+        listadoDatos() {
+            if (!this.itemSeleccionado) {
+                return [];
+            }
+
+            return [
+                {
+                    titulo: "Código SIGMA",
+                    subtitulo: this.itemSeleccionado.codigo,
+                },
+                {
+                    titulo: "Activo Fijo",
+                    subtitulo: this.itemSeleccionado.nombre,
+                },
+                {
+                    titulo: "Estado",
+                    subtitulo: this.itemSeleccionado.estado_activo_fijo,
+                },
+                {
+                    titulo: "Está asignado",
+                    subtitulo: this.itemSeleccionado
+                        .asignacion_activo_fijo_actual
+                        ? "Sí"
+                        : "No",
+                },
+                {
+                    titulo: "Categoría",
+                    subtitulo: this.itemSeleccionado.categoria?.nombre,
+                },
+                {
+                    titulo: "Institución",
+                    subtitulo: this.itemSeleccionado.institucion?.nombre,
+                },
+            ];
+        },
     },
     methods: {
         async accionItem(accion) {
@@ -54,10 +100,13 @@ export default {
             return {
                 id: null,
                 categoria_id: null,
+                categoria: null,
                 institucion_id: null,
+                institucion: null,
                 codigo: null,
                 nombre: null,
                 descripcion: null,
+                asignaciones_activos_fijos: [],
             };
         },
         async obtenerActivosFijos(payload) {
@@ -92,6 +141,53 @@ export default {
             } finally {
                 this.cargandoItems = false;
             }
+        },
+        crearAsignacionActivoFijo() {
+            return {
+                activo_fijo_id: null,
+                asignado_a_id: null,
+                ubicacion_id: null,
+                fecha_asignacion: null,
+                observacion_asignacion: null,
+            };
+        },
+        mostrarDialogoFormularioAsignacion(item) {
+            this.asignacionActivoFijo.activo_fijo_id = item.id;
+            this.mostradoDialogoFormularioAsignacion = true;
+        },
+        cancelarGuardadoAsignacionActivoFijo() {
+            this.mostradoDialogoFormularioAsignacion = false;
+            this.asignacionActivoFijo = this.crearAsignacionActivoFijo();
+        },
+        crearDevolucionActivoFijo() {
+            return {
+                id: null,
+                fecha_devolucion: null,
+                observacion_devolucion: null,
+            };
+        },
+        mostrarDialogoFormularioDevolucion(item) {
+            this.devolucionActivoFijo.id =
+                item.asignacion_activo_fijo_actual?.id;
+            this.mostradoDialogoFormularioDevolucion = true;
+        },
+        cancelarGuardadoDevolucionActivoFijo() {
+            this.mostradoDialogoFormularioDevolucion = false;
+            this.devolucionActivoFijo = this.crearDevolucionActivoFijo();
+        },
+        async mostrarItem(itemId) {
+            try {
+                const { data } = await ActivoFijoService.show(itemId);
+
+                this.itemSeleccionado = data.datos;
+                this.mostradoDialogoMostrarItem = true;
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        cerrarDialogoMostrarItem() {
+            this.mostradoDialogoMostrarItem = false;
+            this.itemSeleccionado = this.crearDatosItem();
         },
     },
 };
@@ -135,6 +231,13 @@ export default {
                 @mostrar-formulario="mostrarDialogoFormulario"
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
                 @cargar-items="obtenerActivosFijos"
+                @mostrar-item="mostrarItem"
+                @mostrar-formulario-asignacion="
+                    mostrarDialogoFormularioAsignacion
+                "
+                @mostrar-formulario-devolucion="
+                    mostrarDialogoFormularioDevolucion
+                "
             />
         </v-col>
 
@@ -152,6 +255,185 @@ export default {
                         @cancelar-guardado="cancelarGuardado"
                     />
                 </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioAsignacion"
+            persistent
+            width="800"
+        >
+            <v-card>
+                <v-card-title>
+                    <span class="text-h6">
+                        {{ `Asignación ${nombreItem}` }}
+                    </span>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <FormularioAsignacionActivoFijo
+                        :datos="asignacionActivoFijo"
+                        :nombre-item="`Asignación ${nombreItem}`"
+                        @actualizar-listado="obtenerActivosFijos"
+                        @cancelar-guardado="
+                            cancelarGuardadoAsignacionActivoFijo
+                        "
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioDevolucion"
+            persistent
+            width="800"
+        >
+            <v-card>
+                <v-card-title>
+                    <span class="text-h6">
+                        {{ `Devolución ${nombreItem}` }}
+                    </span>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <FormularioDevolucionActivoFijo
+                        :datos="devolucionActivoFijo"
+                        :nombre-item="`Devolución ${nombreItem}`"
+                        @actualizar-listado="obtenerActivosFijos"
+                        @cancelar-guardado="
+                            cancelarGuardadoDevolucionActivoFijo
+                        "
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog v-model="mostradoDialogoMostrarItem" width="100%">
+            <v-card>
+                <v-card-title>
+                    <span class="text-h6">{{ nombreItem }}</span>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <v-row>
+                        <v-col
+                            v-for="(dato, indice) in listadoDatos"
+                            :key="indice"
+                            class="py-0"
+                            cols="12"
+                            lg="3"
+                        >
+                            <v-list lines="two">
+                                <v-list-item
+                                    class="py-0"
+                                    :title="dato.titulo"
+                                    :subtitle="dato.subtitulo"
+                                />
+                            </v-list>
+                        </v-col>
+
+                        <v-col cols="12" class="py-0">
+                            <v-list lines="three">
+                                <v-list-item
+                                    class="py-0"
+                                    title="Descripción"
+                                    :subtitle="
+                                        itemSeleccionado?.descripcion || '-'
+                                    "
+                                />
+                            </v-list>
+                        </v-col>
+
+                        <v-col cols="12">
+                            <v-table density="compact" height="400">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">#</th>
+                                        <th class="text-left">Asignado a</th>
+                                        <th class="text-left">Ubicación</th>
+                                        <th class="text-left">Asignado por</th>
+                                        <th class="text-left">
+                                            Fecha Asignación
+                                        </th>
+                                        <th class="text-left">
+                                            Obs. Asignación
+                                        </th>
+                                        <th class="text-left">Devuelto a</th>
+                                        <th class="text-left">
+                                            Fecha Devolución
+                                        </th>
+                                        <th class="text-left">
+                                            Obs. Devolución
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr
+                                        v-if="
+                                            itemSeleccionado
+                                                ?.asignaciones_activos_fijos
+                                                ?.length === 0
+                                        "
+                                    >
+                                        <td colspan="9" class="text-center">
+                                            No hay asignaciones registradas
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        v-for="(
+                                            asignacion, indice
+                                        ) in itemSeleccionado?.asignaciones_activos_fijos"
+                                        :key="indice"
+                                    >
+                                        <td>{{ indice + 1 }}</td>
+                                        <td>
+                                            {{ asignacion.asignado_a?.nombre }}
+                                        </td>
+                                        <td>
+                                            {{ asignacion.ubicacion?.nombre }}
+                                        </td>
+                                        <td>
+                                            {{ asignacion.usuario?.nombre }}
+                                        </td>
+                                        <td>
+                                            {{ asignacion.fecha_asignacion }}
+                                        </td>
+                                        <td>
+                                            {{
+                                                asignacion.observacion_asignacion
+                                            }}
+                                        </td>
+                                        <td>
+                                            {{ asignacion.devuelto_a?.nombre }}
+                                        </td>
+                                        <td>
+                                            {{ asignacion.fecha_devolucion }}
+                                        </td>
+                                        <td>
+                                            {{
+                                                asignacion.observacion_devolucion
+                                            }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </v-table>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-btn
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cerrar"
+                        @click="mostradoDialogoMostrarItem = false"
+                    >
+                        Cerrar
+                    </v-btn>
+                </v-card-actions>
             </v-card>
         </v-dialog>
 
