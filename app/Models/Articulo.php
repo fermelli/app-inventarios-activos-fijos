@@ -59,4 +59,15 @@ class Articulo extends Model
     {
         return $this->belongsTo(Institucion::class, 'institucion_id');
     }
+
+    public function asignacionesActivosFijos()
+    {
+        return $this->hasMany(AsignacionActivoFijo::class, 'activo_fijo_id');
+    }
+
+    public function asignacionActivoFijoActual()
+    {
+        return $this->hasOne(AsignacionActivoFijo::class, 'activo_fijo_id')
+                    ->whereNull('fecha_devolucion');
+    }
 }

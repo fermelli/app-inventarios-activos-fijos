@@ -17,7 +17,7 @@ class ActivoFijoController extends Controller
     public function index(IndexArticuloControllerRequest $request)
     {
         $parametros = $request->validated();
-        $queryBuilder = Articulo::with(['categoria', 'institucion'])->where('tipo', Articulo::TIPO_ACTIVO_FIJO);
+        $queryBuilder = Articulo::with(['categoria', 'institucion', 'asignacionActivoFijoActual'])->where('tipo', Articulo::TIPO_ACTIVO_FIJO);
 
         if (isset($parametros['con_eliminados'])) {
             $queryBuilder->withTrashed();
@@ -81,7 +81,14 @@ class ActivoFijoController extends Controller
     {
         $activoFijo = $this->findWithTrashed($id);
 
-        $activoFijo->load(['categoria', 'institucion']);
+        $activoFijo->load([
+            'categoria',
+            'institucion',
+            'asignacionesActivosFijos.asignadoA',
+            'asignacionesActivosFijos.ubicacion',
+            'asignacionesActivosFijos.usuario',
+            'asignacionesActivosFijos.devueltoA',
+        ]);
 
         return response()->jsonResponse('Activo Fijo recuperado', $activoFijo, 200);
     }

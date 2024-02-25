@@ -68,4 +68,19 @@ class User extends Authenticatable
     {
         return is_null($this->eliminado_en);
     }
+
+    public function asignacionesActivosFijos()
+    {
+        return $this->hasMany(AsignacionActivoFijo::class, 'asignado_a_id');
+    }
+
+    public function registrosAsignacionesActivosFijos()
+    {
+        return $this->hasMany(AsignacionActivoFijo::class, 'usuario_id');
+    }
+
+    public function devolucionesAsignacionesActivosFijos()
+    {
+        return $this->hasMany(AsignacionActivoFijo::class, 'devuelto_a_id');
+    }
 }

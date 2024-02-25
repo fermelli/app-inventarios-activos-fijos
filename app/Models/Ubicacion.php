@@ -23,4 +23,9 @@ class Ubicacion extends Model
     {
         return $this->articulos()->count();
     }
+
+    public function asignacionesActivosFijos()
+    {
+        return $this->hasMany(AsignacionActivoFijo::class, 'ubicacion_id');
+    }
 }

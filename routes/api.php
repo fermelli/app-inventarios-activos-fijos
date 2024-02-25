@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivoFijoController;
 use App\Http\Controllers\ArticuloController;
+use App\Http\Controllers\AsignacionActivoFijoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntradaArticuloController;
@@ -279,5 +280,20 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'activos-fijos',
             ActivoFijoController::class
         )->parameters(['activos-fijos' => 'activoFijo']);
+    });
+
+    // Rutas para Asignaciones de Activos Fijos
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::apiResource(
+            'asignaciones-activos-fijos',
+            AsignacionActivoFijoController::class
+        )
+        ->only(['index', 'store', 'show'])
+        ->parameters(['asignaciones-activos-fijos' => 'asignacionActivoFijo']);
+        Route::match(
+            ['put', 'patch'],
+            'asignaciones-activos-fijos/{asignacionActivoFijo}/devolver',
+            [AsignacionActivoFijoController::class, 'devolver']
+        );
     });
 });
