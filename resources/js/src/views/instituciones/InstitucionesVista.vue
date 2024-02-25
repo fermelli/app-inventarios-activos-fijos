@@ -84,7 +84,7 @@ export default {
     <v-row>
         <v-col cols="12">
             <div class="d-flex align-center">
-                <h2 class="text-h5">Categorias</h2>
+                <h2 class="text-h5">Instituciones</h2>
 
                 <v-btn
                     class="ml-2"
