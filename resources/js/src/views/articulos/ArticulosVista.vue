@@ -27,6 +27,7 @@ export default {
             ),
             busqueda: null,
             totalItems: 0,
+            categoria_id: null,
         };
     },
     methods: {
@@ -34,7 +35,14 @@ export default {
             this.cargandoItems = true;
             this.pagina = payload?.page || this.pagina;
             this.itemsPorPagina = payload?.itemsPerPage || this.itemsPorPagina;
-            this.busqueda = payload?.search;
+            this.busqueda =
+                !!payload && "search" in payload
+                    ? payload?.search
+                    : this.busqueda;
+            this.categoria_id =
+                !!payload && "categoria_id" in payload
+                    ? payload?.categoria_id
+                    : this.categoria_id;
 
             try {
                 const { data } = await ArticuloService.index({
@@ -44,6 +52,7 @@ export default {
                         pagina: this.pagina,
                         items_por_pagina: this.itemsPorPagina,
                         busqueda: this.busqueda,
+                        categoria_id: this.categoria_id,
                     },
                 });
 

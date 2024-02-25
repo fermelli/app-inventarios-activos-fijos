@@ -1,6 +1,8 @@
 <script>
 import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin";
+import { aplanarCategorias } from "../../../utils/funciones";
 import TablaDatosLotes from "./TablaDatosLotes.vue";
+import CategoriaService from "../../../services/categorias";
 
 export default {
     name: "TablaDatosServidorArticulos",
@@ -39,7 +41,12 @@ export default {
             ],
             mostradoDialogoLotes: false,
             lotesItemSeleccionado: [],
+            categoriasPadresConHijasAplanadas: [],
+            categoria_id: null,
         };
+    },
+    created() {
+        this.obtenerCategoriasPadresConHijas();
     },
     methods: {
         mostrarDialogoLotes(item) {
@@ -49,6 +56,27 @@ export default {
         cerrarDialogoLotes() {
             this.mostradoDialogoLotes = false;
             this.lotesItemSeleccionado = [];
+        },
+        async obtenerCategoriasPadresConHijas() {
+            this.cargandoCategoriasPadresConHijas = true;
+
+            try {
+                const { data } = await CategoriaService.indexPadresConHijas({
+                    params: { orden_direccion: "asc", con_eliminados: true },
+                });
+                const categoriasPadresConHijas = data.datos;
+
+                this.categoriasPadresConHijasAplanadas = [];
+
+                aplanarCategorias(
+                    categoriasPadresConHijas,
+                    this.categoriasPadresConHijasAplanadas,
+                );
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.cargandoCategoriasPadresConHijas = false;
+            }
         },
     },
 };
@@ -72,17 +100,47 @@ export default {
         "
     >
         <template #top>
-            <v-text-field
-                v-model="q"
-                class="mb-2"
-                density="compact"
-                label="Buscar"
-                name="buscar"
-                type="text"
-                prepend-icon="mdi-magnify"
-                clearable
-                @update:model-value="buscar"
-            />
+            <v-row>
+                <v-col cols="12" md="7" lg="8" xl="9">
+                    <v-text-field
+                        v-model="q"
+                        class="mb-2"
+                        density="compact"
+                        label="Buscar"
+                        name="buscar"
+                        type="text"
+                        prepend-icon="mdi-magnify"
+                        clearable
+                        @update:model-value="buscar"
+                    />
+                </v-col>
+
+                <v-col cols="12" md="5" lg="4" xl="3">
+                    <v-autocomplete
+                        v-model="categoria_id"
+                        class="mb-2"
+                        :items="categoriasPadresConHijasAplanadas"
+                        item-value="id"
+                        item-title="nombre_mostrado"
+                        label="Categoría"
+                        name="categoria_id"
+                        density="compact"
+                        clear-on-select
+                        clearable
+                        @update:model-value="
+                            $emit('cargarItems', { categoria_id })
+                        "
+                    >
+                        <template #selection="{ item }">
+                            {{ item.raw.nombre }}
+                        </template>
+
+                        <template #item="{ props }">
+                            <v-list-item v-bind="props" />
+                        </template>
+                    </v-autocomplete>
+                </v-col>
+            </v-row>
         </template>
 
         <template #[`item.nro`]="{ index }">
