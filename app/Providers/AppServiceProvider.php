@@ -30,10 +30,14 @@ class AppServiceProvider extends ServiceProvider
              * Return a new JSON response from the application.
              *
              * @param string $mensaje
-             * @param array|\Illuminate\Database\Eloquent\Collection $data
+             * @param \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|array|null $datos
              * @param int $codigoEstado
              */
-            function (string $mensaje, Collection | Model | SupportCollection | array  $datos, int $codigoEstado) {
+            function (
+                string $mensaje,
+                Collection | Model | SupportCollection | array | null  $datos,
+                int $codigoEstado
+            ) {
 
                 return Response::json([
                     'mensaje' => $mensaje,
