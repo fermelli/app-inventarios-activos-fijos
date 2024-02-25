@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ActualizarArticuloRequest;
 use App\Http\Requests\CrearArticuloRequest;
-use App\Http\Requests\PaginacionConEliminadosOrdenDireccionBusquedaRequest;
+use App\Http\Requests\IndexArticuloControllerRequest;
 use App\Models\Articulo;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +15,7 @@ class ArticuloController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(PaginacionConEliminadosOrdenDireccionBusquedaRequest $request)
+    public function index(IndexArticuloControllerRequest $request)
     {
         $parametros = $request->validated();
         $queryBuilder = Articulo::with(['categoria', 'unidad', 'ubicacion', 'articulosLotes' => function (Builder $query) {
@@ -31,6 +31,10 @@ class ArticuloController extends Controller
 
         if (isset($parametros['orden_direccion'])) {
             $queryBuilder->orderBy('id', $parametros['orden_direccion']);
+        }
+
+        if (isset($parametros['categoria_id'])) {
+            $queryBuilder->where('categoria_id', $parametros['categoria_id']);
         }
 
         if (isset($parametros['busqueda'])) {
