@@ -28,6 +28,7 @@ export default {
                         pagina: this.pagina,
                         items_por_pagina: this.itemsPorPagina,
                         busqueda: this.busqueda,
+                        categoria_id: this.categoria_id,
                     },
                 });
 
