@@ -27,6 +27,7 @@ export default {
                 { title: "Nombre", key: "nombre" },
                 { title: "Estado", key: "estado_activo_fijo" },
                 { title: "Categoría", key: "categoria.nombre" },
+                { title: "Institución", key: "institucion.nombre" },
                 { title: "Descripción", key: "descripcion" },
                 {
                     title: "Acciones",

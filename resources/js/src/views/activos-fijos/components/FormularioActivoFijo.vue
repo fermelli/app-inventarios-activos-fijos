@@ -4,6 +4,7 @@ import CategoriaService from "./../../../services/categorias";
 import { useToast } from "vue-toastification";
 import { aplanarCategorias } from "./../../../utils/funciones";
 import formularioMixin from "../../../mixins/formulario.mixin";
+import InstitucionService from "./../../../services/instituciones";
 
 export default {
     name: "FormularioActivoFijo",
@@ -16,6 +17,7 @@ export default {
                 return (
                     "id" in valor &&
                     "categoria_id" in valor &&
+                    "institucion_id" in valor &&
                     "codigo" in valor &&
                     "nombre" in valor &&
                     "descripcion" in valor
@@ -34,6 +36,8 @@ export default {
             metodoUpdate: ActivoFijoService.update,
             categoriasPadresConHijasAplanadas: [],
             cargandoCategoriasPadresConHijas: false,
+            instituciones: [],
+            cargandoInsituciones: false,
             reglasValidacionCodigo: [
                 (valor) => !!valor || "El código es requerido",
                 (valor) =>
@@ -53,6 +57,13 @@ export default {
                     Number.isInteger(Number(valor)) ||
                     "Debe ser un número",
             ],
+            reglasValidacionInstitucionId: [
+                (valor) => !!valor || "La institución es requerida",
+                (valor) =>
+                    !valor ||
+                    Number.isInteger(Number(valor)) ||
+                    "Debe ser un número",
+            ],
             reglasValidacionDescripcion: [
                 (valor) =>
                     !valor ||
@@ -63,6 +74,7 @@ export default {
     },
     created() {
         this.obtenerCategoriasPadresConHijas();
+        this.obtenerInstituciones();
     },
     methods: {
         async obtenerCategoriasPadresConHijas() {
@@ -84,6 +96,21 @@ export default {
                 console.log(error);
             } finally {
                 this.cargandoCategoriasPadresConHijas = false;
+            }
+        },
+        async obtenerInstituciones() {
+            this.cargandoInsituciones = true;
+
+            try {
+                const { data } = await InstitucionService.index({
+                    params: { orden_direccion: "asc" },
+                });
+
+                this.instituciones = data.datos;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.cargandoInsituciones = false;
             }
         },
     },
@@ -144,6 +171,20 @@ export default {
                 />
             </template>
         </v-autocomplete>
+
+        <v-autocomplete
+            v-model="formulario.institucion_id"
+            class="mb-2"
+            :items="instituciones"
+            item-value="id"
+            item-title="nombre"
+            label="Institución"
+            name="institucion_id"
+            density="compact"
+            clear-on-select
+            clearable
+            :rules="reglasValidacionInstitucionId"
+        />
 
         <v-textarea
             v-model="formulario.descripcion"

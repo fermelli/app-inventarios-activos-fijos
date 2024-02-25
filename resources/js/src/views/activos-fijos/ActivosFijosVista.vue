@@ -54,6 +54,7 @@ export default {
             return {
                 id: null,
                 categoria_id: null,
+                institucion_id: null,
                 codigo: null,
                 nombre: null,
                 descripcion: null,
