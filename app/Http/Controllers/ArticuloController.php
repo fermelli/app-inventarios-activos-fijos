@@ -18,10 +18,15 @@ class ArticuloController extends Controller
     public function index(IndexArticuloControllerRequest $request)
     {
         $parametros = $request->validated();
-        $queryBuilder = Articulo::with(['categoria', 'unidad', 'ubicacion', 'articulosLotes' => function (Builder $query) {
-            $query->where('cantidad', '>', 0)
-                ->orderBy('fecha_vencimiento', 'asc');
-        }])->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
+        $queryBuilder = Articulo::with([
+            'categoria',
+            'unidad',
+            'ubicacion',
+            'articulosLotes' => function (Builder $query) {
+                $query->where('cantidad', '>', 0)
+                    ->orderBy('fecha_vencimiento', 'asc');
+            }])
+            ->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
             ->select('articulos.*', DB::raw('IFNULL(SUM(articulos_lotes.cantidad), 0) as cantidad'))
             ->groupBy('articulos.id');
 
@@ -38,8 +43,10 @@ class ArticuloController extends Controller
         }
 
         if (isset($parametros['busqueda'])) {
-            $queryBuilder->where('codigo', 'like', "%{$parametros['busqueda']}%")
-                        ->orWhere('nombre', 'like', "%{$parametros['busqueda']}%");
+            $queryBuilder->where(function (Builder $query) use ($parametros) {
+                $query->where('codigo', 'like', "%{$parametros['busqueda']}%")
+                    ->orWhere('nombre', 'like', "%{$parametros['busqueda']}%");
+            });
         }
 
         $articulos = $queryBuilder->paginate($parametros['items_por_pagina'], ['*'], 'pagina', $parametros['pagina']);
