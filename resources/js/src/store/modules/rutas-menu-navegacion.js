@@ -20,7 +20,17 @@ const rutasMenuNavegacionStore = {
             }
 
             return state.rutas.filter((ruta) => {
-                return ruta.rolesAutorizados.includes(rolUsuarioAutenticado);
+                ruta.rolesAutorizados.includes(rolUsuarioAutenticado);
+
+                if ("rutasHijas" in ruta) {
+                    ruta.rutasHijas = ruta.rutasHijas.filter((rutaHija) =>
+                        rutaHija.rolesAutorizados.includes(
+                            rolUsuarioAutenticado,
+                        ),
+                    );
+                }
+
+                return ruta;
             });
         },
     },
