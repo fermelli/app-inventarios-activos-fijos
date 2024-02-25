@@ -6,7 +6,7 @@ use App\Models\Articulo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CrearArticuloRequest extends FormRequest
+class ActualizarActivoFijoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,22 @@ class CrearArticuloRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'categoria_id' => ['required', 'exists:categorias,id'],
-            'unidad_id' => ['required', 'exists:unidades,id'],
-            'ubicacion_id' => ['required', 'exists:ubicaciones,id'],
-            'codigo' => ['required', 'string', 'max:100', 'unique:articulos,codigo'],
+            'categoria_id' => ['present', 'exists:categorias,id'],
+            'codigo' => [
+                'present',
+                'string',
+                'max:100',
+                Rule::unique('articulos', 'codigo')->ignore($this->route('activoFijo')),
+            ],
             'nombre' => [
-                'required',
+                'present',
                 'string',
                 'max:255',
-                Rule::unique('articulos', 'nombre')->where('tipo', Articulo::TIPO_ALMACENABLE),
+                Rule::unique('articulos', 'nombre')
+                    ->ignore($this->route('articulo'))
+                    ->whereNot('tipo', Articulo::TIPO_ACTIVO_FIJO),
             ],
+            'descripcion' => ['nullable', 'string', 'max:65535'],
         ];
     }
 }

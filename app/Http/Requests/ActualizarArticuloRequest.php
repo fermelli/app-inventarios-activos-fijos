@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Articulo;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -36,7 +37,9 @@ class ActualizarArticuloRequest extends FormRequest
                 'present',
                 'string',
                 'max:255',
-                Rule::unique('articulos', 'nombre')->ignore($this->route('articulo')),
+                Rule::unique('articulos', 'nombre')
+                    ->ignore($this->route('articulo'))
+                    ->where('tipo', Articulo::TIPO_ALMACENABLE),
             ],
         ];
     }

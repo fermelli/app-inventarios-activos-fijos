@@ -26,6 +26,7 @@ class ArticuloController extends Controller
                 $query->where('cantidad', '>', 0)
                     ->orderBy('fecha_vencimiento', 'asc');
             }])
+            ->where('tipo', Articulo::TIPO_ALMACENABLE)
             ->leftJoin('articulos_lotes', 'articulos.id', '=', 'articulos_lotes.articulo_id')
             ->select('articulos.*', DB::raw('IFNULL(SUM(articulos_lotes.cantidad), 0) as cantidad'))
             ->groupBy('articulos.id');
@@ -59,14 +60,18 @@ class ArticuloController extends Controller
      */
     public function store(CrearArticuloRequest $request)
     {
-        $articulo = Articulo::create($request->validated());
+        $datosArticulo = $request->validated();
+        $articulo = Articulo::create([
+            ...$datosArticulo,
+            'tipo' => Articulo::TIPO_ALMACENABLE,
+        ]);
 
         return response()->jsonResponse('Producto creado', $articulo, 201);
     }
 
     protected function findWithTrashed(string $id)
     {
-        $articulo = Articulo::withTrashed()->find($id);
+        $articulo = Articulo::withTrashed()->where('tipo', Articulo::TIPO_ALMACENABLE)->find($id);
 
         if (is_null($articulo)) {
             throw new NotFoundHttpException('Artículo no encontrado');

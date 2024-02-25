@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivoFijoController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DashboardController;
@@ -270,5 +271,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'dashboard/articulos-proximos-vencer',
             [DashboardController::class, 'articulosProximosVencer']
         );
+    });
+
+    // Rutas para Activos Fijos
+    Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::apiResource(
+            'activos-fijos',
+            ActivoFijoController::class
+        )->parameters(['activos-fijos' => 'activoFijo']);
     });
 });
