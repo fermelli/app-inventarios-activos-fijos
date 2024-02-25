@@ -4,8 +4,8 @@ import { useToast } from "vue-toastification";
 import formularioMixin from "../../../mixins/formulario.mixin";
 import TablaDatosServidorArticulos from "../../articulos/components/TablaDatosServidorArticulos.vue";
 import vistaMixin from "../../../mixins/vista.mixin";
-import ArticuloService from "./../../../services/articulos";
 import TablaDatosDetallesSolicitudes from "./TablaDatosDetallesSolicitudes.vue";
+import articulosMixin from "../../../mixins/articulos.mixin";
 
 export default {
     name: "FormularioSolicitud",
@@ -13,7 +13,7 @@ export default {
         TablaDatosServidorArticulos,
         TablaDatosDetallesSolicitudes,
     },
-    mixins: [formularioMixin, vistaMixin],
+    mixins: [formularioMixin, vistaMixin, articulosMixin],
     props: {
         datos: {
             type: Object,
@@ -57,31 +57,6 @@ export default {
         };
     },
     methods: {
-        async obtenerArticulos(payload) {
-            this.cargandoItems = true;
-            this.pagina = payload?.page || this.pagina;
-            this.itemsPorPagina = payload?.itemsPerPage || this.itemsPorPagina;
-            this.busqueda = payload?.search;
-
-            try {
-                const { data } = await ArticuloService.index({
-                    params: {
-                        orden_direccion: "desc",
-                        con_eliminados: true,
-                        pagina: this.pagina,
-                        items_por_pagina: this.itemsPorPagina,
-                        busqueda: this.busqueda,
-                    },
-                });
-
-                this.items = data.datos;
-                this.totalItems = data.metadatos.total || 0;
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.cargandoItems = false;
-            }
-        },
         crearDatosItem() {
             return {};
         },
