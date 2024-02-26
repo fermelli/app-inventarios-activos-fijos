@@ -18,6 +18,24 @@ export default {
                     colorIcono: "primary",
                     icono: "mdi-package-variant-closed",
                 },
+                activos_fijos: {
+                    cantidad: 0,
+                    titulo: "Activos Fijos",
+                    colorIcono: "primary",
+                    icono: "mdi-archive-arrow-down-outline",
+                },
+                activos_fijos_activos: {
+                    cantidad: 0,
+                    titulo: "Activos Fijos Activos",
+                    colorIcono: "success",
+                    icono: "mdi-archive-arrow-down-outline",
+                },
+                activos_fijos_de_baja: {
+                    cantidad: 0,
+                    titulo: "Activos Fijos de Baja",
+                    colorIcono: "error",
+                    icono: "mdi-archive-arrow-down-outline",
+                },
                 entradas_validas: {
                     cantidad: 0,
                     titulo: "Entradas Válidas",
@@ -59,6 +77,18 @@ export default {
                     titulo: "Salidas Anuladas",
                     colorIcono: "error",
                     icono: "mdi-arrow-left",
+                },
+                activos_fijos_asignados: {
+                    cantidad: 0,
+                    titulo: "Activos Fijos Asignados",
+                    colorIcono: "success",
+                    icono: "mdi-archive-check-outline",
+                },
+                activos_fijos_no_asignados: {
+                    cantidad: 0,
+                    titulo: "Activos Fijos No Asignados",
+                    colorIcono: "warning",
+                    icono: "mdi-archive-remove-outline",
                 },
             },
             articulosConStockMinimo: {
