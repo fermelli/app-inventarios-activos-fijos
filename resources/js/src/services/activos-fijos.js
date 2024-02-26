@@ -16,4 +16,7 @@ export default {
     async destroy(id) {
         return await service.delete(`/activos-fijos/${id}`);
     },
+    async darBaja(id, datos) {
+        return await service.patch(`/activos-fijos/${id}/dar-baja`, datos);
+    },
 };

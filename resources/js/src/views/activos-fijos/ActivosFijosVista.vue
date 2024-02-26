@@ -6,6 +6,9 @@ import FormularioActivoFijo from "./components/FormularioActivoFijo.vue";
 import vistaMixin from "../../mixins/vista.mixin";
 import FormularioAsignacionActivoFijo from "./components/FormularioAsignacionActivoFijo.vue";
 import FormularioDevolucionActivoFijo from "./components/FormularioDevolucionActivoFijo.vue";
+import TablaAsignacionesActivosFijos from "./components/TablaAsignacionesActivosFijos.vue";
+import { ESTADOS_ACTIVOS_FIJOS } from "../../utils/constantes";
+import FormularioDarBajaActivoFijo from "./components/FormularioDarBajaActivoFijo.vue";
 
 export default {
     name: "ActivosFijosVista",
@@ -14,6 +17,8 @@ export default {
         FormularioActivoFijo,
         FormularioAsignacionActivoFijo,
         FormularioDevolucionActivoFijo,
+        TablaAsignacionesActivosFijos,
+        FormularioDarBajaActivoFijo,
     },
     mixins: [vistaMixin],
     setup() {
@@ -37,6 +42,7 @@ export default {
             devolucionActivoFijo: this.crearDevolucionActivoFijo(),
             mostradoDialogoFormularioDevolucion: false,
             mostradoDialogoMostrarItem: false,
+            mostradoDialogoFormularioDarBaja: false,
         };
     },
     computed: {
@@ -73,7 +79,19 @@ export default {
                     titulo: "Institución",
                     subtitulo: this.itemSeleccionado.institucion?.nombre,
                 },
+                {
+                    titulo: "Fecha de Baja",
+                    subtitulo: this.itemSeleccionado.fecha_baja || "-",
+                },
             ];
+        },
+        botonDarBajaDeshabilitado() {
+            return (
+                !this.itemSeleccionado ||
+                this.itemSeleccionado.estado_activo_fijo ===
+                    ESTADOS_ACTIVOS_FIJOS.de_baja ||
+                !!this.itemSeleccionado.asignacion_activo_fijo_actual
+            );
         },
     },
     methods: {
@@ -107,6 +125,8 @@ export default {
                 nombre: null,
                 descripcion: null,
                 asignaciones_activos_fijos: [],
+                fecha_baja: null,
+                razon_baja: null,
             };
         },
         async obtenerActivosFijos(payload) {
@@ -189,6 +209,14 @@ export default {
             this.mostradoDialogoMostrarItem = false;
             this.itemSeleccionado = this.crearDatosItem();
         },
+        mostrarFormularioDarBajaActivoFijo(item) {
+            this.datosItem = item;
+            this.mostradoDialogoFormularioDarBaja = true;
+        },
+        cancelarGuardadoDarBajaActivoFijo() {
+            this.mostradoDialogoFormularioDarBaja = false;
+            this.datosItem = this.crearDatosItem();
+        },
     },
 };
 </script>
@@ -237,6 +265,9 @@ export default {
                 "
                 @mostrar-formulario-devolucion="
                     mostrarDialogoFormularioDevolucion
+                "
+                @mostrar-formulario-dar-baja="
+                    mostrarFormularioDarBajaActivoFijo
                 "
             />
         </v-col>
@@ -332,7 +363,7 @@ export default {
                             </v-list>
                         </v-col>
 
-                        <v-col cols="12" class="py-0">
+                        <v-col cols="12" lg="6" class="py-0">
                             <v-list lines="three">
                                 <v-list-item
                                     class="py-0"
@@ -344,81 +375,24 @@ export default {
                             </v-list>
                         </v-col>
 
+                        <v-col cols="12" lg="6" class="py-0">
+                            <v-list lines="three">
+                                <v-list-item
+                                    class="py-0"
+                                    title="Descripción"
+                                    :subtitle="
+                                        itemSeleccionado?.razon_baja || '-'
+                                    "
+                                />
+                            </v-list>
+                        </v-col>
+
                         <v-col cols="12">
-                            <v-table density="compact" height="400">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left">#</th>
-                                        <th class="text-left">Asignado a</th>
-                                        <th class="text-left">Ubicación</th>
-                                        <th class="text-left">Asignado por</th>
-                                        <th class="text-left">
-                                            Fecha Asignación
-                                        </th>
-                                        <th class="text-left">
-                                            Obs. Asignación
-                                        </th>
-                                        <th class="text-left">Devuelto a</th>
-                                        <th class="text-left">
-                                            Fecha Devolución
-                                        </th>
-                                        <th class="text-left">
-                                            Obs. Devolución
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr
-                                        v-if="
-                                            itemSeleccionado
-                                                ?.asignaciones_activos_fijos
-                                                ?.length === 0
-                                        "
-                                    >
-                                        <td colspan="9" class="text-center">
-                                            No hay asignaciones registradas
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        v-for="(
-                                            asignacion, indice
-                                        ) in itemSeleccionado?.asignaciones_activos_fijos"
-                                        :key="indice"
-                                    >
-                                        <td>{{ indice + 1 }}</td>
-                                        <td>
-                                            {{ asignacion.asignado_a?.nombre }}
-                                        </td>
-                                        <td>
-                                            {{ asignacion.ubicacion?.nombre }}
-                                        </td>
-                                        <td>
-                                            {{ asignacion.usuario?.nombre }}
-                                        </td>
-                                        <td>
-                                            {{ asignacion.fecha_asignacion }}
-                                        </td>
-                                        <td>
-                                            {{
-                                                asignacion.observacion_asignacion
-                                            }}
-                                        </td>
-                                        <td>
-                                            {{ asignacion.devuelto_a?.nombre }}
-                                        </td>
-                                        <td>
-                                            {{ asignacion.fecha_devolucion }}
-                                        </td>
-                                        <td>
-                                            {{
-                                                asignacion.observacion_devolucion
-                                            }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </v-table>
+                            <TablaAsignacionesActivosFijos
+                                :asignaciones-activos-fijos="
+                                    itemSeleccionado?.asignaciones_activos_fijos
+                                "
+                            />
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -434,6 +408,29 @@ export default {
                         Cerrar
                     </v-btn>
                 </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioDarBaja"
+            persistent
+            width="800"
+        >
+            <v-card>
+                <v-card-title>
+                    <span class="text-h6">
+                        {{ `Dar Baja ${nombreItem}` }}
+                    </span>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <FormularioDarBajaActivoFijo
+                        :datos="datosItem"
+                        :nombre-item="`Dar Baja ${nombreItem}`"
+                        @actualizar-listado="obtenerActivosFijos"
+                        @cancelar-guardado="cancelarGuardadoDarBajaActivoFijo"
+                    />
+                </v-card-text>
             </v-card>
         </v-dialog>
 

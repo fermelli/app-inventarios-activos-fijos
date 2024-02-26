@@ -52,6 +52,6 @@ export const ESTADOS_ACTIVOS_FIJOS = {
 
 export const COLORES_ESTADOS_ACTIVOS_FIJOS = {
     activo: "success",
-    en_mantenimiento: "warning",
-    de_baja: "error",
+    "en mantenimiento": "warning",
+    "de baja": "error",
 };

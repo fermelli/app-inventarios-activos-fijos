@@ -2,7 +2,10 @@
 import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin";
 import { aplanarCategorias } from "../../../utils/funciones";
 import CategoriaService from "../../../services/categorias";
-import { COLORES_ESTADOS_ACTIVOS_FIJOS } from "../../../utils/constantes";
+import {
+    COLORES_ESTADOS_ACTIVOS_FIJOS,
+    ESTADOS_ACTIVOS_FIJOS,
+} from "../../../utils/constantes";
 
 export default {
     name: "TablaDatosServidorActivosFijos",
@@ -21,6 +24,7 @@ export default {
         "mostrarItem",
         "mostrarFormularioAsignacion",
         "mostrarFormularioDevolucion",
+        "mostrarFormularioDarBaja",
     ],
     data() {
         return {
@@ -41,10 +45,12 @@ export default {
                     key: "acciones",
                     sortable: false,
                     filterable: false,
+                    width: "250px",
                 },
             ],
             categoriasPadresConHijasAplanadas: [],
             categoria_id: null,
+            estadosActivosFijos: ESTADOS_ACTIVOS_FIJOS,
             coloresEstadosActivosFijos: COLORES_ESTADOS_ACTIVOS_FIJOS,
         };
     },
@@ -72,6 +78,12 @@ export default {
             } finally {
                 this.cargandoCategoriasPadresConHijas = false;
             }
+        },
+        deshabilitadoBotonDarBaja(item) {
+            return (
+                !!item.asignacion_activo_fijo_actual ||
+                item.estado_activo_fijo === this.estadosActivosFijos.de_baja
+            );
         },
     },
 };
@@ -184,12 +196,25 @@ export default {
                 />
 
                 <v-btn
+                    class="ml-2"
+                    color="error"
+                    density="compact"
+                    icon="mdi-cancel"
+                    title="Dar de baja"
+                    :disabled="deshabilitadoBotonDarBaja(item)"
+                    @click="$emit('mostrarFormularioDarBaja', item)"
+                />
+
+                <v-btn
                     v-if="!item.asignacion_activo_fijo_actual"
                     class="ml-2"
                     color="success"
                     density="compact"
                     icon="mdi-account-plus"
                     title="Asignar"
+                    :disabled="
+                        item.estado_activo_fijo !== estadosActivosFijos.activo
+                    "
                     @click="$emit('mostrarFormularioAsignacion', item)"
                 />
 
