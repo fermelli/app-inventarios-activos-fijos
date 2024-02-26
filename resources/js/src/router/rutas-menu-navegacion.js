@@ -14,21 +14,9 @@ export default [
         rolesAutorizados: [ROLES.administrador],
         rutasHijas: [
             {
-                to: { name: "categorias" },
-                icono: "mdi-tag",
-                texto: "Categorías",
-                rolesAutorizados: [ROLES.administrador],
-            },
-            {
                 to: { name: "unidades" },
                 icono: "mdi-ruler",
                 texto: "Unidades",
-                rolesAutorizados: [ROLES.administrador],
-            },
-            {
-                to: { name: "ubicaciones" },
-                icono: "mdi-library-shelves",
-                texto: "Ubicaciones",
                 rolesAutorizados: [ROLES.administrador],
             },
             {
@@ -38,18 +26,6 @@ export default [
                 rolesAutorizados: [ROLES.administrador],
             },
         ],
-    },
-    {
-        to: { name: "instituciones" },
-        icono: "mdi-domain",
-        texto: "Instituciones",
-        rolesAutorizados: [ROLES.administrador],
-    },
-    {
-        to: { name: "usuarios" },
-        icono: "mdi-account-group",
-        texto: "Usuarios",
-        rolesAutorizados: [ROLES.administrador],
     },
     {
         to: null,
@@ -93,6 +69,38 @@ export default [
         to: { name: "activos-fijos" },
         icono: "mdi-archive-arrow-down",
         texto: "Activos Fijos",
+        rolesAutorizados: [ROLES.administrador],
+    },
+    {
+        to: null,
+        icono: "mdi-office-building-cog",
+        texto: "Organización",
+        rolesAutorizados: [ROLES.administrador],
+        rutasHijas: [
+            {
+                to: { name: "categorias" },
+                icono: "mdi-tag",
+                texto: "Categorías",
+                rolesAutorizados: [ROLES.administrador],
+            },
+            {
+                to: { name: "ubicaciones" },
+                icono: "mdi-library-shelves",
+                texto: "Ubicaciones",
+                rolesAutorizados: [ROLES.administrador],
+            },
+            {
+                to: { name: "instituciones" },
+                icono: "mdi-domain",
+                texto: "Instituciones",
+                rolesAutorizados: [ROLES.administrador],
+            },
+        ],
+    },
+    {
+        to: { name: "usuarios" },
+        icono: "mdi-account-group",
+        texto: "Usuarios",
         rolesAutorizados: [ROLES.administrador],
     },
     {
