@@ -280,6 +280,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'activos-fijos',
             ActivoFijoController::class
         )->parameters(['activos-fijos' => 'activoFijo']);
+        Route::match(
+            ['put', 'patch'],
+            'activos-fijos/{activoFijo}/dar-baja',
+            [ActivoFijoController::class, 'darBaja']
+        );
     });
 
     // Rutas para Asignaciones de Activos Fijos

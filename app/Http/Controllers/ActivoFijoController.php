@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ActualizarActivoFijoRequest;
 use App\Http\Requests\CrearActivoFijoRequest;
+use App\Http\Requests\DarBajaActivoFijoRequest;
 use App\Http\Requests\IndexArticuloControllerRequest;
 use App\Models\Articulo;
 use Illuminate\Contracts\Database\Eloquent\Builder;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ActivoFijoController extends Controller
@@ -84,6 +86,7 @@ class ActivoFijoController extends Controller
         $activoFijo->load([
             'categoria',
             'institucion',
+            'asignacionActivoFijoActual',
             'asignacionesActivosFijos.asignadoA',
             'asignacionesActivosFijos.ubicacion',
             'asignacionesActivosFijos.usuario',
@@ -115,5 +118,31 @@ class ActivoFijoController extends Controller
         $activoFijo->forceDelete();
 
         return response()->jsonResponse('Activo Fijo eliminado', null, 200);
+    }
+
+    /**
+     * Dar de baja un activo fijo.
+     */
+    public function darBaja(string $id, DarBajaActivoFijoRequest $request)
+    {
+        $datos = $request->validated();
+        $activoFijo = $this->findWithTrashed($id);
+
+        if ($activoFijo->estado_activo_fijo === Articulo::ESTADO_ACTIVO_FIJO_DE_BAJA) {
+            throw new BadRequestHttpException('El activo fijo ya se encuentra dado de baja');
+        }
+
+        $asignacionActivoFijoActual = $activoFijo->load('asignacionActivoFijoActual');
+
+        if (!is_null($asignacionActivoFijoActual->asignacionActivoFijoActual)) {
+            throw new BadRequestHttpException('El activo fijo se encuentra asignado, no se puede dar de baja');
+        }
+
+        $activoFijo->update([
+            ...$datos,
+            'estado_activo_fijo' => Articulo::ESTADO_ACTIVO_FIJO_DE_BAJA,
+        ]);
+
+        return response()->jsonResponse('Activo Fijo dado de baja', $activoFijo, 200);
     }
 }

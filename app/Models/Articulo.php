@@ -32,7 +32,8 @@ class Articulo extends Model
         'tipo',
         'estado_activo_fijo',
         'descripcion',
-        'observacion',
+        'fecha_baja',
+        'razon_baja',
     ];
 
     public function categoria()
