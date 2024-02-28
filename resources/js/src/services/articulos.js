@@ -22,4 +22,17 @@ export default {
     async restore(id) {
         return await service.patch(`/articulos/${id}/activar`);
     },
+    async importar(formData) {
+        return await service.post("/articulos/importar", formData, {
+            timeout: 600000,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+    },
+    async formatoImportacion() {
+        return await service.get("/articulos/formato-importacion", {
+            responseType: "blob",
+        });
+    },
 };

@@ -5,12 +5,14 @@ import FormularioArticulo from "./components/FormularioArticulo.vue";
 import TablaDatosServidorArticulos from "./components/TablaDatosServidorArticulos.vue";
 import vistaMixin from "../../mixins/vista.mixin";
 import articulosMixin from "../../mixins/articulos.mixin";
+import FormularioImportarArticulos from "./components/FormularioImportarArticulos.vue";
 
 export default {
     name: "ArticulosVista",
     components: {
         FormularioArticulo,
         TablaDatosServidorArticulos,
+        FormularioImportarArticulos,
     },
     mixins: [vistaMixin, articulosMixin],
     setup() {
@@ -28,6 +30,10 @@ export default {
             ),
             totalItems: 0,
             busqueda: null,
+            mostradoDialogoFormularioImportarArticulos: false,
+            datosFormularioImportarArticulos:
+                this.crearDatosFormularioImportarArticulos(),
+            descargandoFormatoEjemplo: false,
         };
     },
     methods: {
@@ -68,6 +74,35 @@ export default {
                 articulos_lotes: [],
             };
         },
+        crearDatosFormularioImportarArticulos() {
+            return {
+                archivos: [],
+            };
+        },
+        cancelarGuardadoImportarArticulos() {
+            this.mostradoDialogoFormularioImportarArticulos = false;
+            this.datosFormularioImportarArticulos =
+                this.crearDatosFormularioImportarArticulos();
+        },
+        async descargarFormatoImportacion() {
+            this.descargandoFormatoEjemplo = true;
+
+            try {
+                const { data } = await ArticuloService.formatoImportacion();
+                const blob = new Blob([data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                });
+                const link = document.createElement("a");
+
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Formato de Importación de Artículos.xlsx";
+                link.click();
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.descargandoFormatoEjemplo = false;
+            }
+        },
     },
 };
 </script>
@@ -87,6 +122,20 @@ export default {
                     @click="() => mostrarDialogoFormulario()"
                 >
                     Registrar
+                </v-btn>
+
+                <v-btn
+                    class="ml-2"
+                    color="primary"
+                    density="compact"
+                    prepend-icon="mdi-file-import-outline"
+                    title="Importar"
+                    @click="
+                        () =>
+                            (mostradoDialogoFormularioImportarArticulos = true)
+                    "
+                >
+                    Importar
                 </v-btn>
 
                 <v-btn
@@ -125,6 +174,43 @@ export default {
                         :nombre-item="nombreItem"
                         @actualizar-listado="obtenerArticulos"
                         @cancelar-guardado="cancelarGuardado"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioImportarArticulos"
+            persistent
+            width="560"
+        >
+            <v-card>
+                <v-card-title>
+                    <div class="d-flex justify-space-between align-center">
+                        <span class="text-h6">Importar Artículos</span>
+
+                        <v-btn
+                            class="ml-2"
+                            color="primary"
+                            variant="text"
+                            density="compact"
+                            prepend-icon="mdi-microsoft-excel"
+                            :loading="descargandoFormatoEjemplo"
+                            :disabled="descargandoFormatoEjemplo"
+                            title="Descargar Formato de Importación"
+                            @click="descargarFormatoImportacion"
+                        >
+                            Formato de Ejemplo
+                        </v-btn>
+                    </div>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <FormularioImportarArticulos
+                        :datos="datosFormularioImportarArticulos"
+                        :nombre-item="nombreItem"
+                        @actualizar-listado="obtenerArticulos"
+                        @cancelar-guardado="cancelarGuardadoImportarArticulos"
                     />
                 </v-card-text>
             </v-card>
