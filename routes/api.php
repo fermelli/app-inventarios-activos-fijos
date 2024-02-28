@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivoFijoController;
+use App\Http\Controllers\ActivoFijoExcelController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ArticulosExcelController;
 use App\Http\Controllers\AsignacionActivoFijoController;
@@ -279,6 +280,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     // Rutas para Activos Fijos
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
+        Route::post('activos-fijos/importar', [ActivoFijoExcelController::class, 'importar']);
+        Route::get('activos-fijos/formato-importacion', [ActivoFijoExcelController::class, 'formatoImportacion']);
         Route::apiResource(
             'activos-fijos',
             ActivoFijoController::class
