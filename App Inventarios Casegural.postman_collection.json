@@ -567,6 +567,11 @@
 								{
 									"key": "por_pagina",
 									"value": "20"
+								},
+								{
+									"key": "categoria_id",
+									"value": "1",
+									"disabled": true
 								}
 							]
 						}
@@ -731,6 +736,64 @@
 								"articulos",
 								"2",
 								"activar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Importar Articulos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/D:/Proyects/omar/Articulos (20 - 2).xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_api}}/articulos/importar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"importar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FormatoImportacion Articulos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/formato-importacion",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"formato-importacion"
 							]
 						}
 					},
@@ -1413,6 +1476,511 @@
 								"salidas-articulos",
 								"6",
 								"reporte-pdf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "VistaCantidadRegistros",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/dashboard/cantidad-registros",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"dashboard",
+								"cantidad-registros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "VistaArticulosConStockMinimo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/dashboard/articulos-con-stock-minimo",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"dashboard",
+								"articulos-con-stock-minimo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articulosRecientementeVencidos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/dashboard/articulos-recientemente-vencidos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"dashboard",
+								"articulos-recientemente-vencidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articulosProximosVencer",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/dashboard/articulos-proximos-vencer",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"dashboard",
+								"articulos-proximos-vencer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activos Fijos",
+			"item": [
+				{
+					"name": "Index Activos Fijos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/activos-fijos?pagina=1&items_por_pagina=20",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos"
+							],
+							"query": [
+								{
+									"key": "pagina",
+									"value": "1"
+								},
+								{
+									"key": "items_por_pagina",
+									"value": "20"
+								},
+								{
+									"key": "busqueda",
+									"value": "af",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store Activos Fijos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoria_id\": 8,\r\n    \"institucion_id\": 1,\r\n    \"codigo\": \"AF001\",\r\n    \"nombre\": \"Monitor de Signos Vitales\",\r\n    \"descripcion\": \"Monitor multiparamétrico para control de signos vitales\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/activos-fijos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Activos Fijos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/activos-fijos/15",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos",
+								"15"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "af",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Activos Fijos",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categoria_id\": 8,\r\n    \"institucion_id\": 1,\r\n    \"codigo\": \"AF001\",\r\n    \"nombre\": \"Monitor de Signos Vitales\",\r\n    \"descripcion\": \"Monitor multiparamétrico para control de signos vitales\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/activos-fijos/10",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos",
+								"10"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "af",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy Activos Fijos",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/activos-fijos/13",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos",
+								"13"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "af",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DarBaja Activos Fijos",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"fecha_baja\": \"2024-02-26\",\r\n    \"razon_baja\": \"de baja\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/activos-fijos/14/dar-baja",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos",
+								"14",
+								"dar-baja"
+							],
+							"query": [
+								{
+									"key": "busqueda",
+									"value": "af",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Importar Activos Fijos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/D:/Proyects/omar/Articulos (4000).xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_api}}/activos-fijos/importar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos",
+								"importar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FormatoImportacion Activos Fijos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/activos-fijos/formato-importacion",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"activos-fijos",
+								"formato-importacion"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Asignaciones Activos Fijos",
+			"item": [
+				{
+					"name": "Store Asignaciones Activos Fijos",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"activo_fijo_id\": 15,\r\n    \"asignado_a_id\": 2,\r\n    \"ubicacion_id\": 1,\r\n    \"fecha_asignacion\": \"2024-02-25\",\r\n    \"observacion_asignacion\": \"Entregado despues de la reparación\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/asignaciones-activos-fijos",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"asignaciones-activos-fijos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Index Asignaciones Activos Fijos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/asignaciones-activos-fijos?pagina=1&items_por_pagina=20",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"asignaciones-activos-fijos"
+							],
+							"query": [
+								{
+									"key": "pagina",
+									"value": "1"
+								},
+								{
+									"key": "items_por_pagina",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Asignaciones Activos Fijos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/asignaciones-activos-fijos/1",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"asignaciones-activos-fijos",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Asignaciones Activos Fijos",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"observacion_devolucion\": \"Con raspones en su superficie\",\r\n    \"fecha_devolucion\": \"2024-02-25\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url_api}}/asignaciones-activos-fijos/1/devolver",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"asignaciones-activos-fijos",
+								"1",
+								"devolver"
 							]
 						}
 					},
