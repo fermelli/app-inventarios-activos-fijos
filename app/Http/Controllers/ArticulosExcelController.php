@@ -90,6 +90,7 @@ class ArticulosExcelController extends Controller
                     'ubicacion_id' => $ubicaciones[$nombreUbicacion]->id,
                     'codigo' => $row['codigo'],
                     'nombre' => $row['nombre'],
+                    'tipo' => Articulo::TIPO_ALMACENABLE,
                     'creado_en' => $ahora,
                     'actualizado_en' => $ahora,
                 ];
