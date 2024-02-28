@@ -5,16 +5,15 @@ import FormularioArticulo from "./components/FormularioArticulo.vue";
 import TablaDatosServidorArticulos from "./components/TablaDatosServidorArticulos.vue";
 import vistaMixin from "../../mixins/vista.mixin";
 import articulosMixin from "../../mixins/articulos.mixin";
-import FormularioImportarArticulos from "./components/FormularioImportarArticulos.vue";
+import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
 
 export default {
     name: "ArticulosVista",
     components: {
         FormularioArticulo,
         TablaDatosServidorArticulos,
-        FormularioImportarArticulos,
     },
-    mixins: [vistaMixin, articulosMixin],
+    mixins: [vistaMixin, articulosMixin, dialogoFormularioImportarMixin],
     setup() {
         const toast = useToast();
 
@@ -30,10 +29,10 @@ export default {
             ),
             totalItems: 0,
             busqueda: null,
-            mostradoDialogoFormularioImportarArticulos: false,
-            datosFormularioImportarArticulos:
-                this.crearDatosFormularioImportarArticulos(),
-            descargandoFormatoEjemplo: false,
+            metodoImportar: ArticuloService.importar,
+            metodoFormatoImportacion: ArticuloService.formatoImportacion,
+            tituloArchivoEjemploImportacion:
+                "Formato de Importación de Artículos",
         };
     },
     methods: {
@@ -74,35 +73,6 @@ export default {
                 articulos_lotes: [],
             };
         },
-        crearDatosFormularioImportarArticulos() {
-            return {
-                archivos: [],
-            };
-        },
-        cancelarGuardadoImportarArticulos() {
-            this.mostradoDialogoFormularioImportarArticulos = false;
-            this.datosFormularioImportarArticulos =
-                this.crearDatosFormularioImportarArticulos();
-        },
-        async descargarFormatoImportacion() {
-            this.descargandoFormatoEjemplo = true;
-
-            try {
-                const { data } = await ArticuloService.formatoImportacion();
-                const blob = new Blob([data], {
-                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                });
-                const link = document.createElement("a");
-
-                link.href = window.URL.createObjectURL(blob);
-                link.download = "Formato de Importación de Artículos.xlsx";
-                link.click();
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.descargandoFormatoEjemplo = false;
-            }
-        },
     },
 };
 </script>
@@ -130,10 +100,7 @@ export default {
                     density="compact"
                     prepend-icon="mdi-file-import-outline"
                     title="Importar"
-                    @click="
-                        () =>
-                            (mostradoDialogoFormularioImportarArticulos = true)
-                    "
+                    @click="() => (mostradoDialogoFormularioImportar = true)"
                 >
                     Importar
                 </v-btn>
@@ -180,7 +147,7 @@ export default {
         </v-dialog>
 
         <v-dialog
-            v-model="mostradoDialogoFormularioImportarArticulos"
+            v-model="mostradoDialogoFormularioImportar"
             persistent
             width="560"
         >
@@ -206,11 +173,12 @@ export default {
                 </v-card-title>
 
                 <v-card-text class="pa-4">
-                    <FormularioImportarArticulos
-                        :datos="datosFormularioImportarArticulos"
+                    <FormularioImportar
+                        :datos="datosFormularioImportar"
+                        :metodo-importar="metodoImportar"
                         :nombre-item="nombreItem"
                         @actualizar-listado="obtenerArticulos"
-                        @cancelar-guardado="cancelarGuardadoImportarArticulos"
+                        @cancelar-guardado="cancelarGuardadoImportar"
                     />
                 </v-card-text>
             </v-card>

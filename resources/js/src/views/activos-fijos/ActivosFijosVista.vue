@@ -9,6 +9,7 @@ import FormularioDevolucionActivoFijo from "./components/FormularioDevolucionAct
 import TablaAsignacionesActivosFijos from "./components/TablaAsignacionesActivosFijos.vue";
 import { ESTADOS_ACTIVOS_FIJOS } from "../../utils/constantes";
 import FormularioDarBajaActivoFijo from "./components/FormularioDarBajaActivoFijo.vue";
+import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
 
 export default {
     name: "ActivosFijosVista",
@@ -20,7 +21,7 @@ export default {
         TablaAsignacionesActivosFijos,
         FormularioDarBajaActivoFijo,
     },
-    mixins: [vistaMixin],
+    mixins: [vistaMixin, dialogoFormularioImportarMixin],
     setup() {
         const toast = useToast();
 
@@ -43,6 +44,10 @@ export default {
             mostradoDialogoFormularioDevolucion: false,
             mostradoDialogoMostrarItem: false,
             mostradoDialogoFormularioDarBaja: false,
+            metodoImportar: ActivoFijoService.importar,
+            metodoFormatoImportacion: ActivoFijoService.formatoImportacion,
+            tituloArchivoEjemploImportacion:
+                "Formato de Importación de Activos Fijos",
         };
     },
     computed: {
@@ -242,6 +247,17 @@ export default {
                     class="ml-2"
                     color="primary"
                     density="compact"
+                    prepend-icon="mdi-file-import-outline"
+                    title="Importar"
+                    @click="() => (mostradoDialogoFormularioImportar = true)"
+                >
+                    Importar
+                </v-btn>
+
+                <v-btn
+                    class="ml-2"
+                    color="primary"
+                    density="compact"
                     icon="mdi-reload"
                     :loading="cargandoItems"
                     :disabled="cargandoItems"
@@ -429,6 +445,44 @@ export default {
                         :nombre-item="`Dar Baja ${nombreItem}`"
                         @actualizar-listado="obtenerActivosFijos"
                         @cancelar-guardado="cancelarGuardadoDarBajaActivoFijo"
+                    />
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioImportar"
+            persistent
+            width="560"
+        >
+            <v-card>
+                <v-card-title>
+                    <div class="d-flex justify-space-between align-center">
+                        <span class="text-h6">Importar Activos Fijos</span>
+
+                        <v-btn
+                            class="ml-2"
+                            color="primary"
+                            variant="text"
+                            density="compact"
+                            prepend-icon="mdi-microsoft-excel"
+                            :loading="descargandoFormatoEjemplo"
+                            :disabled="descargandoFormatoEjemplo"
+                            title="Descargar Formato de Importación"
+                            @click="descargarFormatoImportacion"
+                        >
+                            Formato de Ejemplo
+                        </v-btn>
+                    </div>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <FormularioImportar
+                        :datos="datosFormularioImportar"
+                        :metodo-importar="metodoImportar"
+                        :nombre-item="nombreItem"
+                        @actualizar-listado="obtenerActivosFijos"
+                        @cancelar-guardado="cancelarGuardadoImportar"
                     />
                 </v-card-text>
             </v-card>

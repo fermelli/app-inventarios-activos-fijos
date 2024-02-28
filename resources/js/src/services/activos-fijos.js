@@ -19,4 +19,17 @@ export default {
     async darBaja(id, datos) {
         return await service.patch(`/activos-fijos/${id}/dar-baja`, datos);
     },
+    async importar(formData) {
+        return await service.post("/activos-fijos/importar", formData, {
+            timeout: 600000,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+    },
+    async formatoImportacion() {
+        return await service.get("/activos-fijos/formato-importacion", {
+            responseType: "blob",
+        });
+    },
 };

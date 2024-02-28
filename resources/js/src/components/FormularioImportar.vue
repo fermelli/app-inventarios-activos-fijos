@@ -1,10 +1,9 @@
 <script>
-import ArticuloService from "./../../../services/articulos";
 import { useToast } from "vue-toastification";
-import formularioMixin from "../../../mixins/formulario.mixin";
+import formularioMixin from "../mixins/formulario.mixin";
 
 export default {
-    name: "FormularioImportarArticulos",
+    name: "FormularioImportar",
     mixins: [formularioMixin],
     props: {
         datos: {
@@ -13,6 +12,10 @@ export default {
             validator: (valor) => {
                 return "archivos" in valor;
             },
+        },
+        metodoImportar: {
+            type: Function,
+            required: true,
         },
     },
     setup() {
@@ -49,7 +52,7 @@ export default {
             formData.append("archivo", this.formulario.archivos[0]);
 
             try {
-                const response = await ArticuloService.importar(formData);
+                const response = await this.metodoImportar(formData);
                 const data = response.data;
                 const mensaje =
                     data?.mensaje || "El archivo se ha subido correctamente";
