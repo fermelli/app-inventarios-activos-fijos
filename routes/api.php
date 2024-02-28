@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivoFijoController;
 use App\Http\Controllers\ArticuloController;
+use App\Http\Controllers\ArticulosExcelController;
 use App\Http\Controllers\AsignacionActivoFijoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DashboardController;
@@ -98,6 +99,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ArticuloController::class,
             ['only' => ['store', 'update', 'destroy']]
         );
+        Route::post('articulos/importar', [ArticulosExcelController::class, 'importar']);
+        Route::get('articulos/formato-importacion', [ArticulosExcelController::class, 'formatoImportacion']);
     });
     Route::apiResource('articulos', ArticuloController::class, ['only' => ['index', 'show']]);
 
