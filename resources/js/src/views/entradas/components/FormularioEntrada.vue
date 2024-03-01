@@ -251,7 +251,7 @@ export default {
 
             <v-col cols="12" lg="4" class="py-0">
                 <v-btn
-                    color="green"
+                    color="info"
                     density="compact"
                     prepend-icon="mdi-magnify"
                     title="Buscar Artículo"

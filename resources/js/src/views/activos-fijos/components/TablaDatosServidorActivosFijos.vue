@@ -188,7 +188,7 @@ export default {
 
             <template v-else>
                 <v-btn
-                    color="green"
+                    color="info"
                     density="compact"
                     icon="mdi-eye"
                     title="Ver"

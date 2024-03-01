@@ -81,7 +81,7 @@ export default {
 
         <template #[`item.acciones`]="{ item }">
             <v-btn
-                color="green"
+                color="info"
                 density="compact"
                 icon="mdi-eye"
                 title="Ver"
