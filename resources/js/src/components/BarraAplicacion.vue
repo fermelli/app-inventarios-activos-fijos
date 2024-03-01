@@ -33,7 +33,15 @@ export default {
     <v-app-bar color="primary" density="compact">
         <v-app-bar-nav-icon @click="abrirCerrarMenuNavegacion" />
 
-        <v-app-bar-title>CASEGURAL</v-app-bar-title>
+        <v-img
+            inline
+            :width="36"
+            aspect-ratio="1/1"
+            alt="Logo de CASEGURAL"
+            src="./../assets/imagenes/logo.png"
+        />
+
+        <v-app-bar-title> CASEGURAL </v-app-bar-title>
 
         <v-spacer />
 
