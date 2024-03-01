@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\ArticuloTrait;
+use App\Http\Requests\IndexArticuloControllerRequest;
 use App\Http\Requests\SubirArchivoExcelRequest;
 use App\Models\Articulo;
 use App\Models\Categoria;
@@ -17,6 +19,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticulosExcelController extends Controller
 {
+    use ArticuloTrait;
+    
     public function importar(SubirArchivoExcelRequest $request)
     {
         $archivoExcel = $request->file('archivo');
@@ -140,6 +144,30 @@ class ArticulosExcelController extends Controller
             'Código del artículo (debe ser único y maximo 255 caracteres)',
             'Nombre del artículo (maximo 255 caracteres)',
         ]);
+
+        return $writer->toBrowser();
+    }
+
+    public function exportar(IndexArticuloControllerRequest $request)
+    {
+        $parametros = $request->validated();
+        $articulos = $this->indexQueryBuilder($parametros)->get();
+
+        $writer = SimpleExcelWriter::streamDownload('Articulos.xlsx');
+        
+        $writer->nameCurrentSheet('Artículos');
+        $writer->addHeader(['CÓDIGO', 'ID.', 'NOMBRE', 'STOCK', 'CATEOGRÍA', 'UNIDAD', 'UBICACIÓN']);
+        $articulos->each(function (Articulo $articulo) use ($writer) {
+            $writer->addRow([
+                $articulo->codigo,
+                $articulo->id,
+                $articulo->nombre,
+                (float) $articulo->cantidad,
+                $articulo->categoria->nombre,
+                $articulo->unidad->nombre,
+                $articulo->ubicacion->nombre,
+            ]);
+        });
 
         return $writer->toBrowser();
     }
