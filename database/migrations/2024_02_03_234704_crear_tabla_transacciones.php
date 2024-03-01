@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Transaccion;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('institucion_id');
             $table->date('fecha');
             $table->enum('tipo', ['entrada']);
-            $table->enum('comprobante', Transaccion::COMPROBANTES);
+            $table->enum('comprobante', ['factura', 'recibo', 'nota', 'boleta', 'otro']);
             $table->string('numero_comprobante', 100);
             $table->string('observacion', 255)->nullable();
             $table->timestamp('creado_en');
