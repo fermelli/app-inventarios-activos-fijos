@@ -1,9 +1,15 @@
 <script>
 import { mapGetters } from "vuex";
+import { useTheme } from "vuetify";
 
 export default {
     name: "BarraAplicacion",
     emits: ["abrirCerrarMenuNavegacion"],
+    setup() {
+        const theme = useTheme();
+
+        return { theme };
+    },
     computed: {
         ...mapGetters("autenticacion", ["usuarioAutenticado"]),
     },
@@ -13,6 +19,11 @@ export default {
         },
         cerrarSesion() {
             this.$store.dispatch("autenticacion/logout");
+        },
+        cambiarTema() {
+            this.theme.global.name.value = this.theme.global.current.value.dark
+                ? "temaClaro"
+                : "temaOscuro";
         },
     },
 };
@@ -44,9 +55,11 @@ export default {
 
                 <v-divider />
 
-                <v-list-item link>
-                    <v-list-item-title> Perfil de usuario </v-list-item-title>
+                <v-list-item link @click="cambiarTema">
+                    <v-list-item-title>Cambiar tema</v-list-item-title>
                 </v-list-item>
+
+                <v-divider />
 
                 <v-list-item link @click="cerrarSesion">
                     <v-list-item-title>Cerrar sesión</v-list-item-title>
