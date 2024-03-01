@@ -24,4 +24,17 @@ export default {
     async showReportePdf(id) {
         return await service.get(`/entradas-articulos/${id}/reporte-pdf`);
     },
+    async importar(formData) {
+        return await service.post("/entradas-articulos/importar", formData, {
+            timeout: 600000,
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+    },
+    async formatoImportacion() {
+        return await service.get("/entradas-articulos/formato-importacion", {
+            responseType: "blob",
+        });
+    },
 };

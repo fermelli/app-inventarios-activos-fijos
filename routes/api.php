@@ -8,6 +8,7 @@ use App\Http\Controllers\AsignacionActivoFijoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EntradaArticuloController;
+use App\Http\Controllers\EntradaArticuloExcelController;
 use App\Http\Controllers\EntradaArticuloReportePdfController;
 use App\Http\Controllers\InstitucionController;
 use App\Http\Controllers\SalidaArticuloController;
@@ -102,6 +103,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         );
         Route::post('articulos/importar', [ArticulosExcelController::class, 'importar']);
         Route::get('articulos/formato-importacion', [ArticulosExcelController::class, 'formatoImportacion']);
+        Route::get('articulos/exportar', [ArticulosExcelController::class, 'exportar']);
     });
     Route::apiResource('articulos', ArticuloController::class, ['only' => ['index', 'show']]);
 
@@ -167,6 +169,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ['put', 'patch'],
             'entradas-articulos/{entradaArticulo}/anular',
             [EntradaArticuloController::class, 'anular']
+        );
+        Route::post('entradas-articulos/importar', [EntradaArticuloExcelController::class, 'importar']);
+        Route::get(
+            'entradas-articulos/formato-importacion',
+            [EntradaArticuloExcelController::class, 'formatoImportacion']
         );
         Route::apiResource(
             'entradas-articulos',

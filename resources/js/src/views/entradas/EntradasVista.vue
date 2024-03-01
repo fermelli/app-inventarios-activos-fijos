@@ -7,6 +7,7 @@ import vistaMixin from "../../mixins/vista.mixin";
 import TablaDatosDetallesEntradas from "./components/TablaDatosDetallesEntradas.vue";
 import { ESTADOS_ENTRADAS, ROLES } from "../../utils/constantes";
 import reportePdfMixin from "../../mixins/reporte-pdf.mixin";
+import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
 
 export default {
     name: "EntradasVista",
@@ -15,7 +16,7 @@ export default {
         TablaDatosServidorEntradas,
         TablaDatosDetallesEntradas,
     },
-    mixins: [vistaMixin, reportePdfMixin],
+    mixins: [vistaMixin, reportePdfMixin, dialogoFormularioImportarMixin],
     setup() {
         const toast = useToast();
 
@@ -36,6 +37,10 @@ export default {
             estadosEntradas: ESTADOS_ENTRADAS,
             metodoServicioObtenerReportePdf:
                 EntradaArticuloService.showReportePdf,
+            metodoImportar: EntradaArticuloService.importar,
+            metodoFormatoImportacion: EntradaArticuloService.formatoImportacion,
+            tituloArchivoEjemploImportacion:
+                "Formato de Importación de Entradas de Artículos",
         };
     },
     computed: {
@@ -257,6 +262,17 @@ export default {
                     class="ml-2"
                     color="primary"
                     density="compact"
+                    prepend-icon="mdi-file-import-outline"
+                    title="Importar"
+                    @click="() => (mostradoDialogoFormularioImportar = true)"
+                >
+                    Importar
+                </v-btn>
+
+                <v-btn
+                    class="ml-2"
+                    color="primary"
+                    density="compact"
                     icon="mdi-reload"
                     :loading="cargandoItems"
                     :disabled="cargandoItems"
@@ -375,6 +391,46 @@ export default {
                         Cerrar
                     </v-btn>
                 </v-card-actions>
+            </v-card>
+        </v-dialog>
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioImportar"
+            persistent
+            width="560"
+        >
+            <v-card>
+                <v-card-title>
+                    <div class="d-flex justify-space-between align-center">
+                        <span class="text-h6">
+                            Importar Entradas de Artículos
+                        </span>
+
+                        <v-btn
+                            class="ml-2"
+                            color="primary"
+                            variant="text"
+                            density="compact"
+                            prepend-icon="mdi-microsoft-excel"
+                            :loading="descargandoFormatoEjemplo"
+                            :disabled="descargandoFormatoEjemplo"
+                            title="Descargar Formato de Importación"
+                            @click="descargarFormatoImportacion"
+                        >
+                            Formato de Ejemplo
+                        </v-btn>
+                    </div>
+                </v-card-title>
+
+                <v-card-text class="pa-4">
+                    <FormularioImportar
+                        :datos="datosFormularioImportar"
+                        :metodo-importar="metodoImportar"
+                        :nombre-item="nombreItem"
+                        @actualizar-listado="obtenerEntradasArticulos"
+                        @cancelar-guardado="cancelarGuardadoImportar"
+                    />
+                </v-card-text>
             </v-card>
         </v-dialog>
 
