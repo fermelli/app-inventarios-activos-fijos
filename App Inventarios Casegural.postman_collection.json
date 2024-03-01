@@ -622,13 +622,13 @@
 							}
 						],
 						"url": {
-							"raw": "{{url_api}}/articulos/1",
+							"raw": "{{url_api}}/articulos/4071",
 							"host": [
 								"{{url_api}}"
 							],
 							"path": [
 								"articulos",
-								"1"
+								"4071"
 							]
 						}
 					},
@@ -794,6 +794,30 @@
 							"path": [
 								"articulos",
 								"formato-importacion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exportar Articulos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/exportar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"exportar"
 							]
 						}
 					},
@@ -1214,6 +1238,64 @@
 								"entradas-articulos",
 								"8",
 								"reporte-pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Importar Entradas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/D:/Proyects/omar/sin nada.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/importar",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"importar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FormatoImportacion Entradas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/entradas-articulos/formato-importacion",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"entradas-articulos",
+								"formato-importacion"
 							]
 						}
 					},
