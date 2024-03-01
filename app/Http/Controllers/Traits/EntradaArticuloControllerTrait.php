@@ -46,4 +46,30 @@ trait EntradaArticuloControllerTrait
 
         return $transaccion;
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param array $datos
+     * @return \App\Models\Transaccion
+     */
+    public function guardarEntrada(array $datos): Transaccion
+    {
+        $transaccion = Transaccion::create($datos);
+        $datosDetallesTransacciones = $datos['detalles_transacciones'];
+
+        foreach ($datosDetallesTransacciones as $datosDetalleTransaccion) {
+            $detalleTransaccion = $transaccion->detallesTransacciones()->create($datosDetalleTransaccion);
+            
+            $datosArticuloLote = $datosDetalleTransaccion['articulo_lote'] ?? [];
+            
+            $detalleTransaccion->articuloLote()->create([
+                ...$datosArticuloLote,
+                'articulo_id' => $datosDetalleTransaccion['articulo_id'],
+                'cantidad' => $datosDetalleTransaccion['cantidad'],
+            ]);
+        }
+
+        return $transaccion;
+    }
 }

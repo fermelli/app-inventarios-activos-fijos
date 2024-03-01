@@ -126,7 +126,8 @@ class ActivoFijoExcelController extends Controller
         $writer = SimpleExcelWriter::streamDownload('Formato de importación de activos fijos.xlsx');
         
         $writer->nameCurrentSheet('Activos Fijos');
-        $writer->addHeader(['categoria',
+        $writer->addHeader([
+            'categoria',
             'institucion',
             'codigo',
             'nombre',

@@ -42,12 +42,20 @@ class Transaccion extends Model
         self::TIPO_SOLICITUD,
     ];
 
+    public const COMPROBANTE_FACTURA = 'factura';
+    public const COMPROBANTE_RECIBO = 'recibo';
+    public const COMPROBANTE_NOTA = 'nota';
+    public const COMPROBANTE_BOLETA = 'boleta';
+    public const COMPROBANTE_OTRO = 'otro';
+    public const COMPROBANTE_IMPORTACION_DATOS = 'importacion datos';
+
     public const COMPROBANTES = [
-        'factura',
-        'recibo',
-        'nota',
-        'boleta',
-        'otro',
+        self::COMPROBANTE_FACTURA,
+        self::COMPROBANTE_RECIBO,
+        self::COMPROBANTE_NOTA,
+        self::COMPROBANTE_BOLETA,
+        self::COMPROBANTE_OTRO,
+        self::COMPROBANTE_IMPORTACION_DATOS,
     ];
 
     public const ESTADO_ENTRADA_VALIDA = 'valida';

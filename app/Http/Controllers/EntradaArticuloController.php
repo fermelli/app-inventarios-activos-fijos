@@ -67,25 +67,14 @@ class EntradaArticuloController extends Controller
         DB::beginTransaction();
 
         try {
-            $transaccion = Transaccion::create([
+            $datosEntrada = [
                 ...$datos,
                 'tipo' => Transaccion::TIPO_ENTRADA,
                 'usuario_id' => $request->user()->id,
                 'estado_entrada' => Transaccion::ESTADO_ENTRADA_VALIDA,
-            ]);
-            $datosDetallesTransacciones = $datos['detalles_transacciones'];
-            
-            foreach ($datosDetallesTransacciones as $datosDetalleTransaccion) {
-                $detalleTransaccion = $transaccion->detallesTransacciones()->create($datosDetalleTransaccion);
-                
-                $datosArticuloLote = $datosDetalleTransaccion['articulo_lote'] ?? [];
-                
-                $detalleTransaccion->articuloLote()->create([
-                    ...$datosArticuloLote,
-                    'articulo_id' => $datosDetalleTransaccion['articulo_id'],
-                    'cantidad' => $datosDetalleTransaccion['cantidad'],
-                ]);
-            }
+            ];
+
+            $transaccion = $this->guardarEntrada($datosEntrada);
 
             DB::commit();
 
