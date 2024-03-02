@@ -27,7 +27,7 @@
                 <td style="width: 12.50%; text-align: left;">{{ $transaccion->estado_entrada }}</td>
 
                 <td style="width: 19.35%; text-align: right;"><strong>Institución: </strong></td>
-                <td style="width: 19.35%; text-align: left;">{{ $transaccion->institucion->nombre }}</td>
+                <td style="width: 19.35%; text-align: left;">{{ $transaccion->institucion ? $transaccion->institucion->nombre : '-' }}</td>
 
                 <td style="width: 19.35%; text-align: right;"><strong>Registrado por: </strong></td>
                 <td style="width: 19.35%; text-align: left;">{{ $transaccion->usuario->nombre }}</td>
