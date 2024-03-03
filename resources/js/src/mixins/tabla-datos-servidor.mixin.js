@@ -12,6 +12,10 @@ export default {
             type: Boolean,
             required: true,
         },
+        exportandoItems: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {

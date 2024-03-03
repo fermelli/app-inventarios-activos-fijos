@@ -6,6 +6,7 @@ import TablaDatosServidorArticulos from "./components/TablaDatosServidorArticulo
 import vistaMixin from "../../mixins/vista.mixin";
 import articulosMixin from "../../mixins/articulos.mixin";
 import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
+import reportePdfMixin from "../../mixins/reporte-pdf.mixin";
 
 export default {
     name: "ArticulosVista",
@@ -13,7 +14,12 @@ export default {
         FormularioArticulo,
         TablaDatosServidorArticulos,
     },
-    mixins: [vistaMixin, articulosMixin, dialogoFormularioImportarMixin],
+    mixins: [
+        vistaMixin,
+        articulosMixin,
+        dialogoFormularioImportarMixin,
+        reportePdfMixin,
+    ],
     setup() {
         const toast = useToast();
 
@@ -33,6 +39,8 @@ export default {
             metodoFormatoImportacion: ArticuloService.formatoImportacion,
             tituloArchivoEjemploImportacion:
                 "Formato de Importación de Artículos",
+            exportandoArticulos: false,
+            metodoServicioObtenerReportePdf: ArticuloService.showReportePdf,
         };
     },
     methods: {
@@ -72,6 +80,72 @@ export default {
                 cantidad: null,
                 articulos_lotes: [],
             };
+        },
+        async exportarArticulosExcel() {
+            this.exportandoArticulos = true;
+            const params = {
+                orden_direccion: "desc",
+                con_eliminados: true,
+                pagina: this.pagina,
+                items_por_pagina: this.itemsPorPagina,
+                busqueda: this.busqueda,
+                categoria_id: this.categoria_id,
+            };
+
+            try {
+                const { data } = await ArticuloService.exportar({
+                    params,
+                });
+                const blob = new Blob([data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                });
+                const link = document.createElement("a");
+
+                link.href = window.URL.createObjectURL(blob);
+                link.download = "Artículos.xlsx";
+                link.click();
+            } catch (error) {
+                console.log(error);
+
+                const mensaje =
+                    error?.response?.data?.message ||
+                    error.message ||
+                    error ||
+                    "Error al descargar el formato de ejemplo";
+
+                this.toast.error(mensaje);
+            } finally {
+                this.exportandoArticulos = false;
+            }
+        },
+        async exportarArticulosPdf() {
+            const params = {
+                orden_direccion: "desc",
+                con_eliminados: true,
+                pagina: this.pagina,
+                items_por_pagina: this.itemsPorPagina,
+                busqueda: this.busqueda,
+                categoria_id: this.categoria_id,
+            };
+
+            this.exportandoArticulos = true;
+
+            try {
+                const { data } = await ArticuloService.showReportePdf({
+                    params,
+                });
+                const datos = data?.datos;
+                const mensaje = data?.mensaje;
+                const { pdf } = datos;
+
+                this.toast.success(mensaje || "Reporte PDF generado");
+                this.pdfSrc = `data:application/pdf;base64,${pdf}`;
+                this.mostradoDialogoReportePdf = true;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.exportandoArticulos = false;
+            }
         },
     },
 };
@@ -123,9 +197,12 @@ export default {
                 :items="items"
                 :total-items="totalItems"
                 :cargando-items="cargandoItems"
+                :exportando-items="exportandoArticulos"
                 @mostrar-formulario="mostrarDialogoFormulario"
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
                 @cargar-items="obtenerArticulos"
+                @exportar-pdf="exportarArticulosPdf"
+                @exportar-excel="exportarArticulosExcel"
             />
         </v-col>
 
@@ -190,6 +267,12 @@ export default {
             :realizando-accion="realizandoAccion"
             @aceptar="funcionDialogoConfirmacion"
             @cancelar="cancelarAccion"
+        />
+
+        <DialogoReportePdf
+            v-model="mostradoDialogoReportePdf"
+            :pdf-src="pdfSrc"
+            @cerrar="mostradoDialogoReportePdf = false"
         />
     </v-row>
 </template>
