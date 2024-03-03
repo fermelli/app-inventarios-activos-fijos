@@ -61,14 +61,13 @@ export default {
                 <th class="text-left" style="width: 5%">#</th>
                 <th
                     class="text-left"
-                    :style="{ width: editable ? '30%' : '20%' }"
+                    :style="{ width: editable ? '40%' : '30%' }"
                 >
                     Artículo
                 </th>
-                <th class="text-left" style="width: 15%">Unidad</th>
-                <th class="text-left" style="width: 15%">Lote</th>
+                <th class="text-left" style="width: 20%">Unidad</th>
                 <th v-if="!editable" class="text-left" style="width: 15%">
-                    Cant. Lote
+                    Cant. Ingresada
                 </th>
                 <th class="text-left" style="width: 20%">Fecha Vencimiento</th>
                 <th class="text-left" style="width: 15%">Cantidad</th>
@@ -97,20 +96,6 @@ export default {
                 <td>{{ detalle.articulo.unidad.nombre }}</td>
 
                 <template v-if="editable">
-                    <td>
-                        <v-text-field
-                            v-model="detalle.articulo_lote.lote"
-                            variant="outlined"
-                            label="Lote"
-                            :name="`lote${indice}`"
-                            type="text"
-                            density="compact"
-                            single-line
-                            hide-details
-                            clearable
-                        />
-                    </td>
-
                     <td>
                         <v-menu
                             :ref="`menu${indice}`"
@@ -203,8 +188,6 @@ export default {
                 </template>
 
                 <template v-else>
-                    <td>{{ detalle.articulo_lote.lote || "-" }}</td>
-
                     <td
                         class="text-right"
                         :class="claseCeldaCantidadLote(detalle)"

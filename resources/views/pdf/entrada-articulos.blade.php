@@ -39,9 +39,8 @@
         <thead>
             <tr>
                 <th style="width: 5%;">#</th>
-                <th style="width: 30%;">ARTÍCULO</th>
-                <th style="width: 15%;">UNIDAD</th>
-                <th style="width: 15%;">LOTE</th>
+                <th style="width: 40%;">ARTÍCULO</th>
+                <th style="width: 20%;">UNIDAD</th>
                 <th style="width: 20%;">FECHA VENC.</th>
                 <th style="width: 15%;">CANTIDAD</th>
             </tr>
@@ -53,7 +52,6 @@
                     <td style="text-align: left;">{{ $loop->iteration }}</td>
                     <td style="text-align: left;">{{ $detalleTransaccion->articulo->nombre }}</td>
                     <td style="text-align: left;">{{ $detalleTransaccion->articulo->unidad->nombre }}</td>
-                    <td style="text-align: right;">{{ $detalleTransaccion->articuloLote->lote ?? '-' }}</td>
                     <td style="text-align: right;">{{ $detalleTransaccion->articuloLote->fecha_vencimiento ?? '-' }}</td>
                     <td style="text-align: right;">{{ $detalleTransaccion->cantidad }}</td>
                 </tr>

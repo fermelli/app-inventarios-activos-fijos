@@ -59,7 +59,7 @@ class EntradaArticuloExcelController extends Controller
                     'articulo_id' => (int) $idArticulo,
                     'cantidad' => (float) $row['cantidad'],
                     'articulo_lote' => [
-                        'lote' => $row['lote'] == '' ? null : $row['lote'],
+                        'lote' => null,
                         'fecha_vencimiento' => $row['fecha_vencimiento'] == '' ? null : $row['fecha_vencimiento'],
                     ],
                 ];
@@ -123,12 +123,11 @@ class EntradaArticuloExcelController extends Controller
         $writer = SimpleExcelWriter::streamDownload('Formato_de_importacion_de_entradas_de_articulos.xlsx');
 
         $writer->nameCurrentSheet('Entradas de Artículos');
-        $writer->addHeader(['id', 'articulo', 'cantidad', 'lote', 'fecha_vencimiento']);
+        $writer->addHeader(['id', 'articulo', 'cantidad', 'fecha_vencimiento']);
         $writer->addRow([
             'Identificador (id) del artículo (tiene que existir en la base de datos)',
             'Nombre del artículo (no debe estar vacío)',
             'Cantidad del artículo (debe ser un número)',
-            'Lote del artículo (opcional)',
             'Fecha de vencimiento del artículo (formato: YYYY-MM-DD, opcional)',
         ]);
     }
