@@ -2,14 +2,25 @@
 import AppLayout from "./layouts/AppLayout.vue";
 import BlankLayout from "./layouts/BlankLayout.vue";
 import { LAYOUTS } from "./utils/constantes";
+import { useTheme } from "vuetify";
 
 export default {
     name: "App",
     components: { AppLayout, BlankLayout },
+    setup() {
+        const theme = useTheme();
+
+        return { theme };
+    },
     data() {
         return {
             layouts: LAYOUTS,
         };
+    },
+    created() {
+        const temaActual = localStorage.getItem("tema-actual") || "temaClaro";
+
+        this.theme.global.name.value = temaActual;
     },
 };
 </script>

@@ -21,9 +21,12 @@ export default {
             this.$store.dispatch("autenticacion/logout");
         },
         cambiarTema() {
-            this.theme.global.name.value = this.theme.global.current.value.dark
+            const temaActual = this.theme.global.current.value.dark
                 ? "temaClaro"
                 : "temaOscuro";
+
+            localStorage.setItem("tema-actual", temaActual);
+            this.theme.global.name.value = temaActual;
         },
     },
 };
