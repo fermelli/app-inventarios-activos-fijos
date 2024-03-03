@@ -822,6 +822,52 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Index Articulos Pdf",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{url_api}}/articulos/reporte-pdf?orden_direccion=desc&con_eliminados=true&pagina=1&items_por_pagina=15&categoria_id=6",
+							"host": [
+								"{{url_api}}"
+							],
+							"path": [
+								"articulos",
+								"reporte-pdf"
+							],
+							"query": [
+								{
+									"key": "orden_direccion",
+									"value": "desc"
+								},
+								{
+									"key": "con_eliminados",
+									"value": "true"
+								},
+								{
+									"key": "pagina",
+									"value": "1"
+								},
+								{
+									"key": "items_por_pagina",
+									"value": "15"
+								},
+								{
+									"key": "categoria_id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

@@ -35,4 +35,15 @@ export default {
             responseType: "blob",
         });
     },
+    async exportar(opciones = { params: {} }) {
+        return await service.get("/articulos/exportar", {
+            responseType: "blob",
+            params: opciones.params,
+        });
+    },
+    async showReportePdf(opciones = { params: {} }) {
+        return await service.get("/articulos/reporte-pdf", {
+            params: opciones.params,
+        });
+    },
 };
