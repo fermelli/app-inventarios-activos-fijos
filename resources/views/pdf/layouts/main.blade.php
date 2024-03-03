@@ -36,6 +36,12 @@
             margin: 0 0 1rem 0;
         }
 
+        .h3 {
+            font-size: 0.75rem;
+            text-align: center;
+            margin: 0 0 1rem 0;
+        }
+
         .tabla {
             width: 100%;
             font-size: 0.75rem;
