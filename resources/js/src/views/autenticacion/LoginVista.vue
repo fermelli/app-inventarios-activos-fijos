@@ -9,8 +9,8 @@ export default {
             enviandoFormulario: false,
             passwordMostrado: false,
             formulario: {
-                correo_electronico: "omartaboada1990@hotmail.com",
-                password: "Password123$",
+                correo_electronico: "",
+                password: "",
             },
             reglasValidacion: {
                 requerido: (valor) => !!valor || "Campo requerido.",
