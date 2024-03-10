@@ -15,11 +15,20 @@ export default {
             },
         },
     },
+    computed: {
+        ruta() {
+            return this.datos.ruta
+                ? {
+                      to: this.datos.ruta,
+                  }
+                : {};
+        },
+    },
 };
 </script>
 
 <template>
-    <v-card elevation="4">
+    <v-card elevation="4" v-bind="ruta">
         <v-card-text>
             <v-row>
                 <v-col cols="auto">
@@ -44,3 +53,9 @@ export default {
         </v-card-text>
     </v-card>
 </template>
+
+<style scoped>
+.text-on-background {
+    color: var(--v-theme-on-background);
+}
+</style>
