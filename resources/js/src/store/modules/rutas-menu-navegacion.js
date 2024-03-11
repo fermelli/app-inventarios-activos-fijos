@@ -19,18 +19,22 @@ const rutasMenuNavegacionStore = {
                 return [];
             }
 
-            return state.rutas.filter((ruta) => {
-                ruta.rolesAutorizados.includes(rolUsuarioAutenticado);
+            const rutas = JSON.parse(JSON.stringify(state.rutas));
 
-                if ("rutasHijas" in ruta) {
-                    ruta.rutasHijas = ruta.rutasHijas.filter((rutaHija) =>
+            return rutas.filter((ruta) => {
+                const rutaEstaAutorizada = ruta?.rolesAutorizados.includes(
+                    rolUsuarioAutenticado,
+                );
+
+                if ("rutasHijas" in ruta && ruta.rutasHijas.length > 0) {
+                    ruta.rutasHijas = ruta?.rutasHijas?.filter((rutaHija) =>
                         rutaHija.rolesAutorizados.includes(
                             rolUsuarioAutenticado,
                         ),
                     );
                 }
 
-                return ruta;
+                return rutaEstaAutorizada;
             });
         },
     },

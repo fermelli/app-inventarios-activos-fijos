@@ -8,7 +8,7 @@ export default [
         meta: {
             layout: LAYOUTS.app,
             requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador, ROLES.personal],
+            rolesAutorizados: [ROLES.administrador],
         },
     },
     {

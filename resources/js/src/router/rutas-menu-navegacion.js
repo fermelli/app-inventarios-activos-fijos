@@ -5,7 +5,7 @@ export default [
         to: { name: "inicio" },
         icono: "mdi-view-dashboard",
         texto: "Dashboard",
-        rolesAutorizados: [ROLES.administrador, ROLES.personal],
+        rolesAutorizados: [ROLES.administrador],
     },
     {
         to: null,

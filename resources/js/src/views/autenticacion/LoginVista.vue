@@ -1,5 +1,6 @@
 <script>
 import AutenticacionService from "@/services/autenticacion";
+import { ROLES } from "../../utils/constantes";
 
 export default {
     name: "LoginVista",
@@ -38,7 +39,14 @@ export default {
                 );
 
                 if (usuarioAutenticado) {
-                    this.$router.push({ name: "inicio" });
+                    if (usuarioAutenticado?.rol === ROLES.administrador) {
+                        this.$router.push({ name: "inicio" });
+                    } else if (usuarioAutenticado?.rol === ROLES.personal) {
+                        console.log(usuarioAutenticado?.rol === ROLES.personal);
+                        this.$router.push({ name: "solicitudes-usuario" });
+                    } else {
+                        this.$router.push({ name: "no-autorizado" });
+                    }
                 }
             } catch (error) {
                 console.log(error);

@@ -2,6 +2,8 @@ import axios from "axios";
 import store from "@/store";
 import { useToast } from "vue-toastification";
 import ListaErroresValidacion from "@/components/ListaErroresValidacion.vue";
+import router from "@/router";
+import { ROLES } from "../utils/constantes";
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -68,6 +70,19 @@ service.interceptors.response.use(
                 error.response.status === 404)
         ) {
             toast.error(error.response.data.mensaje);
+
+            if (error.response.status === 403) {
+                const usuarioAutenticado =
+                    store.getters["autenticacion/usuarioAutenticado"];
+
+                if (usuarioAutenticado?.rol === ROLES.administrador) {
+                    router.push({ name: "inicio" });
+                } else if (usuarioAutenticado?.rol === ROLES.personal) {
+                    router.push({ name: "solicitudes-usuario" });
+                } else {
+                    router.push({ name: "no-autorizado" });
+                }
+            }
         } else {
             toast.error("Se produjo un error inesperado");
         }
