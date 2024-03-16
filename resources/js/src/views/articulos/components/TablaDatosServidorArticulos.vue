@@ -187,14 +187,14 @@ export default {
             <v-chip
                 v-if="item.cantidad > 0"
                 color="success"
-                small
+                size="small"
                 append-icon="mdi-open-in-new"
                 @click="mostrarDialogoLotes(item)"
             >
                 {{ item.cantidad }}
             </v-chip>
 
-            <v-chip v-else color="error" small>
+            <v-chip v-else color="error" size="small">
                 {{ item.cantidad }}
             </v-chip>
         </template>
@@ -202,6 +202,7 @@ export default {
         <template #[`item.acciones`]="{ item }">
             <v-btn
                 v-if="soloSeleccionItems"
+                class="ma-1"
                 color="primary"
                 density="compact"
                 icon="mdi-plus"
@@ -211,6 +212,7 @@ export default {
 
             <template v-else>
                 <v-btn
+                    class="ma-1"
                     color="primary"
                     density="compact"
                     icon="mdi-pencil"
@@ -219,7 +221,7 @@ export default {
                 />
 
                 <v-btn
-                    class="ml-2"
+                    class="ma-1"
                     color="error"
                     density="compact"
                     icon="mdi-trash-can"

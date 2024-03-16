@@ -73,7 +73,7 @@ export default {
             <v-chip
                 :color="coloresEstadosEntradas[item.estado_entrada] || 'grey'"
                 class="text-capitalize"
-                small
+                size="small"
             >
                 {{ item.estado_entrada }}
             </v-chip>
@@ -81,6 +81,7 @@ export default {
 
         <template #[`item.acciones`]="{ item }">
             <v-btn
+                class="ma-1"
                 color="info"
                 density="compact"
                 icon="mdi-eye"

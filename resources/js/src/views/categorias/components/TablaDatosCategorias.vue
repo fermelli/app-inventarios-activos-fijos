@@ -60,6 +60,7 @@ export default {
 
         <template #[`item.acciones`]="{ item }">
             <v-btn
+                class="ma-1"
                 color="primary"
                 density="compact"
                 icon="mdi-pencil"
@@ -68,7 +69,7 @@ export default {
             />
 
             <v-btn
-                class="ml-2"
+                class="ma-1"
                 color="error"
                 density="compact"
                 icon="mdi-trash-can"

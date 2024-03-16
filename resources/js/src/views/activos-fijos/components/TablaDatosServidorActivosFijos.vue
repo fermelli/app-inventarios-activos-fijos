@@ -158,7 +158,7 @@ export default {
             <v-chip
                 class="text-capitalize"
                 :color="coloresEstadosActivosFijos[item.estado_activo_fijo]"
-                small
+                size="small"
             >
                 {{ item.estado_activo_fijo }}
             </v-chip>
@@ -170,7 +170,7 @@ export default {
                 :color="
                     !!item.asignacion_activo_fijo_actual ? 'success' : 'error'
                 "
-                small
+                size="small"
             >
                 {{ item.asignacion_activo_fijo_actual ? "Sí" : "No" }}
             </v-chip>
@@ -179,6 +179,7 @@ export default {
         <template #[`item.acciones`]="{ item }">
             <v-btn
                 v-if="soloSeleccionItems"
+                class="ma-1"
                 color="primary"
                 density="compact"
                 icon="mdi-plus"
@@ -188,6 +189,7 @@ export default {
 
             <template v-else>
                 <v-btn
+                    class="ma-1"
                     color="info"
                     density="compact"
                     icon="mdi-eye"
@@ -196,7 +198,7 @@ export default {
                 />
 
                 <v-btn
-                    class="ml-2"
+                    class="ma-1"
                     color="error"
                     density="compact"
                     icon="mdi-cancel"
@@ -207,7 +209,7 @@ export default {
 
                 <v-btn
                     v-if="!item.asignacion_activo_fijo_actual"
-                    class="ml-2"
+                    class="ma-1"
                     color="success"
                     density="compact"
                     icon="mdi-account-plus"
@@ -220,7 +222,7 @@ export default {
 
                 <v-btn
                     v-else
-                    class="ml-2"
+                    class="ma-1"
                     color="error"
                     density="compact"
                     icon="mdi-account-minus"
@@ -229,7 +231,7 @@ export default {
                 />
 
                 <v-btn
-                    class="ml-2"
+                    class="ma-1"
                     color="primary"
                     density="compact"
                     icon="mdi-pencil"
@@ -238,7 +240,7 @@ export default {
                 />
 
                 <v-btn
-                    class="ml-2"
+                    class="ma-1"
                     color="error"
                     density="compact"
                     icon="mdi-trash-can"

@@ -56,6 +56,7 @@ export default {
 
         <template #[`item.acciones`]="{ item }">
             <v-btn
+                class="ma-1"
                 color="primary"
                 density="compact"
                 icon="mdi-pencil"
@@ -64,7 +65,7 @@ export default {
             />
 
             <v-btn
-                class="ml-2"
+                class="ma-1"
                 color="error"
                 density="compact"
                 icon="mdi-trash-can"
@@ -81,7 +82,7 @@ export default {
 
             <v-btn
                 v-if="!item.eliminado_en"
-                class="ml-2"
+                class="ma-1"
                 color="error"
                 density="compact"
                 icon="mdi-cancel"
@@ -98,7 +99,7 @@ export default {
 
             <v-btn
                 v-else
-                class="ml-2"
+                class="ma-1"
                 color="success"
                 density="compact"
                 icon="mdi-check"

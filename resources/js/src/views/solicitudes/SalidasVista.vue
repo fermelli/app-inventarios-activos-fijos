@@ -119,7 +119,7 @@ export default {
 <template>
     <v-row>
         <v-col cols="12">
-            <div class="d-flex align-center">
+            <div class="d-flex flex-wrap align-center">
                 <h2 class="text-h5">{{ titulo }}</h2>
 
                 <v-btn
