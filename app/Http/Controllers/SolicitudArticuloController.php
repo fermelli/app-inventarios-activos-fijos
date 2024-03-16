@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Traits\SolicitudArticuloControllerTrait;
+use App\Http\Requests\CrearSolicitudArticuloConSolicitanteRequest;
 use App\Http\Requests\CrearSolicitudArticuloRequest;
 use App\Http\Requests\PaginacionConEliminadosOrdenDireccionBusquedaRequest;
 use App\Models\Transaccion;
@@ -97,6 +98,20 @@ class SolicitudArticuloController extends Controller
     {
         $datos = $request->validated();
 
+        $datos['solicitante_id'] = $request->user()->id;
+
+        return $this->save($datos);
+    }
+
+    public function storeConSolicitante(CrearSolicitudArticuloConSolicitanteRequest $request)
+    {
+        $datos = $request->validated();
+
+        return $this->save($datos);
+    }
+
+    protected function save($datos)
+    {
         $numeroSolicitud = Transaccion::where('tipo', Transaccion::TIPO_SOLICITUD)
             ->max('numero_solicitud') + 1;
 
@@ -106,7 +121,6 @@ class SolicitudArticuloController extends Controller
             $transaccion = Transaccion::create([
                 ...$datos,
                 'tipo' => Transaccion::TIPO_SOLICITUD,
-                'solicitante_id' => $request->user()->id,
                 'numero_solicitud' => $numeroSolicitud,
                 'estado_solicitud' => Transaccion::ESTADO_SOLICITUD_PENDIENTE,
             ]);
@@ -117,6 +131,8 @@ class SolicitudArticuloController extends Controller
             }
 
             DB::commit();
+
+            return response()->jsonResponse('Solicitud de artículo creada', $transaccion, 201);
         } catch (\Exception $e) {
             DB::rollBack();
 

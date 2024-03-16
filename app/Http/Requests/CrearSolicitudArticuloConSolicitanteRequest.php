@@ -5,10 +5,10 @@ namespace App\Http\Requests;
 use App\Http\Requests\Traits\CrearSolicitudArticuloRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CrearSolicitudArticuloRequest extends FormRequest
+class CrearSolicitudArticuloConSolicitanteRequest extends FormRequest
 {
     use CrearSolicitudArticuloRequestTrait;
-
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -24,6 +24,11 @@ class CrearSolicitudArticuloRequest extends FormRequest
      */
     public function rules(): array
     {
-        return $this->crearSolicitudArticuloRules();
+        return array_merge(
+            $this->crearSolicitudArticuloRules(),
+            [
+                'solicitante_id' => ['required', 'integer', 'exists:usuarios,id'],
+            ],
+        );
     }
 }

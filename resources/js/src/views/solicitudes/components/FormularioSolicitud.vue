@@ -6,6 +6,7 @@ import TablaDatosServidorArticulos from "../../articulos/components/TablaDatosSe
 import vistaMixin from "../../../mixins/vista.mixin";
 import TablaDatosDetallesSolicitudes from "./TablaDatosDetallesSolicitudes.vue";
 import articulosMixin from "../../../mixins/articulos.mixin";
+import UsuarioService from "../../../services/usuarios";
 
 export default {
     name: "FormularioSolicitud",
@@ -29,6 +30,11 @@ export default {
                 );
             },
         },
+        tipo: {
+            type: String,
+            required: true,
+            validator: (valor) => ["usuario", "todas"].includes(valor),
+        },
     },
     setup() {
         const toast = useToast();
@@ -37,9 +43,14 @@ export default {
     },
     data() {
         return {
-            metodoStore: SolicitudArticuloService.store,
+            metodoStore:
+                this.tipo === "todas"
+                    ? SolicitudArticuloService.storeConSolicitante
+                    : SolicitudArticuloService.store,
             metodoUpdate: SolicitudArticuloService.update,
             mostradoDialogoTablaArticulos: false,
+            usuarios: [],
+            cargandoUsuarios: false,
             pagina: 1,
             itemsPorPagina: parseInt(
                 localStorage.getItem(`itemsPorPagina-${this.$route.name}`) ||
@@ -54,7 +65,19 @@ export default {
                     valor.length <= 255 ||
                     "La observación debe tener menos de 255 caracteres",
             ],
+            reglasValidacionSolicitanteId: [
+                (valor) => !!valor || "El solicitante es requerido",
+                (valor) =>
+                    !valor ||
+                    Number.isInteger(Number(valor)) ||
+                    "Debe ser un número",
+            ],
         };
+    },
+    created() {
+        if (this.tipo === "todas") {
+            this.obtenerUsuarios();
+        }
     },
     methods: {
         crearDatosItem() {
@@ -86,6 +109,21 @@ export default {
 
             this.toast.success("Artículo agregado");
         },
+        async obtenerUsuarios() {
+            this.cargandoUsuarios = true;
+
+            try {
+                const { data } = await UsuarioService.index({
+                    params: { orden_direccion: "asc" },
+                });
+
+                this.usuarios = data.datos;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.cargandoUsuarios = false;
+            }
+        },
     },
 };
 </script>
@@ -97,7 +135,7 @@ export default {
         @submit.prevent="guardarItem"
     >
         <v-row>
-            <v-col cols="12" lg="8" class="py-0">
+            <v-col cols="12" lg="7" class="py-0">
                 <v-textarea
                     v-model="formulario.observacion"
                     class="mb-2"
@@ -111,7 +149,23 @@ export default {
                 />
             </v-col>
 
-            <v-col cols="12" lg="4" class="py-0">
+            <v-col v-if="tipo === 'todas'" cols="12" lg="5" class="py-0">
+                <v-autocomplete
+                    v-model="formulario.solicitante_id"
+                    class="mb-2"
+                    :items="usuarios"
+                    item-value="id"
+                    item-title="nombre"
+                    label="Solcitante"
+                    name="solicitante_id"
+                    density="compact"
+                    :rules="reglasValidacionSolicitanteId"
+                    clear-on-select
+                    clearable
+                />
+            </v-col>
+
+            <v-col cols="12" class="pt-0 pb-2">
                 <v-btn
                     color="info"
                     density="compact"

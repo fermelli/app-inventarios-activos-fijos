@@ -208,6 +208,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
             SolicitudArticuloController::class,
             ['only' => ['index']]
         );
+
+        Route::post(
+            'solicitudes-articulos/solicitante',
+            [SolicitudArticuloController::class, 'storeConSolicitante']
+        );
     });
     Route::match(
         ['put', 'patch'],

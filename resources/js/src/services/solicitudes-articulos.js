@@ -26,4 +26,7 @@ export default {
     async showReportePdf(id) {
         return await service.get(`/solicitudes-articulos/${id}/reporte-pdf`);
     },
+    async storeConSolicitante(datos) {
+        return await service.post("/solicitudes-articulos/solicitante", datos);
+    },
 };

@@ -206,6 +206,7 @@ export default {
                     <FormularioSolicitud
                         :datos="datosItem"
                         :nombre-item="nombreItem"
+                        :tipo="tipo"
                         @actualizar-listado="obtenerSolicitudesArticulos"
                         @cancelar-guardado="cancelarGuardado"
                     />
