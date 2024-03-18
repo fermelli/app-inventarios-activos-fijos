@@ -44,7 +44,9 @@ export default {
             src="./../assets/imagenes/logo.png"
         />
 
-        <v-app-bar-title> CASEGURAL </v-app-bar-title>
+        <v-app-bar-title>
+            CENTRO DE SALUD AMBULATORIO CASEGURAL DE SUCRE
+        </v-app-bar-title>
 
         <v-spacer />
 

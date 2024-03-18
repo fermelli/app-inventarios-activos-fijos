@@ -7,7 +7,7 @@ export default {
 <template>
     <h2>Sobre Nosotros</h2>
 
-    <h3>CASEGURAL</h3>
+    <h3>CENTRO DE SALUD AMBULATORIO CASEGURAL DE SUCRE</h3>
 
     <p>
         Somos un Centro de Salud Ambulatorio de Primer Nivel del Municipio de

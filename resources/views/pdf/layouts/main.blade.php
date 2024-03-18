@@ -87,7 +87,7 @@
         <tbody>
             <tr>
                 <td style="width: 70%; text-align: left;">
-                    <h1 class="h1">HOSPITAL MUNICIPAL CASEGURAL</h1>
+                    <h1 class="h1">CENTRO DE SALUD AMBULATORIO CASEGURAL DE SUCRE</h1>
                     <p class="subtitulo">
                         ATENCIONES GRATUITAS EN EL MARCO DEL SEGURO MUNICIPAL DE SALUD "SI-SALUD"
                     </p>
