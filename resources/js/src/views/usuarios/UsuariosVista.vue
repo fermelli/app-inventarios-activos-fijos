@@ -72,6 +72,8 @@ export default {
                 nombre: null,
                 correo_electronico: null,
                 rol: null,
+                dependencia_id: null,
+                dependencia: null,
             };
         },
     },

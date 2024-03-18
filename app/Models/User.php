@@ -39,6 +39,7 @@ class User extends Authenticatable
         'correo_electronico',
         'password',
         'rol',
+        'dependencia_id',
     ];
 
     /**
@@ -82,5 +83,10 @@ class User extends Authenticatable
     public function devolucionesAsignacionesActivosFijos()
     {
         return $this->hasMany(AsignacionActivoFijo::class, 'devuelto_a_id');
+    }
+
+    public function dependencia()
+    {
+        return $this->belongsTo(Ubicacion::class, 'dependencia_id');
     }
 }

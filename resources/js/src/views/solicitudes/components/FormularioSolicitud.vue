@@ -162,7 +162,15 @@ export default {
                     :rules="reglasValidacionSolicitanteId"
                     clear-on-select
                     clearable
-                />
+                >
+                    <template #item="{ props, item }">
+                        <v-list-item
+                            v-bind="props"
+                            :title="item.raw.nombre"
+                            :subtitle="item.raw?.dependencia?.nombre || '-'"
+                        />
+                    </template>
+                </v-autocomplete>
             </v-col>
 
             <v-col cols="12" class="pt-0 pb-2">

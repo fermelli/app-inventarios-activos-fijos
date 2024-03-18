@@ -7,6 +7,9 @@ export default {
     async show(id) {
         return await service.get(`/usuarios/${id}`);
     },
+    async update(id, datos) {
+        return await service.patch(`/usuarios/${id}`, datos);
+    },
     async cambiarRol(id, datos) {
         return await service.patch(`/usuarios/${id}/cambiar-rol`, datos);
     },

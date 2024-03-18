@@ -12,6 +12,7 @@ export default {
                 { title: "Nombre", key: "nombre" },
                 { title: "Correo electrónico", key: "correo_electronico" },
                 { title: "Rol", key: "rol" },
+                { title: "Dependencia", key: "dependencia.nombre" },
                 {
                     title: "Acciones",
                     key: "acciones",
@@ -52,6 +53,10 @@ export default {
 
         <template #[`item.nro`]="{ index }">
             {{ index + 1 + itemsPorPagina * (paginaActual - 1) }}
+        </template>
+
+        <template #[`item.dependencia.nombre`]="{ item }">
+            {{ item?.dependencia?.nombre || "-" }}
         </template>
 
         <template #[`item.acciones`]="{ item }">

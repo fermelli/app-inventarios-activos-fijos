@@ -153,7 +153,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
             ['only' => ['destroy']]
         );
     });
-    Route::apiResource('usuarios', UsuarioController::class, ['only' => ['index', 'show']]);
+    Route::apiResource('usuarios', UsuarioController::class, ['only' => ['index', 'show', 'update']]);
 
     // Rutas para entradas de articulos
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {

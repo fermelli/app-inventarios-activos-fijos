@@ -28,4 +28,9 @@ class Ubicacion extends Model
     {
         return $this->hasMany(AsignacionActivoFijo::class, 'ubicacion_id');
     }
+
+    public function usuarios()
+    {
+        return $this->hasMany(User::class, 'dependencia_id');
+    }
 }

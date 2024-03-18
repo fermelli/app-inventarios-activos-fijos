@@ -2,6 +2,7 @@
 import formularioMixin from "../../../mixins/formulario.mixin";
 import UsuarioService from "./../../../services/usuarios";
 import { useToast } from "vue-toastification";
+import UbicacionService from "./../../../services/ubicaciones";
 
 export default {
     name: "FormularioUsuario",
@@ -15,7 +16,9 @@ export default {
                     "id" in valor &&
                     "nombre" in valor &&
                     "correo_electronico" in valor &&
-                    "rol" in valor
+                    "rol" in valor &&
+                    "dependencia_id" in valor &&
+                    "dependencia" in valor
                 );
             },
         },
@@ -27,9 +30,38 @@ export default {
     },
     data() {
         return {
-            metodoUpdate: UsuarioService.cambiarRol,
+            metodoUpdate: UsuarioService.update,
+            ubicaciones: [],
+            cargandoUbicaciones: false,
             reglasValidacionRol: [(valor) => !!valor || "El rol es requerido"],
+            reglasValidacionDependenciaId: [
+                (valor) => !!valor || "La dependencia es requerida",
+                (valor) =>
+                    !valor ||
+                    Number.isInteger(Number(valor)) ||
+                    "Debe ser un número",
+            ],
         };
+    },
+    created() {
+        this.obtenerUbicaciones();
+    },
+    methods: {
+        async obtenerUbicaciones() {
+            this.cargandoUbicaciones = true;
+
+            try {
+                const { data } = await UbicacionService.index({
+                    params: { orden_direccion: "asc" },
+                });
+
+                this.ubicaciones = data.datos;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.cargandoUbicaciones = false;
+            }
+        },
     },
 };
 </script>
@@ -52,6 +84,20 @@ export default {
             ]"
             required
             clearable
+        />
+
+        <v-autocomplete
+            v-model="formulario.dependencia_id"
+            class="mb-2"
+            :items="ubicaciones"
+            item-value="id"
+            item-title="nombre"
+            label="Dependencia"
+            name="dependencia_id"
+            density="compact"
+            clear-on-select
+            clearable
+            :rules="reglasValidacionDependenciaId"
         />
 
         <v-btn

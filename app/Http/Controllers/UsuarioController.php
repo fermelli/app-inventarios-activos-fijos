@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ActualizarUsuarioRequest;
 use App\Http\Requests\CambiarRolUsuarioRequest;
 use App\Http\Requests\ConEliminadosOrdenDireccionRequest;
 use App\Models\User;
@@ -15,7 +16,7 @@ class UsuarioController extends Controller
     public function index(ConEliminadosOrdenDireccionRequest $request)
     {
         $parametros = $request->validated();
-        $queryBuilder = User::query();
+        $queryBuilder = User::with(['dependencia']);
 
         if (isset($parametros['con_eliminados'])) {
             $queryBuilder->withTrashed();
@@ -61,7 +62,7 @@ class UsuarioController extends Controller
         return response()->jsonResponse('Rol de usuario actualizado', $usuario, 200);
     }
 
-        /**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
@@ -95,5 +96,14 @@ class UsuarioController extends Controller
         $usuario->restore();
 
         return response()->jsonResponse('Usuario activado', $usuario, 200);
+    }
+
+    public function update(ActualizarUsuarioRequest $request, string $id)
+    {
+        $usuario = $this->findWithTrashed($id);
+        
+        $usuario->update($request->validated());
+
+        return response()->jsonResponse('Usuario actualizado', $usuario, 200);
     }
 }
