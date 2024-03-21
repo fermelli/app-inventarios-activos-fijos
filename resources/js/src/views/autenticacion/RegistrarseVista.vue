@@ -21,15 +21,9 @@ export default {
                         /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
                     return regex.test(valor) || "Correo electrónico inválido.";
                 },
-                password: (valor) => {
-                    // Al menos 8 caracteres, una letra mayúscula, una letra minúscula, un número y un carácter especial.
-                    let regex =
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-                    return (
-                        regex.test(valor) ||
-                        "La contraseña debe tener al menos 8 caracteres (una letra mayúscula, una letra minúscula, un número y un carácter especial) y máximo 15 caracteres."
-                    );
-                },
+                password: (valor) =>
+                    (valor && valor.length >= 8) ||
+                    "El password debe tener al menos 8 caracteres",
                 confirmarPassword: (valor) =>
                     valor === this.formulario.password ||
                     "Las contraseñas no coinciden.",
