@@ -237,6 +237,8 @@ export default {
                             @mostrar-confirmacion="mostrarDialogoConfirmacion"
                             @cargar-items="obtenerArticulos"
                             @seleccionar-item="seleccionarItem"
+                            @exportar-pdf="exportarArticulosPdf"
+                            @exportar-excel="exportarArticulosExcel"
                         />
                     </v-card-text>
 
@@ -253,6 +255,12 @@ export default {
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
+            <DialogoReportePdf
+                v-model="mostradoDialogoReportePdf"
+                :pdf-src="pdfSrc"
+                @cerrar="mostradoDialogoReportePdf = false"
+            />
         </v-row>
     </v-form>
 </template>
