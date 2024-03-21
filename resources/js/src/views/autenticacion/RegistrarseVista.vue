@@ -41,7 +41,7 @@ export default {
             try {
                 await AutenticacionService.register(this.formulario);
 
-                this.$router.push({ name: "login" });
+                this.$router.push({ name: "solicitudes-usuario" });
             } catch (error) {
                 console.log(error);
             } finally {
