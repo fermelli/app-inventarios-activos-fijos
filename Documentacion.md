@@ -102,8 +102,7 @@ JavaScript - Vue - Vuex - Vue Router - Vuetify
 
 ## Objetivo General
 
-Desarrollar un sistema web para la gesión de articulos y activos fijos para el control de inventarios en el Centro de Salud Ambulatorio Casegural Sucre (COPILOT)
-Desarrollar una sistema web para la gestión de inventarios en el Centro de Salud Ambulatorio Casegural Sucre (OMAR)
+Desarrollar un sistema web para la gesión de articulos y activos fijos para el control de inventarios en el Centro de Salud Ambulatorio Casegural Sucre.
 
 ## Objetivos Específicos
 
