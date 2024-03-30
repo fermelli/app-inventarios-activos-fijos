@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "67ed94ff-74b9-438d-83f7-dc8ea1d02179",
+		"_postman_id": "f35db6cc-b583-430b-90c1-bbc2d47971d9",
 		"name": "App Inventarios Casegural",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8046053"
@@ -49,7 +49,8 @@
 									"    }\r",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -64,7 +65,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"correo_electronico\": \"omartaboada1990@hotmail.com\",\r\n    \"password\": \"Password123$\"\r\n}",
+							"raw": "{\r\n    \"correo_electronico\": \"admin@casegural.com\",\r\n    \"password\": \"Password123$\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,7 +97,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"omartaboada\",\r\n    \"correo_electronico\": \"omartaboada1991@hotmail.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
+							"raw": "{\r\n    \"nombre\": \"user\",\r\n    \"correo_electronico\": \"user@casegural.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -758,7 +759,7 @@
 								{
 									"key": "archivo",
 									"type": "file",
-									"src": "/D:/Proyects/omar/Articulos (20 - 2).xlsx"
+									"src": []
 								}
 							]
 						},
@@ -1306,7 +1307,7 @@
 								{
 									"key": "archivo",
 									"type": "file",
-									"src": "/D:/Proyects/omar/sin nada.xlsx"
+									"src": []
 								}
 							]
 						},
@@ -1945,7 +1946,7 @@
 								{
 									"key": "archivo",
 									"type": "file",
-									"src": "/D:/Proyects/omar/Articulos (4000).xlsx"
+									"src": []
 								}
 							]
 						},
