@@ -1,6 +1,6 @@
-# Aplicacion de Inventarios para Casegural
+# Aplicacion de Inventarios y Activos Fijos para Casegural
 
-Esta es una aplicacion de inventarios para Casegural.
+Esta es una aplicacion de inventarios y activos fijos para el Centro de Salud Ambulatorio Casegural Sucre. Consulte [Documentacion del proyecto](Documentacion.md) para obtener mas informacion sobre el desarrollo del proyecto.
 
 ## Instrucciones
 
