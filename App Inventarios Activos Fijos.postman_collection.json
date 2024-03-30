@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "f35db6cc-b583-430b-90c1-bbc2d47971d9",
-		"name": "App Inventarios Casegural",
+		"_postman_id": "8a7d09c4-c9ea-476d-898c-aeb813adb5fc",
+		"name": "App Inventarios Activos Fijos",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8046053"
 	},
@@ -65,7 +65,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"correo_electronico\": \"admin@casegural.com\",\r\n    \"password\": \"Password123$\"\r\n}",
+							"raw": "{\r\n    \"correo_electronico\": \"admin@email.com\",\r\n    \"password\": \"Password123$\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -97,7 +97,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nombre\": \"user\",\r\n    \"correo_electronico\": \"user@casegural.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
+							"raw": "{\r\n    \"nombre\": \"user\",\r\n    \"correo_electronico\": \"user@email.com\",\r\n    \"password\": \"Password123$\",\r\n    \"password_confirmation\": \"Password123$\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
