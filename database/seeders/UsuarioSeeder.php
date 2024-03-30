@@ -16,7 +16,7 @@ class UsuarioSeeder extends Seeder
         DB::table('usuarios')->insert([
             [
                 'nombre' => 'admin',
-                'correo_electronico' => 'admin@casegural.com',
+                'correo_electronico' => 'admin@email.com',
                 'password' => bcrypt('Password123$'),
                 'rol' => User::ROL_ADMINISTRADOR,
                 'creado_en' => now(),
@@ -24,7 +24,7 @@ class UsuarioSeeder extends Seeder
             ],
             [
                 'nombre' => 'personal',
-                'correo_electronico' => 'personal@casegural.com',
+                'correo_electronico' => 'personal@email.com',
                 'password' => bcrypt('Password123$'),
                 'rol' => User::ROL_PERSONAL,
                 'creado_en' => now(),
