@@ -40,13 +40,11 @@ export default {
             inline
             :width="36"
             aspect-ratio="1/1"
-            alt="Logo de CASEGURAL"
+            alt="Logo"
             src="./../assets/imagenes/logo.png"
         />
 
-        <v-app-bar-title>
-            CENTRO DE SALUD AMBULATORIO CASEGURAL DE SUCRE
-        </v-app-bar-title>
+        <v-app-bar-title> CENTRO DE SALUD SUCRE </v-app-bar-title>
 
         <v-spacer />
 

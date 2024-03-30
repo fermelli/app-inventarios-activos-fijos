@@ -8,7 +8,7 @@ export default {
     <h2>Inicio</h2>
 
     <p>
-        Bienvenido al Sistema de Gestión de Inventarios de Centro de Salud
-        Ambulatorio Casegural de Sucre.
+        Bienvenido al Sistema de Gestión de Inventarios y Activos Fijos de
+        Centro de Salud Sucre.
     </p>
 </template>
