@@ -102,7 +102,7 @@ JavaScript - Vue - Vuex - Vue Router - Vuetify
 
 ## Objetivo General
 
-Desarrollar un sistema web para la gesión de articulos y activos fijos para el control de inventarios en el Centro de Salud Ambulatorio Casegural Sucre.
+Desarrollar un sistema web para la gesión de articulos y activos fijos para el control de inventarios en el Centro de Salud Sucre.
 
 ## Objetivos Específicos
 
@@ -113,16 +113,16 @@ Desarrollar un sistema web para la gesión de articulos y activos fijos para el 
 
 # Conclusiones (tienen que tener relación con los objetivos)
 
--   La implementación exitosa del módulo de autenticación y gestión de usuarios constituye un paso fundamental para garantizar la seguridad y control de acceso al sistema web de gestión de inventarios en el Centro de Salud Ambulatorio Casegural Sucre. Este componente sienta las bases para una administración eficiente de usuarios, contribuyendo a la integridad y confidencialidad de la información.
+-   La implementación exitosa del módulo de autenticación y gestión de usuarios constituye un paso fundamental para garantizar la seguridad y control de acceso al sistema web de gestión de inventarios en el Centro de Salud Sucre. Este componente sienta las bases para una administración eficiente de usuarios, contribuyendo a la integridad y confidencialidad de la información.
 -   El desarrollo del módulo de gestión de artículos y activos fijos proporciona una herramienta robusta para el control y seguimiento de los recursos disponibles en el Centro de Salud. La capacidad de registrar, asignar y dar de baja activos fijos, así como gestionar el inventario de artículos, optimiza los procesos internos y fortalece la eficiencia operativa.
 -   Un módulo de reportes y auditoría consolida la capacidad del sistema para generar informes precisos y relevantes sobre las actividades relacionadas con el inventario. Este componente no solo facilita la toma de decisiones informadas, sino que también proporciona un mecanismo de auditoría que mejora la transparencia y la rendición de cuentas en el Centro de Salud.
 -   La creación de la aplicación móvil destinada a las solicitudes y salidas de artículos constituye un avance significativo hacia la accesibilidad y agilidad en la gestión de inventarios. La movilidad proporcionada por esta aplicación no solo simplifica el proceso de solicitud y salida de artículos, sino que también se adapta a las demandas de un entorno dinámico como el de un centro de salud, mejorando la eficiencia operativa y la satisfacción del usuario.
 
-En conclusión, el desarrollo del sistema web para la gestión de inventarios en el Centro de Salud Ambulatorio Casegural Sucre ha alcanzado sus objetivos específicos de manera integral. La implementación exitosa de los módulos de autenticación y gestión de usuarios, gestión de artículos y activos fijos, así como reportes y auditoría, proporciona una solución robusta y completa para optimizar los procesos internos. La incorporación de una aplicación móvil para solicitudes y salidas de artículos añade un nivel adicional de accesibilidad y eficiencia. En conjunto, estos logros fortalecen la capacidad del Centro de Salud para administrar de manera efectiva su inventario, mejorar la toma de decisiones y promover una gestión más transparente y eficiente de sus recursos.
+En conclusión, el desarrollo del sistema web para la gestión de inventarios en el Centro de Salud Sucre ha alcanzado sus objetivos específicos de manera integral. La implementación exitosa de los módulos de autenticación y gestión de usuarios, gestión de artículos y activos fijos, así como reportes y auditoría, proporciona una solución robusta y completa para optimizar los procesos internos. La incorporación de una aplicación móvil para solicitudes y salidas de artículos añade un nivel adicional de accesibilidad y eficiencia. En conjunto, estos logros fortalecen la capacidad del Centro de Salud para administrar de manera efectiva su inventario, mejorar la toma de decisiones y promover una gestión más transparente y eficiente de sus recursos.
 
 # Recomendaciones
 
--   Implementar un plan de capacitación para el personal del Centro de Salud Ambulatorio Casegural Sucre, con el fin de garantizar una adopción efectiva del sistema web y la aplicación móvil. Este plan debe incluir sesiones de formación sobre el uso de las diferentes funcionalidades, así como la creación de manuales y guías de usuario.
+-   Implementar un plan de capacitación para el personal del Centro de Salud Sucre, con el fin de garantizar una adopción efectiva del sistema web y la aplicación móvil. Este plan debe incluir sesiones de formación sobre el uso de las diferentes funcionalidades, así como la creación de manuales y guías de usuario.
 -   Establecer un proceso de monitoreo y evaluación continua para el sistema web y la aplicación móvil, con el fin de identificar oportunidades de mejora y optimización. Esto puede incluir la recopilación de comentarios y sugerencias del usuario, así como la realización de pruebas de usabilidad y rendimiento.
 -   Considerar la posibilidad de integrar el sistema web con otros sistemas o plataformas utilizadas en el Centro de Salud, con el fin de mejorar la interoperabilidad y la eficiencia operativa. Esto puede incluir la integración con sistemas de gestión de pacientes, sistemas de contabilidad, entre otros.
 -   Mantener un diálogo abierto y constante con el personal del Centro de Salud para identificar nuevas necesidades y requerimientos, con el fin de garantizar que el sistema web y la aplicación móvil sigan siendo relevantes y efectivos a lo largo del tiempo.

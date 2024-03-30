@@ -1,13 +1,13 @@
-# Aplicacion de Inventarios y Activos Fijos para Casegural
+# Aplicacion de Inventarios y Activos Fijos para el Centro de Salud Sucre
 
-Esta es una aplicacion de inventarios y activos fijos para el Centro de Salud Ambulatorio Casegural Sucre. Consulte [Documentacion del proyecto](Documentacion.md) para obtener mas informacion sobre el desarrollo del proyecto.
+Esta es una aplicacion de inventarios y activos fijos para el Centro de Salud Sucre. Consulte [Documentacion del proyecto](Documentacion.md) para obtener mas informacion sobre el desarrollo del proyecto.
 
 ## Instrucciones
 
 ### Inicio del proyecto
 
-1. Generacion del proyecto de Laravel `composer create-project laravel/laravel app-inventarios-casegural`
-   El comando anterior genera un proyecto de Laravel en la carpeta app-inventarios-casegural y se instalan las dependencias de Laravel, que se encuentran en el archivo composer.json las cuales se instalan con el comando `composer install`.
+1. Generacion del proyecto de Laravel `composer create-project laravel/laravel app-inventarios-activos-fijos`
+   El comando anterior genera un proyecto de Laravel en la carpeta app-inventarios-activos-fijos y se instalan las dependencias de Laravel, que se encuentran en el archivo composer.json las cuales se instalan con el comando `composer install`.
 
 2. Se instala las dependencias de lado del cliente con el comando `npm install`.
 
@@ -127,7 +127,7 @@ Las herramientas de desarrollo para el backend son las siguientes: [Conjunto de 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=app_inventarios_casegural
+DB_DATABASE=db_inventarios_activos_fijos
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -187,7 +187,7 @@ INFO  Running migrations.
 
 10. En `routes/api.php` proteger las rutas con el middleware `auth:sanctum`.
 
-11. Agregar el archivo de `Postman` que se encuentra en la carpeta raiz del proyecto ([App Inventarios Casegural.postman_collection.json](App%20Inventarios%20Casegural.postman_collection.json)) que contiene las rutas de autenticacion.
+11. Agregar el archivo de `Postman` que se encuentra en la carpeta raiz del proyecto ([App Inventarios Activos Fijos.postman_collection.json](App%20Inventarios%20Activos%20Fijos.postman_collection.json)) que contiene las rutas de autenticacion.
 
 #### Personalizacion de los Campos de la Tabla de usuarios (antes users) y del Modelo de Usuario (User)
 
