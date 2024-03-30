@@ -87,14 +87,14 @@
         <tbody>
             <tr>
                 <td style="width: 70%; text-align: left;">
-                    <h1 class="h1">CENTRO DE SALUD AMBULATORIO CASEGURAL DE SUCRE</h1>
+                    <h1 class="h1">CENTRO DE SALUD SUCRE</h1>
                     <p class="subtitulo">
-                        ATENCIONES GRATUITAS EN EL MARCO DEL SEGURO MUNICIPAL DE SALUD "SI-SALUD"
+                        ATENCIONES GRATUITAS EN EL MARCO DEL SEGURO MUNICIPAL DE SALUD
                     </p>
                 </td>
 
                 <td style="width: 30%; text-align: center;">
-                    <strong>Dirección: </strong>Barrio Casegural, Distrito 3, zona media
+                    <strong>Dirección: </strong>Av. 6 de Agosto Nº 123
                 </td>
             </tr>
 
@@ -104,7 +104,7 @@
                 </td>
 
                 <td style="width: 20%; text-align: center;">
-                    <strong>Teléfono: </strong>64-38942
+                    <strong>Teléfono: </strong>64-44444
                 </td>
             </tr>
         </tbody>
