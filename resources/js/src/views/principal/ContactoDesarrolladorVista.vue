@@ -7,10 +7,10 @@ export default {
 <template>
     <h2>Contacto Desarrollador</h2>
 
-    <h3>Omar Taboada</h3>
+    <h3>Fermelli</h3>
 
     <p>
-        <a href="omartaboada1990@hotmail.com">Email</a> |
-        <a href="https://github.com/omartabo">GitHub</a>
+        <a href="luisfernandosalgadomiguez@gmail.com">Email</a> |
+        <a href="https://github.com/fermelli">GitHub</a>
     </p>
 </template>
