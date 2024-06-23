@@ -600,7 +600,3 @@ Resultado Esperado: El administrador debe poder listar, buscar, generar reporte,
 | Se debe poder generar un reporte en PDF de la salida de articulos                                                         | Exitoso   | -                                                                   |
 | Se debe poder entregar una salida de articulos                                                                            | Exitoso   | -                                                                   |
 | Se debe poder anular una salida de articulos                                                                              | Fallido   | Corregido el reingreso de la cantidad de articulos al anular salida |
-
-# Conclusiones
-
-Es importante en un sistema de inventario y activos fijos
