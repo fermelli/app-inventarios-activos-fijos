@@ -111,8 +111,9 @@ export default {
                         label="Buscar"
                         name="buscar"
                         type="text"
-                        prepend-icon="mdi-magnify"
+                        prepend-inner-icon="mdi-magnify"
                         clearable
+                        hide-details
                         @update:model-value="buscar"
                     />
                 </v-col>
@@ -129,6 +130,7 @@ export default {
                         density="compact"
                         clear-on-select
                         clearable
+                        hide-details
                         @update:model-value="
                             $emit('cargarItems', { categoria_id })
                         "

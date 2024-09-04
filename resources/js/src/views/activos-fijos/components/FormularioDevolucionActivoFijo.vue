@@ -79,7 +79,7 @@ export default {
                     v-model="formulario.fecha_devolucion"
                     class="mb-2"
                     label="Fecha de Devolución"
-                    prepend-icon="mdi-calendar"
+                    prepend-inner-icon="mdi-calendar"
                     readonly
                     density="compact"
                     :rules="reglasValidacionFechaDevolucion"

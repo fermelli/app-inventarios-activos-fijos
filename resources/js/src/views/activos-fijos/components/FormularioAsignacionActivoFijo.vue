@@ -163,7 +163,7 @@ export default {
                     v-model="formulario.fecha_asignacion"
                     class="mb-2"
                     label="Fecha de Asignación"
-                    prepend-icon="mdi-calendar"
+                    prepend-inner-icon="mdi-calendar"
                     readonly
                     density="compact"
                     :rules="reglasValidacionFechaAsignacion"

@@ -177,7 +177,7 @@ export default {
                 <v-btn
                     color="info"
                     density="compact"
-                    prepend-icon="mdi-magnify"
+                    prepend-inner-icon="mdi-magnify"
                     title="Buscar Artículo"
                     type="button"
                     @click="mostradoDialogoTablaArticulos = true"

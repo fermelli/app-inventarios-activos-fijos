@@ -46,8 +46,9 @@ export default {
                 label="Buscar"
                 name="buscar"
                 type="text"
-                prepend-icon="mdi-magnify"
+                prepend-inner-icon="mdi-magnify"
                 clearable
+                hide-details
             />
         </template>
 

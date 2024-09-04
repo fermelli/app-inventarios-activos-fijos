@@ -170,7 +170,7 @@ export default {
                             v-model="formulario.fecha"
                             class="mb-2"
                             label="Fecha"
-                            prepend-icon="mdi-calendar"
+                            prepend-inner-icon="mdi-calendar"
                             readonly
                             density="compact"
                             :rules="reglasValidacionFecha"
@@ -253,7 +253,7 @@ export default {
                 <v-btn
                     color="info"
                     density="compact"
-                    prepend-icon="mdi-magnify"
+                    prepend-inner-icon="mdi-magnify"
                     title="Buscar Artículo"
                     type="button"
                     @click="mostradoDialogoTablaArticulos = true"

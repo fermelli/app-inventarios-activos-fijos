@@ -78,7 +78,7 @@ export default {
                     v-model="formulario.fecha_baja"
                     class="mb-2"
                     label="Fecha de Baja"
-                    prepend-icon="mdi-calendar"
+                    prepend-inner-icon="mdi-calendar"
                     readonly
                     density="compact"
                     :rules="reglasValidacionFechaBaja"
