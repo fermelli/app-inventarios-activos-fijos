@@ -140,6 +140,7 @@ export default {
                             single-line
                             hide-details
                             v-bind="props"
+                            clearable
                         />
                     </template>
 
@@ -152,11 +153,14 @@ export default {
                         scrollable
                         show-adjacent-months
                         @update:model-value="
-                            item.articulo_lote.fecha_vencimiento =
-                                formatearFecha(
-                                    item.articulo_lote
-                                        .fecha_vencimiento_sin_formato,
-                                )
+                            ($event) => {
+                                item.articulo_lote.fecha_vencimiento =
+                                    formatearFecha(
+                                        item.articulo_lote
+                                            .fecha_vencimiento_sin_formato,
+                                    );
+                                item.articulo_lote.menu = false;
+                            }
                         "
                     >
                         <template #actions>

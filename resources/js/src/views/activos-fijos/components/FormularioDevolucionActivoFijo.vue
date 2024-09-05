@@ -84,6 +84,7 @@ export default {
                     density="compact"
                     :rules="reglasValidacionFechaDevolucion"
                     v-bind="props"
+                    clearable
                 />
             </template>
 
@@ -94,7 +95,10 @@ export default {
                 scrollable
                 show-adjacent-months
                 @update:model-value="
-                    formulario.fecha_devolucion = formatearFecha(fecha)
+                    ($event) => {
+                        formulario.fecha_devolucion = formatearFecha($event);
+                        menu = false;
+                    }
                 "
             >
                 <template #actions>
