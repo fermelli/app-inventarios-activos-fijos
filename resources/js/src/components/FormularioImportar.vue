@@ -78,7 +78,6 @@ export default {
     >
         <v-file-input
             v-model="formulario.archivos"
-            class="mb-2"
             label="Archivo (XLSX)"
             name="archivo"
             accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
@@ -89,28 +88,31 @@ export default {
             clearable
         />
 
-        <v-btn
-            color="primary"
-            density="compact"
-            prepend-icon="mdi-file-upload"
-            title="Subir Archivo"
-            type="submit"
-            :loading="guardandoItem"
-            :disabled="guardandoItem"
-        >
-            Subir Archivo
-        </v-btn>
+        <div class="d-flex flex-wrap justify-space-between align-center">
+            <v-btn
+                class="ma-1"
+                color="primary"
+                density="compact"
+                prepend-icon="mdi-file-upload"
+                title="Subir Archivo"
+                type="submit"
+                :loading="guardandoItem"
+                :disabled="guardandoItem"
+            >
+                Subir
+            </v-btn>
 
-        <v-btn
-            class="ml-2"
-            color="blue-grey"
-            density="compact"
-            prepend-icon="mdi-close"
-            title="Cancelar"
-            :disabled="guardandoItem"
-            @click="emitCancelarGuardado"
-        >
-            Cancelar
-        </v-btn>
+            <v-btn
+                class="ma-1"
+                color="blue-grey"
+                density="compact"
+                prepend-icon="mdi-close"
+                title="Cancelar"
+                :disabled="guardandoItem"
+                @click="emitCancelarGuardado"
+            >
+                Cancelar
+            </v-btn>
+        </div>
     </v-form>
 </template>

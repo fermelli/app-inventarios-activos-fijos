@@ -18,8 +18,9 @@ export default {
 <template>
     <v-dialog
         :model-value="modelValue"
-        persistent
         width="1400"
+        persistent
+        scrollable
         @update:model-value="value = $event"
     >
         <v-card>
@@ -34,16 +35,20 @@ export default {
             </v-card-text>
 
             <v-card-actions>
-                <v-btn
-                    class="ml-2"
-                    color="blue-grey"
-                    density="compact"
-                    prepend-icon="mdi-close"
-                    title="Cerrar"
-                    @click="$emit('cerrar')"
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
                 >
-                    Cerrar
-                </v-btn>
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cerrar"
+                        @click="$emit('cerrar')"
+                    >
+                        Cerrar
+                    </v-btn>
+                </div>
             </v-card-actions>
         </v-card>
     </v-dialog>

@@ -294,7 +294,12 @@ export default {
             />
         </v-col>
 
-        <v-dialog v-model="mostradoDialogoFormulario" persistent width="1200">
+        <v-dialog
+            v-model="mostradoDialogoFormulario"
+            width="1200"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ tituloDialogoFormulario }}</span>
@@ -311,7 +316,12 @@ export default {
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="mostradoDialogoMostrarItem" width="1200">
+        <v-dialog
+            v-model="mostradoDialogoMostrarItem"
+            width="1200"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ nombreItem }}</span>
@@ -365,55 +375,64 @@ export default {
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn
-                        color="error"
-                        density="compact"
-                        prepend-icon="mdi-close"
-                        title="Anular Entrada de Artículos"
-                        :disabled="botonAnularDeshabilitado"
-                        @click="() => confirmarAtencion('anular')"
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
                     >
-                        Anular Entrada de Artículos
-                    </v-btn>
+                        <v-btn
+                            class="ma-1"
+                            color="error"
+                            density="compact"
+                            prepend-icon="mdi-close"
+                            title="Anular Entrada de Artículos"
+                            :disabled="botonAnularDeshabilitado"
+                            @click="() => confirmarAtencion('anular')"
+                        >
+                            Anular Entrada de Artículos
+                        </v-btn>
 
-                    <v-btn
-                        class="ml-2"
-                        color="primary"
-                        density="compact"
-                        prepend-icon="mdi-printer"
-                        title="Reporte PDF"
-                        @click="mostrarReportePdf"
-                    >
-                        Reporte PDF
-                    </v-btn>
+                        <v-btn
+                            class="ma-1"
+                            color="primary"
+                            density="compact"
+                            prepend-icon="mdi-printer"
+                            title="Reporte PDF"
+                            @click="mostrarReportePdf"
+                        >
+                            Reporte PDF
+                        </v-btn>
 
-                    <v-btn
-                        color="blue-grey"
-                        density="compact"
-                        prepend-icon="mdi-close"
-                        title="Cerrar"
-                        @click="mostradoDialogoMostrarItem = false"
-                    >
-                        Cerrar
-                    </v-btn>
+                        <v-btn
+                            class="ma-1"
+                            color="blue-grey"
+                            density="compact"
+                            prepend-icon="mdi-close"
+                            title="Cerrar"
+                            @click="mostradoDialogoMostrarItem = false"
+                        >
+                            Cerrar
+                        </v-btn>
+                    </div>
                 </v-card-actions>
             </v-card>
         </v-dialog>
 
         <v-dialog
             v-model="mostradoDialogoFormularioImportar"
-            persistent
             width="560"
+            persistent
+            scrollable
         >
             <v-card>
                 <v-card-title>
-                    <div class="d-flex justify-space-between align-center">
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
+                    >
                         <span class="text-h6">
                             Importar Entradas de Artículos
                         </span>
 
                         <v-btn
-                            class="ml-2"
+                            class="ma-1"
                             color="primary"
                             variant="text"
                             density="compact"
@@ -423,7 +442,7 @@ export default {
                             title="Descargar Formato de Importación"
                             @click="descargarFormatoImportacion"
                         >
-                            Formato de Ejemplo
+                            Ejemplo
                         </v-btn>
                     </div>
                 </v-card-title>

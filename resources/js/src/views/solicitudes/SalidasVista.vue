@@ -146,7 +146,12 @@ export default {
             />
         </v-col>
 
-        <v-dialog v-model="mostradoDialogoMostrarItem" width="1200">
+        <v-dialog
+            v-model="mostradoDialogoMostrarItem"
+            width="1200"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ nombreItem }}</span>
@@ -199,51 +204,57 @@ export default {
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn
-                        v-if="mostradoBotonAccion"
-                        color="success"
-                        density="compact"
-                        prepend-icon="mdi-check"
-                        title="Entregar Salida de Artículos"
-                        :disabled="botonEntregarOAnularDeshabilitado"
-                        @click="() => confirmarAtencion('entregar')"
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
                     >
-                        Entregar Salida de Artículos
-                    </v-btn>
+                        <v-btn
+                            v-if="mostradoBotonAccion"
+                            class="ma-1"
+                            color="success"
+                            density="compact"
+                            prepend-icon="mdi-check"
+                            title="Entregar Salida de Artículos"
+                            :disabled="botonEntregarOAnularDeshabilitado"
+                            @click="() => confirmarAtencion('entregar')"
+                        >
+                            Entregar
+                        </v-btn>
 
-                    <v-btn
-                        v-if="mostradoBotonAccion"
-                        color="error"
-                        density="compact"
-                        prepend-icon="mdi-close"
-                        title="Anular Salida de Artículos"
-                        :disabled="botonEntregarOAnularDeshabilitado"
-                        @click="() => confirmarAtencion('anular')"
-                    >
-                        Anular Salida de Artículos
-                    </v-btn>
+                        <v-btn
+                            v-if="mostradoBotonAccion"
+                            class="ma-1"
+                            color="error"
+                            density="compact"
+                            prepend-icon="mdi-close"
+                            title="Anular Salida de Artículos"
+                            :disabled="botonEntregarOAnularDeshabilitado"
+                            @click="() => confirmarAtencion('anular')"
+                        >
+                            Anular
+                        </v-btn>
 
-                    <v-btn
-                        class="ml-2"
-                        color="primary"
-                        density="compact"
-                        prepend-icon="mdi-printer"
-                        title="Reporte PDF"
-                        @click="mostrarReportePdf"
-                    >
-                        Reporte PDF
-                    </v-btn>
+                        <v-btn
+                            class="ma-1"
+                            color="primary"
+                            density="compact"
+                            prepend-icon="mdi-printer"
+                            title="Reporte PDF"
+                            @click="mostrarReportePdf"
+                        >
+                            Reporte PDF
+                        </v-btn>
 
-                    <v-btn
-                        class="ml-2"
-                        color="secondary"
-                        density="compact"
-                        prepend-icon="mdi-close"
-                        title="Cerrar"
-                        @click="cerrarDialogoMostrarItem"
-                    >
-                        Cerrar
-                    </v-btn>
+                        <v-btn
+                            class="ma-1"
+                            color="secondary"
+                            density="compact"
+                            prepend-icon="mdi-close"
+                            title="Cerrar"
+                            @click="cerrarDialogoMostrarItem"
+                        >
+                            Cerrar
+                        </v-btn>
+                    </div>
                 </v-card-actions>
             </v-card>
         </v-dialog>

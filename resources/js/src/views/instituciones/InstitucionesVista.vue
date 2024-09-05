@@ -119,7 +119,12 @@ export default {
             />
         </v-col>
 
-        <v-dialog v-model="mostradoDialogoFormulario" persistent width="440">
+        <v-dialog
+            v-model="mostradoDialogoFormulario"
+            width="440"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ tituloDialogoFormulario }}</span>

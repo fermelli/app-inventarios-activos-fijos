@@ -132,7 +132,12 @@ export default {
             />
         </v-col>
 
-        <v-dialog v-model="mostradoDialogoFormulario" persistent width="440">
+        <v-dialog
+            v-model="mostradoDialogoFormulario"
+            width="440"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ tituloDialogoFormulario }}</span>
@@ -151,16 +156,19 @@ export default {
 
         <v-dialog
             v-model="mostradoDialogoFormularioImportar"
-            persistent
             width="560"
+            persistent
+            scrollable
         >
             <v-card>
                 <v-card-title>
-                    <div class="d-flex justify-space-between align-center">
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
+                    >
                         <span class="text-h6">Importar Artículos</span>
 
                         <v-btn
-                            class="ml-2"
+                            class="ma-1"
                             color="primary"
                             variant="text"
                             density="compact"
@@ -170,7 +178,7 @@ export default {
                             title="Descargar Formato de Importación"
                             @click="descargarFormatoImportacion"
                         >
-                            Formato de Ejemplo
+                            Ejemplo
                         </v-btn>
                     </div>
                 </v-card-title>

@@ -288,7 +288,12 @@ export default {
             />
         </v-col>
 
-        <v-dialog v-model="mostradoDialogoFormulario" persistent width="800">
+        <v-dialog
+            v-model="mostradoDialogoFormulario"
+            width="800"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ tituloDialogoFormulario }}</span>
@@ -307,8 +312,9 @@ export default {
 
         <v-dialog
             v-model="mostradoDialogoFormularioAsignacion"
-            persistent
             width="800"
+            persistent
+            scrollable
         >
             <v-card>
                 <v-card-title>
@@ -332,8 +338,9 @@ export default {
 
         <v-dialog
             v-model="mostradoDialogoFormularioDevolucion"
-            persistent
             width="800"
+            persistent
+            scrollable
         >
             <v-card>
                 <v-card-title>
@@ -355,7 +362,12 @@ export default {
             </v-card>
         </v-dialog>
 
-        <v-dialog v-model="mostradoDialogoMostrarItem" width="100%">
+        <v-dialog
+            v-model="mostradoDialogoMostrarItem"
+            width="100%"
+            persistent
+            scrollable
+        >
             <v-card>
                 <v-card-title>
                     <span class="text-h6">{{ nombreItem }}</span>
@@ -425,23 +437,29 @@ export default {
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn
-                        color="blue-grey"
-                        density="compact"
-                        prepend-icon="mdi-close"
-                        title="Cerrar"
-                        @click="mostradoDialogoMostrarItem = false"
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
                     >
-                        Cerrar
-                    </v-btn>
+                        <v-btn
+                            class="ma-1"
+                            color="blue-grey"
+                            density="compact"
+                            prepend-icon="mdi-close"
+                            title="Cerrar"
+                            @click="mostradoDialogoMostrarItem = false"
+                        >
+                            Cerrar
+                        </v-btn>
+                    </div>
                 </v-card-actions>
             </v-card>
         </v-dialog>
 
         <v-dialog
             v-model="mostradoDialogoFormularioDarBaja"
-            persistent
             width="800"
+            persistent
+            scrollable
         >
             <v-card>
                 <v-card-title>
@@ -463,16 +481,18 @@ export default {
 
         <v-dialog
             v-model="mostradoDialogoFormularioImportar"
-            persistent
             width="560"
+            persistent
+            scrollable
         >
             <v-card>
                 <v-card-title>
-                    <div class="d-flex justify-space-between align-center">
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
+                    >
                         <span class="text-h6">Importar Activos Fijos</span>
 
                         <v-btn
-                            class="ml-2"
                             color="primary"
                             variant="text"
                             density="compact"
@@ -482,7 +502,7 @@ export default {
                             title="Descargar Formato de Importación"
                             @click="descargarFormatoImportacion"
                         >
-                            Formato de Ejemplo
+                            Ejemplo
                         </v-btn>
                     </div>
                 </v-card-title>

@@ -221,7 +221,12 @@ export default {
                 </v-btn>
             </v-col>
 
-            <v-dialog v-model="mostradoDialogoTablaArticulos" width="1200">
+            <v-dialog
+                v-model="mostradoDialogoTablaArticulos"
+                width="1200"
+                persistent
+                scrollable
+            >
                 <v-card>
                     <v-card-title>
                         <span class="text-h6">Seleccionar Artículo</span>
@@ -243,15 +248,20 @@ export default {
                     </v-card-text>
 
                     <v-card-actions>
-                        <v-btn
-                            color="blue-grey"
-                            density="compact"
-                            prepend-icon="mdi-close"
-                            title="Cerrar"
-                            @click="mostradoDialogoTablaArticulos = false"
+                        <div
+                            class="d-flex flex-wrap justify-space-between align-center"
                         >
-                            Cerrar
-                        </v-btn>
+                            <v-btn
+                                class="ma-1"
+                                color="blue-grey"
+                                density="compact"
+                                prepend-icon="mdi-close"
+                                title="Cerrar"
+                                @click="mostradoDialogoTablaArticulos = false"
+                            >
+                                Cerrar
+                            </v-btn>
+                        </div>
                     </v-card-actions>
                 </v-card>
             </v-dialog>

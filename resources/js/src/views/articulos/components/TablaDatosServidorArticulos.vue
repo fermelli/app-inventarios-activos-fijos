@@ -256,9 +256,19 @@ export default {
             </v-card-text>
 
             <v-card-actions>
-                <v-btn color="primary" @click="cerrarDialogoLotes">
-                    Cerrar
-                </v-btn>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        @click="cerrarDialogoLotes"
+                    >
+                        Cerrar
+                    </v-btn>
+                </div>
             </v-card-actions>
         </v-card>
     </v-dialog>

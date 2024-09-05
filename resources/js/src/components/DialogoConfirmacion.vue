@@ -22,8 +22,9 @@ export default {
 <template>
     <v-dialog
         :model-value="modelValue"
-        persistent
         width="440"
+        persistent
+        scrollable
         @update:model-value="value = $event"
     >
         <v-card>
@@ -37,29 +38,34 @@ export default {
             </v-card-text>
 
             <v-card-actions>
-                <v-btn
-                    color="primary"
-                    density="compact"
-                    prepend-icon="mdi-check"
-                    title="Aceptar"
-                    :loading="realizandoAccion"
-                    :disabled="realizandoAccion"
-                    @click="$emit('aceptar')"
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
                 >
-                    Aceptar
-                </v-btn>
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-check"
+                        title="Aceptar"
+                        :loading="realizandoAccion"
+                        :disabled="realizandoAccion"
+                        @click="$emit('aceptar')"
+                    >
+                        Aceptar
+                    </v-btn>
 
-                <v-btn
-                    class="ml-2"
-                    color="blue-grey"
-                    density="compact"
-                    prepend-icon="mdi-close"
-                    title="Cancelar"
-                    :disabled="realizandoAccion"
-                    @click="$emit('cancelar')"
-                >
-                    Cancelar
-                </v-btn>
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cancelar"
+                        :disabled="realizandoAccion"
+                        @click="$emit('cancelar')"
+                    >
+                        Cancelar
+                    </v-btn>
+                </div>
             </v-card-actions>
         </v-card>
     </v-dialog>
