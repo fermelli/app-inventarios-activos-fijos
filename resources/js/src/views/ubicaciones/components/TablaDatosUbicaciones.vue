@@ -1,10 +1,16 @@
 <script>
 import tablaDatosMixin from "../../../mixins/tabla-datos.mixin";
+import { useDisplay } from "vuetify";
 
 export default {
     name: "TablaDatosUbicaciones",
     mixins: [tablaDatosMixin],
     emits: ["mostrarFormulario", "mostrarConfirmacion"],
+    setup() {
+        const display = useDisplay();
+
+        return { display };
+    },
     data() {
         return {
             headers: [
@@ -32,6 +38,8 @@ export default {
         :items-per-page-options="itemsPorPaginaOpciones"
         density="compact"
         :loading="cargandoItems"
+        :mobile="null"
+        :hide-default-header="display.mobile.value"
         @update:items-per-page="actualizarItemsPorPagina"
         @update:page="paginaActual = $event"
     >

@@ -1,6 +1,7 @@
 <script>
 import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin";
 import { COLORES_ESTADOS_ENTRADAS } from "../../../utils/constantes";
+import { useDisplay } from "vuetify";
 
 export default {
     name: "TablaDatosServidorEntradas",
@@ -11,6 +12,11 @@ export default {
         "cargarItems",
         "mostrarItem",
     ],
+    setup() {
+        const display = useDisplay();
+
+        return { display };
+    },
     data() {
         return {
             headers: [
@@ -45,6 +51,8 @@ export default {
         :items-per-page-options="itemsPorPaginaOpciones"
         density="compact"
         :loading="cargandoItems"
+        :mobile="null"
+        :hide-default-header="display.mobile.value"
         @update:items-per-page="actualizarItemsPorPagina"
         @update:options="
             ({ page, itemsPerPage, search }) =>

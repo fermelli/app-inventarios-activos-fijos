@@ -3,6 +3,7 @@ import tablaDatosServidorMixin from "../../../mixins/tabla-datos-servidor.mixin"
 import { aplanarCategorias } from "../../../utils/funciones";
 import TablaDatosLotes from "./TablaDatosLotes.vue";
 import CategoriaService from "../../../services/categorias";
+import { useDisplay } from "vuetify";
 
 export default {
     name: "TablaDatosServidorArticulos",
@@ -24,6 +25,11 @@ export default {
         "exportarPdf",
         "exportarExcel",
     ],
+    setup() {
+        const display = useDisplay();
+
+        return { display };
+    },
     data() {
         return {
             headers: [
@@ -95,6 +101,8 @@ export default {
         :items-per-page-options="itemsPorPaginaOpciones"
         density="compact"
         :loading="cargandoItems"
+        :mobile="null"
+        :hide-default-header="display.mobile.value"
         @update:items-per-page="actualizarItemsPorPagina"
         @update:options="
             ({ page, itemsPerPage, search }) =>

@@ -24,6 +24,9 @@ const vuetify = createVuetify({
             temaOscuro,
         },
     },
+    display: {
+        mobileBreakpoint: "md",
+    },
 });
 
 export default vuetify;

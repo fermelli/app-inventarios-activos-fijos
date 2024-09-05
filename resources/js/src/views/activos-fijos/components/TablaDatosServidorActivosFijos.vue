@@ -6,6 +6,7 @@ import {
     COLORES_ESTADOS_ACTIVOS_FIJOS,
     ESTADOS_ACTIVOS_FIJOS,
 } from "../../../utils/constantes";
+import { useDisplay } from "vuetify";
 
 export default {
     name: "TablaDatosServidorActivosFijos",
@@ -26,6 +27,11 @@ export default {
         "mostrarFormularioDevolucion",
         "mostrarFormularioDarBaja",
     ],
+    setup() {
+        const display = useDisplay();
+
+        return { display };
+    },
     data() {
         return {
             headers: [
@@ -100,6 +106,8 @@ export default {
         :items-per-page-options="itemsPorPaginaOpciones"
         density="compact"
         :loading="cargandoItems"
+        :mobile="null"
+        :hide-default-header="display.mobile.value"
         @update:items-per-page="actualizarItemsPorPagina"
         @update:options="
             ({ page, itemsPerPage, search }) =>
