@@ -221,7 +221,7 @@ export default {
                 </v-card-title>
 
                 <v-card-text class="pa-4">
-                    <v-row>
+                    <v-row dense>
                         <v-col
                             v-for="(dato, indice) in listadoDatos"
                             :key="indice"
@@ -229,9 +229,10 @@ export default {
                             cols="12"
                             lg="3"
                         >
-                            <v-list lines="two">
+                            <v-list lines="two" class="py-0" density="compact">
                                 <v-list-item
                                     class="py-0"
+                                    density="compact"
                                     :title="dato.titulo"
                                     :subtitle="dato.subtitulo"
                                 />
@@ -239,9 +240,14 @@ export default {
                         </v-col>
 
                         <v-col cols="12" class="py-0">
-                            <v-list lines="three">
+                            <v-list
+                                lines="three"
+                                class="py-0"
+                                density="compact"
+                            >
                                 <v-list-item
                                     class="py-0"
+                                    density="compact"
                                     title="Observación"
                                     :subtitle="itemSeleccionado?.observacion"
                                 />
