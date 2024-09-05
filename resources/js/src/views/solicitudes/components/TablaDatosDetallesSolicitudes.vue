@@ -1,4 +1,6 @@
 <script>
+import { useDisplay } from "vuetify";
+
 export default {
     name: "TablaDatosDetallesSolicitudes",
     props: {
@@ -16,6 +18,11 @@ export default {
         },
     },
     emits: ["quitarDetalleTransaccion"],
+    setup() {
+        const display = useDisplay();
+
+        return { display };
+    },
     data() {
         return {
             reglasCantidad: [
@@ -30,6 +37,23 @@ export default {
             return this.mostradoStock
                 ? { width: this.editable ? "50%" : "55%" }
                 : { width: this.editable ? "65%" : "70%" };
+        },
+        headers() {
+            const campoStock = this.mostradoStock
+                ? [{ title: "Stock", value: "articulo.cantidad" }]
+                : [];
+            const campoAcciones = this.editable
+                ? [{ title: "Acciones", value: "acciones" }]
+                : [];
+
+            return [
+                { title: "#", value: "nro" },
+                { title: "Artículo", value: "articulo.nombre" },
+                ...campoStock,
+                { title: "Unidad", value: "articulo.unidad.nombre" },
+                { title: "Cantidad", value: "cantidad", align: "end" },
+                ...campoAcciones,
+            ];
         },
     },
     methods: {
@@ -55,81 +79,69 @@ export default {
 </script>
 
 <template>
-    <v-table density="compact" height="400">
-        <thead>
-            <tr>
-                <th class="text-left" style="width: 5%">#</th>
-                <th class="text-left" :style="estilosColumnaNombreArticulo">
-                    Artículo
-                </th>
-                <th v-if="mostradoStock" class="text-left" style="width: 15%">
-                    Stock
-                </th>
-                <th class="text-left" style="width: 15%">Unidad</th>
-                <th class="text-left" style="width: 15%">Cantidad</th>
-                <th v-if="editable" class="text-center" style="width: 5%" />
-            </tr>
-        </thead>
+    <v-data-table
+        density="compact"
+        :headers="headers"
+        :items="detallesTransacciones"
+        :hide-default-header="display.mobile.value"
+        hide-default-footer
+        :mobile="null"
+    >
+        <template #[`item.nro`]="{ index }">
+            {{ index + 1 }}
+        </template>
 
-        <tbody>
-            <tr v-if="detallesTransacciones.length === 0">
-                <td :colspan="mostradoStock ? 6 : 5" class="text-center">
-                    No hay detalles
-                </td>
-            </tr>
+        <template #[`item.articulo.nombre`]="{ value }">
+            <div style="min-width: 175px">
+                {{ value }}
+            </div>
+        </template>
 
-            <tr
-                v-for="(detalle, indice) in detallesTransacciones"
-                :key="indice"
-                :class="claseFilaDetalleTransaccion(detalle)"
-            >
-                <td>{{ indice + 1 }}</td>
+        <template #[`item.articulo.cantidad`]="{ value }">
+            <div class="text-right" style="min-width: 175px">
+                {{ value }}
+            </div>
+        </template>
 
-                <td>{{ detalle.articulo.nombre }}</td>
+        <template #[`item.cantidad`]="{ value, item, index }">
+            <div style="min-width: 175px">
+                <v-text-field
+                    v-if="editable"
+                    v-model="item.cantidad"
+                    variant="outlined"
+                    label="Cantidad"
+                    :name="`cantidad${index}`"
+                    type="number"
+                    min="1"
+                    step="0.01"
+                    density="compact"
+                    single-line
+                    hide-details
+                    clearable
+                    required
+                    :rules="[...reglasCantidad, reglaCantidadMaxima(index)]"
+                />
 
-                <td v-if="mostradoStock" class="text-right">
-                    {{ detalle.articulo.cantidad }}
-                </td>
+                <div v-else class="text-right">
+                    {{ value }}
+                </div>
+            </div>
+        </template>
 
-                <td>{{ detalle.articulo.unidad.nombre }}</td>
+        <template #[`item.articulo.unidad.nombre`]="{ value }">
+            <div style="min-width: 175px">
+                {{ value }}
+            </div>
+        </template>
 
-                <template v-if="editable">
-                    <td>
-                        <v-text-field
-                            v-model="detalle.cantidad"
-                            variant="outlined"
-                            label="Cantidad"
-                            :name="`cantidad${indice}`"
-                            type="number"
-                            min="1"
-                            step="0.01"
-                            density="compact"
-                            single-line
-                            hide-details
-                            clearable
-                            required
-                            :rules="[
-                                ...reglasCantidad,
-                                reglaCantidadMaxima(indice),
-                            ]"
-                        />
-                    </td>
-
-                    <td>
-                        <v-btn
-                            color="error"
-                            density="compact"
-                            icon="mdi-close"
-                            title="Quitar Artículo"
-                            @click="$emit('quitarDetalleTransaccion', indice)"
-                        />
-                    </td>
-                </template>
-
-                <template v-else>
-                    <td class="text-right">{{ detalle.cantidad }}</td>
-                </template>
-            </tr>
-        </tbody>
-    </v-table>
+        <template #[`item.acciones`]="{ index }">
+            <v-btn
+                color="error"
+                density="compact"
+                icon="mdi-close"
+                title="Quitar Artículo"
+                @click="$emit('quitarDetalleTransaccion', index)"
+            />
+        </template>
+    </v-data-table>
 </template>

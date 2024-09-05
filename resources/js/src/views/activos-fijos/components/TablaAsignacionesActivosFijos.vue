@@ -1,4 +1,6 @@
 <script>
+import { useDisplay } from "vuetify";
+
 export default {
     name: "TablaAsignacionesActivosFijos",
     props: {
@@ -7,62 +9,52 @@ export default {
             required: true,
         },
     },
+    setup() {
+        const display = useDisplay();
+
+        return { display };
+    },
+    data() {
+        return {
+            headers: [
+                { title: "#", value: "nro" },
+                { title: "Asignado a", value: "asignado_a.nombre" },
+                { title: "Ubicación", value: "ubicacion.nombre" },
+                { title: "Asignado por", value: "usuario.nombre" },
+                { title: "Fecha Asignación", value: "fecha_asignacion" },
+                { title: "Obs. Asignación", value: "observacion_asignacion" },
+                { title: "Devuelto a", value: "devuelto_a.nombre" },
+                { title: "Fecha Devolución", value: "fecha_devolucion" },
+                { title: "Obs. Devolución", value: "observacion_devolucion" },
+            ],
+        };
+    },
 };
 </script>
 
 <template>
-    <v-table density="compact" height="300">
-        <thead>
-            <tr>
-                <th class="text-left">#</th>
-                <th class="text-left">Asignado a</th>
-                <th class="text-left">Ubicación</th>
-                <th class="text-left">Asignado por</th>
-                <th class="text-left">Fecha Asignación</th>
-                <th class="text-left">Obs. Asignación</th>
-                <th class="text-left">Devuelto a</th>
-                <th class="text-left">Fecha Devolución</th>
-                <th class="text-left">Obs. Devolución</th>
-            </tr>
-        </thead>
+    <v-data-table
+        density="compact"
+        :headers="headers"
+        :items="asignacionesActivosFijos"
+        :hide-default-header="display.mobile.value"
+        hide-default-footer
+        :mobile="null"
+    >
+        <template #[`item.nro`]="{ index }">
+            {{ index + 1 }}
+        </template>
 
-        <tbody>
-            <tr v-if="asignacionesActivosFijos?.length === 0">
-                <td colspan="9" class="text-center">
-                    No hay asignaciones registradas
-                </td>
-            </tr>
+        <template #[`item.devuelto_a.nombre`]="{ value }">
+            {{ value || "-" }}
+        </template>
 
-            <tr
-                v-for="(asignacion, indice) in asignacionesActivosFijos"
-                :key="indice"
-            >
-                <td>{{ indice + 1 }}</td>
-                <td>
-                    {{ asignacion.asignado_a?.nombre }}
-                </td>
-                <td>
-                    {{ asignacion.ubicacion?.nombre }}
-                </td>
-                <td>
-                    {{ asignacion.usuario?.nombre }}
-                </td>
-                <td>
-                    {{ asignacion.fecha_asignacion }}
-                </td>
-                <td>
-                    {{ asignacion.observacion_asignacion }}
-                </td>
-                <td>
-                    {{ asignacion.devuelto_a?.nombre || "-" }}
-                </td>
-                <td>
-                    {{ asignacion.fecha_devolucion || "-" }}
-                </td>
-                <td>
-                    {{ asignacion.observacion_devolucion || "-" }}
-                </td>
-            </tr>
-        </tbody>
-    </v-table>
+        <template #[`item.fecha_devolucion`]="{ value }">
+            {{ value || "-" }}
+        </template>
+
+        <template #[`item.observacion_devolucion`]="{ value }">
+            {{ value || "-" }}
+        </template>
+    </v-data-table>
 </template>
