@@ -156,7 +156,21 @@ export default {
     >
         <v-card>
             <v-card-title>
-                <span class="text-h6">{{ titulo }}</span>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <span class="text-h6">{{ titulo }}</span>
+
+                    <v-btn
+                        class="my-1"
+                        color="blue-grey"
+                        density="compact"
+                        variant="text"
+                        icon="mdi-close"
+                        title="Cerrar"
+                        @click="emitCancelarGuardado"
+                    />
+                </div>
             </v-card-title>
 
             <v-card-text class="pa-4 pb-0">
@@ -342,7 +356,21 @@ export default {
         >
             <v-card>
                 <v-card-title>
-                    <span class="text-h6">Seleccionar Artículo</span>
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
+                    >
+                        <span class="text-h6">Seleccionar Artículo</span>
+
+                        <v-btn
+                            class="my-1"
+                            color="blue-grey"
+                            density="compact"
+                            variant="text"
+                            icon="mdi-close"
+                            title="Cerrar"
+                            @click="mostradoDialogoTablaArticulos = false"
+                        />
+                    </div>
                 </v-card-title>
 
                 <v-card-text class="pa-4">
