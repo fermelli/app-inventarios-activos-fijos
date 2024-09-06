@@ -72,54 +72,69 @@ export default {
         :loading="guardandoItem"
         @submit.prevent="guardarItem"
     >
-        <v-select
-            v-model="formulario.rol"
-            class="mb-2"
-            label="Rol"
-            name="rol"
-            density="compact"
-            :items="[
-                { title: 'Administrador', value: 'administrador' },
-                { title: 'Personal', value: 'personal' },
-            ]"
-            required
-            clearable
-        />
+        <v-card>
+            <v-card-title>
+                <span class="text-h6">{{ titulo }}</span>
+            </v-card-title>
 
-        <v-autocomplete
-            v-model="formulario.dependencia_id"
-            class="mb-2"
-            :items="ubicaciones"
-            item-value="id"
-            item-title="nombre"
-            label="Dependencia"
-            name="dependencia_id"
-            density="compact"
-            clear-on-select
-            clearable
-            :rules="reglasValidacionDependenciaId"
-        />
+            <v-card-text class="pa-4 pb-0">
+                <v-select
+                    v-model="formulario.rol"
+                    class="mb-2"
+                    label="Rol"
+                    name="rol"
+                    density="compact"
+                    :items="[
+                        { title: 'Administrador', value: 'administrador' },
+                        { title: 'Personal', value: 'personal' },
+                    ]"
+                    required
+                    clearable
+                />
 
-        <v-btn
-            color="primary"
-            density="compact"
-            prepend-icon="mdi-content-save"
-            title="Guardar"
-            type="submit"
-            :disabled="guardandoItem"
-        >
-            Guardar
-        </v-btn>
+                <v-autocomplete
+                    v-model="formulario.dependencia_id"
+                    class="mb-2"
+                    :items="ubicaciones"
+                    item-value="id"
+                    item-title="nombre"
+                    label="Dependencia"
+                    name="dependencia_id"
+                    density="compact"
+                    clear-on-select
+                    clearable
+                    :rules="reglasValidacionDependenciaId"
+                />
+            </v-card-text>
 
-        <v-btn
-            class="ml-2"
-            color="blue-grey"
-            density="compact"
-            prepend-icon="mdi-close"
-            title="Cancelar"
-            @click="emitCancelarGuardado"
-        >
-            Cancelar
-        </v-btn>
+            <v-card-actions>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-content-save"
+                        title="Guardar"
+                        type="submit"
+                        :disabled="guardandoItem"
+                    >
+                        Guardar
+                    </v-btn>
+
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cancelar"
+                        @click="emitCancelarGuardado"
+                    >
+                        Cancelar
+                    </v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
     </v-form>
 </template>

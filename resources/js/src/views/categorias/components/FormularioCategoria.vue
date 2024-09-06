@@ -80,63 +80,78 @@ export default {
         :loading="guardandoItem"
         @submit.prevent="guardarItem"
     >
-        <v-text-field
-            v-model="formulario.nombre"
-            class="mb-2"
-            label="Nombre"
-            name="nombre"
-            type="text"
-            density="compact"
-            :rules="reglasValidacionNombre"
-            required
-            clearable
-        />
+        <v-card>
+            <v-card-title>
+                <span class="text-h6">{{ titulo }}</span>
+            </v-card-title>
 
-        <v-autocomplete
-            v-model="formulario.categoria_padre_id"
-            class="mb-2"
-            :items="categoriasPadresConHijasAplanadas"
-            item-value="id"
-            item-title="nombre_mostrado"
-            label="Categoría Padre"
-            name="categoria_padre_id"
-            density="compact"
-            clear-on-select
-            clearable
-            :rules="reglasValidacionCategoriaPadreId"
-        >
-            <template #selection="{ item }">
-                {{ item.raw.nombre }}
-            </template>
-
-            <template #item="{ item, props }">
-                <v-list-item
-                    v-bind="props"
-                    :disabled="item.raw.id == formulario.id"
+            <v-card-text class="pa-4 pb-0">
+                <v-text-field
+                    v-model="formulario.nombre"
+                    class="mb-2"
+                    label="Nombre"
+                    name="nombre"
+                    type="text"
+                    density="compact"
+                    :rules="reglasValidacionNombre"
+                    required
+                    clearable
                 />
-            </template>
-        </v-autocomplete>
 
-        <v-btn
-            color="primary"
-            density="compact"
-            prepend-icon="mdi-content-save"
-            title="Guardar"
-            type="submit"
-            :disabled="guardandoItem"
-        >
-            Guardar
-        </v-btn>
+                <v-autocomplete
+                    v-model="formulario.categoria_padre_id"
+                    class="mb-2"
+                    :items="categoriasPadresConHijasAplanadas"
+                    item-value="id"
+                    item-title="nombre_mostrado"
+                    label="Categoría Padre"
+                    name="categoria_padre_id"
+                    density="compact"
+                    clear-on-select
+                    clearable
+                    :rules="reglasValidacionCategoriaPadreId"
+                >
+                    <template #selection="{ item }">
+                        {{ item.raw.nombre }}
+                    </template>
 
-        <v-btn
-            class="ml-2"
-            color="blue-grey"
-            density="compact"
-            prepend-icon="mdi-close"
-            title="Cancelar"
-            @click="emitCancelarGuardado"
-        >
-            Cancelar
-        </v-btn>
+                    <template #item="{ item, props }">
+                        <v-list-item
+                            v-bind="props"
+                            :disabled="item.raw.id == formulario.id"
+                        />
+                    </template>
+                </v-autocomplete>
+            </v-card-text>
+
+            <v-card-actions>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-content-save"
+                        title="Guardar"
+                        type="submit"
+                        :disabled="guardandoItem"
+                    >
+                        Guardar
+                    </v-btn>
+
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cancelar"
+                        @click="emitCancelarGuardado"
+                    >
+                        Cancelar
+                    </v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
     </v-form>
 </template>

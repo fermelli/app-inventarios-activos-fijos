@@ -294,20 +294,12 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">{{ tituloDialogoFormulario }}</span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioActivoFijo
-                        :datos="datosItem"
-                        :nombre-item="nombreItem"
-                        @actualizar-listado="obtenerActivosFijos"
-                        @cancelar-guardado="cancelarGuardado"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioActivoFijo
+                :datos="datosItem"
+                :nombre-item="nombreItem"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardado"
+            />
         </v-dialog>
 
         <v-dialog
@@ -316,24 +308,12 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">
-                        {{ `Asignación ${nombreItem}` }}
-                    </span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioAsignacionActivoFijo
-                        :datos="asignacionActivoFijo"
-                        :nombre-item="`Asignación ${nombreItem}`"
-                        @actualizar-listado="obtenerActivosFijos"
-                        @cancelar-guardado="
-                            cancelarGuardadoAsignacionActivoFijo
-                        "
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioAsignacionActivoFijo
+                :datos="asignacionActivoFijo"
+                :nombre-item="`Asignación ${nombreItem}`"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardadoAsignacionActivoFijo"
+            />
         </v-dialog>
 
         <v-dialog
@@ -342,24 +322,12 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">
-                        {{ `Devolución ${nombreItem}` }}
-                    </span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioDevolucionActivoFijo
-                        :datos="devolucionActivoFijo"
-                        :nombre-item="`Devolución ${nombreItem}`"
-                        @actualizar-listado="obtenerActivosFijos"
-                        @cancelar-guardado="
-                            cancelarGuardadoDevolucionActivoFijo
-                        "
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioDevolucionActivoFijo
+                :datos="devolucionActivoFijo"
+                :nombre-item="`Devolución ${nombreItem}`"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardadoDevolucionActivoFijo"
+            />
         </v-dialog>
 
         <v-dialog
@@ -461,22 +429,12 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">
-                        {{ `Dar Baja ${nombreItem}` }}
-                    </span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioDarBajaActivoFijo
-                        :datos="datosItem"
-                        :nombre-item="`Dar Baja ${nombreItem}`"
-                        @actualizar-listado="obtenerActivosFijos"
-                        @cancelar-guardado="cancelarGuardadoDarBajaActivoFijo"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioDarBajaActivoFijo
+                :datos="datosItem"
+                :nombre-item="`Dar Baja ${nombreItem}`"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardadoDarBajaActivoFijo"
+            />
         </v-dialog>
 
         <v-dialog
@@ -485,38 +443,17 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <div
-                        class="d-flex flex-wrap justify-space-between align-center"
-                    >
-                        <span class="text-h6">Importar Activos Fijos</span>
-
-                        <v-btn
-                            color="primary"
-                            variant="text"
-                            density="compact"
-                            prepend-icon="mdi-microsoft-excel"
-                            :loading="descargandoFormatoEjemplo"
-                            :disabled="descargandoFormatoEjemplo"
-                            title="Descargar Formato de Importación"
-                            @click="descargarFormatoImportacion"
-                        >
-                            Ejemplo
-                        </v-btn>
-                    </div>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioImportar
-                        :datos="datosFormularioImportar"
-                        :metodo-importar="metodoImportar"
-                        :nombre-item="nombreItem"
-                        @actualizar-listado="obtenerActivosFijos"
-                        @cancelar-guardado="cancelarGuardadoImportar"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioImportar
+                :datos="datosFormularioImportar"
+                :metodo-importar="metodoImportar"
+                :metodo-formato-importacion="metodoFormatoImportacion"
+                :titulo-archivo-ejemplo-importacion="
+                    tituloArchivoEjemploImportacion
+                "
+                nombre-item="Importación Activos Fijos"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardadoImportar"
+            />
         </v-dialog>
 
         <DialogoConfirmacion

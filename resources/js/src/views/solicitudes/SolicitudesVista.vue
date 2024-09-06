@@ -202,21 +202,13 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">{{ tituloDialogoFormulario }}</span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioSolicitud
-                        :datos="datosItem"
-                        :nombre-item="nombreItem"
-                        :tipo="tipo"
-                        @actualizar-listado="obtenerSolicitudesArticulos"
-                        @cancelar-guardado="cancelarGuardado"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioSolicitud
+                :datos="datosItem"
+                :nombre-item="nombreItem"
+                :tipo="tipo"
+                @actualizar-listado="obtenerSolicitudesArticulos"
+                @cancelar-guardado="cancelarGuardado"
+            />
         </v-dialog>
 
         <v-dialog

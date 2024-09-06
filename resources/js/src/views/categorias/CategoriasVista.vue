@@ -132,20 +132,12 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">{{ tituloDialogoFormulario }}</span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioCategoria
-                        :datos="datosItem"
-                        :nombre-item="nombreItem"
-                        @actualizar-listado="obtenerCategorias"
-                        @cancelar-guardado="cancelarGuardado"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioCategoria
+                :datos="datosItem"
+                :nombre-item="nombreItem"
+                @actualizar-listado="obtenerCategorias"
+                @cancelar-guardado="cancelarGuardado"
+            />
         </v-dialog>
 
         <DialogoConfirmacion

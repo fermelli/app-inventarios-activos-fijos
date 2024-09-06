@@ -121,110 +121,126 @@ export default {
         :loading="guardandoItem"
         @submit.prevent="guardarItem"
     >
-        <v-autocomplete
-            v-model="formulario.asignado_a_id"
-            class="mb-2"
-            :items="asignados"
-            item-value="id"
-            item-title="nombre"
-            label="Asignado a"
-            name="asignado_a_id"
-            density="compact"
-            clear-on-select
-            clearable
-            :rules="reglasValidacionAsignadoA"
-        />
+        <v-card>
+            <v-card-title>
+                <span class="text-h6">{{ titulo }}</span>
+            </v-card-title>
 
-        <v-autocomplete
-            v-model="formulario.ubicacion_id"
-            class="mb-2"
-            :items="ubicaciones"
-            item-value="id"
-            item-title="nombre"
-            label="Ubicación"
-            name="ubicacion_id"
-            density="compact"
-            clear-on-select
-            clearable
-            :rules="reglasValidacionUbicacionId"
-        />
-
-        <v-menu
-            ref="menu"
-            v-model="menu"
-            v-model:return-value="formulario.fecha_asignacion"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-        >
-            <template #activator="{ props }">
-                <v-text-field
-                    v-model="formulario.fecha_asignacion"
+            <v-card-text class="pa-4 pb-0">
+                <v-autocomplete
+                    v-model="formulario.asignado_a_id"
                     class="mb-2"
-                    label="Fecha de Asignación"
-                    prepend-inner-icon="mdi-calendar"
-                    readonly
+                    :items="asignados"
+                    item-value="id"
+                    item-title="nombre"
+                    label="Asignado a"
+                    name="asignado_a_id"
                     density="compact"
-                    :rules="reglasValidacionFechaAsignacion"
-                    v-bind="props"
+                    clear-on-select
+                    clearable
+                    :rules="reglasValidacionAsignadoA"
+                />
+
+                <v-autocomplete
+                    v-model="formulario.ubicacion_id"
+                    class="mb-2"
+                    :items="ubicaciones"
+                    item-value="id"
+                    item-title="nombre"
+                    label="Ubicación"
+                    name="ubicacion_id"
+                    density="compact"
+                    clear-on-select
+                    clearable
+                    :rules="reglasValidacionUbicacionId"
+                />
+
+                <v-menu
+                    ref="menu"
+                    v-model="menu"
+                    v-model:return-value="formulario.fecha_asignacion"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template #activator="{ props }">
+                        <v-text-field
+                            v-model="formulario.fecha_asignacion"
+                            class="mb-2"
+                            label="Fecha de Asignación"
+                            prepend-inner-icon="mdi-calendar"
+                            readonly
+                            density="compact"
+                            :rules="reglasValidacionFechaAsignacion"
+                            v-bind="props"
+                            clearable
+                        />
+                    </template>
+
+                    <v-date-picker
+                        v-model="fecha"
+                        hide-header
+                        no-title
+                        scrollable
+                        show-adjacent-months
+                        @update:model-value="
+                            ($event) => {
+                                formulario.fecha_asignacion =
+                                    formatearFecha($event);
+                                menu = false;
+                            }
+                        "
+                    >
+                        <template #actions>
+                            <v-spacer />
+
+                            <v-btn text color="primary" @click="menu = false">
+                                Cerrar
+                            </v-btn>
+                        </template>
+                    </v-date-picker>
+                </v-menu>
+
+                <v-textarea
+                    v-model="formulario.observacion_asignacion"
+                    class="mb-2"
+                    label="Observación de Asignación"
+                    name="observacion_asignacion"
+                    density="compact"
+                    :rules="reglasValidacionObservacionAsignacion"
                     clearable
                 />
-            </template>
+            </v-card-text>
 
-            <v-date-picker
-                v-model="fecha"
-                hide-header
-                no-title
-                scrollable
-                show-adjacent-months
-                @update:model-value="
-                    ($event) => {
-                        formulario.fecha_asignacion = formatearFecha($event);
-                        menu = false;
-                    }
-                "
-            >
-                <template #actions>
-                    <v-spacer />
-
-                    <v-btn text color="primary" @click="menu = false">
-                        Cerrar
+            <v-card-actions>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-content-save"
+                        title="Guardar"
+                        type="submit"
+                        :disabled="guardandoItem"
+                    >
+                        Guardar
                     </v-btn>
-                </template>
-            </v-date-picker>
-        </v-menu>
 
-        <v-textarea
-            v-model="formulario.observacion_asignacion"
-            class="mb-2"
-            label="Observación de Asignación"
-            name="observacion_asignacion"
-            density="compact"
-            :rules="reglasValidacionObservacionAsignacion"
-            clearable
-        />
-
-        <v-btn
-            color="primary"
-            density="compact"
-            prepend-icon="mdi-content-save"
-            title="Guardar"
-            type="submit"
-            :disabled="guardandoItem"
-        >
-            Guardar
-        </v-btn>
-
-        <v-btn
-            class="ml-2"
-            color="blue-grey"
-            density="compact"
-            prepend-icon="mdi-close"
-            title="Cancelar"
-            @click="emitCancelarGuardado"
-        >
-            Cancelar
-        </v-btn>
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cancelar"
+                        @click="emitCancelarGuardado"
+                    >
+                        Cancelar
+                    </v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
     </v-form>
 </template>

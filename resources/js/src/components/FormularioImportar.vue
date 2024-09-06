@@ -17,6 +17,14 @@ export default {
             type: Function,
             required: true,
         },
+        metodoFormatoImportacion: {
+            type: Function,
+            required: true,
+        },
+        tituloArchivoEjemploImportacion: {
+            type: String,
+            required: true,
+        },
     },
     setup() {
         const toast = useToast();
@@ -27,6 +35,7 @@ export default {
         return {
             metodoStore: () => {},
             metodoUpdate: () => {},
+            descargandoFormatoEjemplo: false,
             reglasValidacionArchivo: [
                 (valor) =>
                     (!!valor && valor.length > 0) || "El archivo es requerido",
@@ -66,6 +75,33 @@ export default {
                 this.guardandoItem = false;
             }
         },
+        async descargarFormatoImportacion() {
+            this.descargandoFormatoEjemplo = true;
+
+            try {
+                const { data } = await this.metodoFormatoImportacion();
+                const blob = new Blob([data], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                });
+                const link = document.createElement("a");
+
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `${this.tituloArchivoEjemploImportacion}.xlsx`;
+                link.click();
+            } catch (error) {
+                console.log(error);
+
+                const mensaje =
+                    error?.response?.data?.message ||
+                    error.message ||
+                    error ||
+                    "Error al descargar el formato de ejemplo";
+
+                this.toast.error(mensaje);
+            } finally {
+                this.descargandoFormatoEjemplo = false;
+            }
+        },
     },
 };
 </script>
@@ -76,43 +112,73 @@ export default {
         :loading="guardandoItem"
         @submit.prevent="subirArchivo"
     >
-        <v-file-input
-            v-model="formulario.archivos"
-            label="Archivo (XLSX)"
-            name="archivo"
-            accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-            prepend-icon="mdi-microsoft-excel"
-            density="compact"
-            :rules="reglasValidacionArchivo"
-            required
-            clearable
-        />
+        <v-card>
+            <v-card-title>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <span class="text-h6">{{ titulo }}</span>
 
-        <div class="d-flex flex-wrap justify-space-between align-center">
-            <v-btn
-                class="ma-1"
-                color="primary"
-                density="compact"
-                prepend-icon="mdi-file-upload"
-                title="Subir Archivo"
-                type="submit"
-                :loading="guardandoItem"
-                :disabled="guardandoItem"
-            >
-                Subir
-            </v-btn>
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        variant="text"
+                        density="compact"
+                        prepend-icon="mdi-microsoft-excel"
+                        :loading="descargandoFormatoEjemplo"
+                        :disabled="descargandoFormatoEjemplo"
+                        title="Descargar Formato de Importación"
+                        @click="descargarFormatoImportacion"
+                    >
+                        Ejemplo
+                    </v-btn>
+                </div>
+            </v-card-title>
 
-            <v-btn
-                class="ma-1"
-                color="blue-grey"
-                density="compact"
-                prepend-icon="mdi-close"
-                title="Cancelar"
-                :disabled="guardandoItem"
-                @click="emitCancelarGuardado"
-            >
-                Cancelar
-            </v-btn>
-        </div>
+            <v-card-text class="pa-4 pb-0">
+                <v-file-input
+                    v-model="formulario.archivos"
+                    label="Archivo (XLSX)"
+                    name="archivo"
+                    accept=".xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    prepend-icon="mdi-microsoft-excel"
+                    density="compact"
+                    :rules="reglasValidacionArchivo"
+                    required
+                    clearable
+                />
+            </v-card-text>
+
+            <v-card-actions>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
+                >
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-file-upload"
+                        title="Subir Archivo"
+                        type="submit"
+                        :loading="guardandoItem"
+                        :disabled="guardandoItem"
+                    >
+                        Subir
+                    </v-btn>
+
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cancelar"
+                        :disabled="guardandoItem"
+                        @click="emitCancelarGuardado"
+                    >
+                        Cancelar
+                    </v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
     </v-form>
 </template>

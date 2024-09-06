@@ -17,13 +17,6 @@ export default {
             realizandoAccion: false,
         };
     },
-    computed: {
-        tituloDialogoFormulario() {
-            return this.datosItem.id
-                ? `Editar ${this.nombreItem}`
-                : `Registrar ${this.nombreItem}`;
-        },
-    },
     methods: {
         mostrarDialogoFormulario(item) {
             this.datosItem = item

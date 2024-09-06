@@ -6,6 +6,13 @@ export default {
         },
     },
     emits: ["actualizarListado", "cancelarGuardado"],
+    computed: {
+        titulo() {
+            return this.datos?.id
+                ? `Editar ${this.nombreItem}`
+                : `Registrar ${this.nombreItem}`;
+        },
+    },
     data() {
         return {
             formulario: this.datos,

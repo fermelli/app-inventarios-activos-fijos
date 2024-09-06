@@ -154,134 +154,147 @@ export default {
         :loading="guardandoItem"
         @submit.prevent="guardarItem"
     >
-        <v-row>
-            <v-col cols="12" lg="4" class="py-0">
-                <v-menu
-                    ref="menu"
-                    v-model="menu"
-                    v-model:return-value="formulario.fecha"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    min-width="auto"
-                >
-                    <template #activator="{ props }">
-                        <v-text-field
-                            v-model="formulario.fecha"
+        <v-card>
+            <v-card-title>
+                <span class="text-h6">{{ titulo }}</span>
+            </v-card-title>
+
+            <v-card-text class="pa-4 pb-0">
+                <v-row>
+                    <v-col cols="12" lg="4" class="py-0">
+                        <v-menu
+                            ref="menu"
+                            v-model="menu"
+                            v-model:return-value="formulario.fecha"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="auto"
+                        >
+                            <template #activator="{ props }">
+                                <v-text-field
+                                    v-model="formulario.fecha"
+                                    class="mb-2"
+                                    label="Fecha"
+                                    prepend-inner-icon="mdi-calendar"
+                                    readonly
+                                    density="compact"
+                                    :rules="reglasValidacionFecha"
+                                    v-bind="props"
+                                    clearable
+                                />
+                            </template>
+
+                            <v-date-picker
+                                v-model="fecha"
+                                hide-header
+                                no-title
+                                scrollable
+                                show-adjacent-months
+                                @update:model-value="
+                                    ($event) => {
+                                        formulario.fecha =
+                                            formatearFecha($event);
+                                        menu = false;
+                                    }
+                                "
+                            >
+                                <template #actions>
+                                    <v-spacer />
+
+                                    <v-btn
+                                        text
+                                        color="primary"
+                                        @click="menu = false"
+                                    >
+                                        Cerrar
+                                    </v-btn>
+                                </template>
+                            </v-date-picker>
+                        </v-menu>
+                    </v-col>
+
+                    <v-col cols="12" lg="8" class="py-0">
+                        <v-autocomplete
+                            v-model="formulario.institucion_id"
                             class="mb-2"
-                            label="Fecha"
-                            prepend-inner-icon="mdi-calendar"
-                            readonly
+                            :items="instituciones"
+                            item-value="id"
+                            item-title="nombre"
+                            label="Institución"
+                            name="institucion_id"
                             density="compact"
-                            :rules="reglasValidacionFecha"
-                            v-bind="props"
+                            clear-on-select
+                            clearable
+                            :rules="reglasValidacionInstitucionId"
+                        />
+                    </v-col>
+
+                    <v-col cols="12" lg="4" class="py-0">
+                        <v-select
+                            v-model="formulario.comprobante"
+                            class="mb-2"
+                            label="Comprobante"
+                            name="comprobante"
+                            density="compact"
+                            :items="[
+                                { title: 'Factura', value: 'factura' },
+                                { title: 'Recibo', value: 'recibo' },
+                                { title: 'Nota', value: 'nota' },
+                                { title: 'Boleta', value: 'boleta' },
+                                { title: 'Otro', value: 'otro' },
+                            ]"
+                            :rules="reglasValidacionComprobante"
+                            required
                             clearable
                         />
-                    </template>
+                    </v-col>
 
-                    <v-date-picker
-                        v-model="fecha"
-                        hide-header
-                        no-title
-                        scrollable
-                        show-adjacent-months
-                        @update:model-value="
-                            ($event) => {
-                                formulario.fecha = formatearFecha($event);
-                                menu = false;
-                            }
-                        "
-                    >
-                        <template #actions>
-                            <v-spacer />
+                    <v-col cols="12" lg="4" class="py-0">
+                        <v-text-field
+                            v-model="formulario.numero_comprobante"
+                            class="mb-2"
+                            label="N° Comprobante"
+                            name="numero_comprobante"
+                            type="text"
+                            density="compact"
+                            :rules="reglasValidacionNumeroComprobante"
+                            required
+                            clearable
+                        />
+                    </v-col>
 
-                            <v-btn text color="primary" @click="menu = false">
-                                Cerrar
-                            </v-btn>
-                        </template>
-                    </v-date-picker>
-                </v-menu>
-            </v-col>
+                    <v-col cols="12" lg="4" class="py-0">
+                        <v-btn
+                            class="mb-4"
+                            color="info"
+                            density="compact"
+                            prepend-inner-icon="mdi-magnify"
+                            title="Buscar Artículo"
+                            type="button"
+                            @click="mostradoDialogoTablaArticulos = true"
+                        >
+                            Buscar Artículo
+                        </v-btn>
+                    </v-col>
 
-            <v-col cols="12" lg="8" class="py-0">
-                <v-autocomplete
-                    v-model="formulario.institucion_id"
-                    class="mb-2"
-                    :items="instituciones"
-                    item-value="id"
-                    item-title="nombre"
-                    label="Institución"
-                    name="institucion_id"
-                    density="compact"
-                    clear-on-select
-                    clearable
-                    :rules="reglasValidacionInstitucionId"
-                />
-            </v-col>
+                    <v-col cols="12" lg="8" class="py-0">
+                        <v-textarea
+                            v-model="formulario.observacion"
+                            class="mb-2"
+                            label="Observación"
+                            name="observacion"
+                            type="text"
+                            rows="3"
+                            density="compact"
+                            :rules="reglasValidacionObservacion"
+                            clearable
+                        />
+                    </v-col>
+                </v-row>
 
-            <v-col cols="12" lg="4" class="py-0">
-                <v-select
-                    v-model="formulario.comprobante"
-                    class="mb-2"
-                    label="Comprobante"
-                    name="comprobante"
-                    density="compact"
-                    :items="[
-                        { title: 'Factura', value: 'factura' },
-                        { title: 'Recibo', value: 'recibo' },
-                        { title: 'Nota', value: 'nota' },
-                        { title: 'Boleta', value: 'boleta' },
-                        { title: 'Otro', value: 'otro' },
-                    ]"
-                    :rules="reglasValidacionComprobante"
-                    required
-                    clearable
-                />
-            </v-col>
-
-            <v-col cols="12" lg="4" class="py-0">
-                <v-text-field
-                    v-model="formulario.numero_comprobante"
-                    class="mb-2"
-                    label="N° Comprobante"
-                    name="numero_comprobante"
-                    type="text"
-                    density="compact"
-                    :rules="reglasValidacionNumeroComprobante"
-                    required
-                    clearable
-                />
-            </v-col>
-
-            <v-col cols="12" lg="4" class="py-0">
-                <v-btn
-                    color="info"
-                    density="compact"
-                    prepend-inner-icon="mdi-magnify"
-                    title="Buscar Artículo"
-                    type="button"
-                    @click="mostradoDialogoTablaArticulos = true"
-                >
-                    Buscar Artículo
-                </v-btn>
-            </v-col>
-
-            <v-col cols="12" lg="8" class="py-0">
-                <v-textarea
-                    v-model="formulario.observacion"
-                    class="mb-2"
-                    label="Observación"
-                    name="observacion"
-                    type="text"
-                    rows="3"
-                    density="compact"
-                    :rules="reglasValidacionObservacion"
-                    clearable
-                />
-            </v-col>
-
-            <v-col cols="12">
                 <TablaDatosDetallesEntradas
+                    style="padding: 1rem 0 !important"
                     :detalles-transacciones="formulario.detalles_transacciones"
                     :editable="true"
                     @quitar-detalle-transaccion="
@@ -289,82 +302,87 @@ export default {
                             formulario.detalles_transacciones.splice(indice, 1)
                     "
                 />
-            </v-col>
+            </v-card-text>
 
-            <v-col cols="12">
-                <v-btn
-                    color="primary"
-                    density="compact"
-                    prepend-icon="mdi-content-save"
-                    title="Guardar"
-                    type="submit"
-                    :disabled="guardandoItem"
+            <v-card-actions>
+                <div
+                    class="d-flex flex-wrap justify-space-between align-center"
                 >
-                    Guardar
-                </v-btn>
+                    <v-btn
+                        class="ma-1"
+                        color="primary"
+                        density="compact"
+                        prepend-icon="mdi-content-save"
+                        title="Guardar"
+                        type="submit"
+                        :disabled="guardandoItem"
+                    >
+                        Guardar
+                    </v-btn>
 
-                <v-btn
-                    class="ml-2"
-                    color="blue-grey"
-                    density="compact"
-                    prepend-icon="mdi-close"
-                    title="Cancelar"
-                    @click="emitCancelarGuardado"
-                >
-                    Cancelar
-                </v-btn>
-            </v-col>
+                    <v-btn
+                        class="ma-1"
+                        color="blue-grey"
+                        density="compact"
+                        prepend-icon="mdi-close"
+                        title="Cancelar"
+                        @click="emitCancelarGuardado"
+                    >
+                        Cancelar
+                    </v-btn>
+                </div>
+            </v-card-actions>
+        </v-card>
 
-            <v-dialog
-                v-model="mostradoDialogoTablaArticulos"
-                width="1200"
-                persistent
-                scrollable
-            >
-                <v-card>
-                    <v-card-title>
-                        <span class="text-h6">Seleccionar Artículo</span>
-                    </v-card-title>
+        <v-dialog
+            v-model="mostradoDialogoTablaArticulos"
+            width="1200"
+            persistent
+            scrollable
+        >
+            <v-card>
+                <v-card-title>
+                    <span class="text-h6">Seleccionar Artículo</span>
+                </v-card-title>
 
-                    <v-card-text class="pa-4">
-                        <TablaDatosServidorArticulos
-                            :items="items"
-                            :total-items="totalItems"
-                            :cargando-items="cargandoItems"
-                            :solo-seleccion-items="true"
-                            @mostrar-formulario="mostrarDialogoFormulario"
-                            @mostrar-confirmacion="mostrarDialogoConfirmacion"
-                            @cargar-items="obtenerArticulos"
-                            @seleccionar-item="seleccionarItem"
-                            @exportar-pdf="exportarArticulosPdf"
-                            @exportar-excel="exportarArticulosExcel"
-                        />
-                    </v-card-text>
+                <v-card-text class="pa-4">
+                    <TablaDatosServidorArticulos
+                        :items="items"
+                        :total-items="totalItems"
+                        :cargando-items="cargandoItems"
+                        :solo-seleccion-items="true"
+                        @mostrar-formulario="mostrarDialogoFormulario"
+                        @mostrar-confirmacion="mostrarDialogoConfirmacion"
+                        @cargar-items="obtenerArticulos"
+                        @seleccionar-item="seleccionarItem"
+                        @exportar-pdf="exportarArticulosPdf"
+                        @exportar-excel="exportarArticulosExcel"
+                    />
+                </v-card-text>
 
-                    <v-card-actions>
-                        <div
-                            class="d-flex flex-wrap justify-space-between align-center"
+                <v-card-actions>
+                    <div
+                        class="d-flex flex-wrap justify-space-between align-center"
+                    >
+                        <v-btn
+                            class="ma-1"
+                            color="blue-grey"
+                            density="compact"
+                            prepend-icon="mdi-close"
+                            title="Cerrar"
+                            @click="mostradoDialogoTablaArticulos = false"
                         >
-                            <v-btn
-                                class="ma-1"
-                                color="blue-grey"
-                                density="compact"
-                                prepend-icon="mdi-close"
-                                title="Cerrar"
-                                @click="mostradoDialogoTablaArticulos = false"
-                            >
-                                Cerrar
-                            </v-btn>
-                        </div>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+                            Cerrar
+                        </v-btn>
+                    </div>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
 
-            <DialogoReportePdf
-                v-model="mostradoDialogoReportePdf"
-                :pdf-src="pdfSrc"
-                @cerrar="mostradoDialogoReportePdf = false"
-            />
-        </v-row>
+        <DialogoReportePdf
+            v-model="mostradoDialogoReportePdf"
+            :pdf-src="pdfSrc"
+            @cerrar="mostradoDialogoReportePdf = false"
+        />
     </v-form>
 </template>

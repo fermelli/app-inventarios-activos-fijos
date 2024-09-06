@@ -132,6 +132,7 @@ export default {
                     <template #activator="{ props }">
                         <v-text-field
                             v-model="item.articulo_lote.fecha_vencimiento"
+                            class="my-1"
                             variant="outlined"
                             label="Fecha Vencimiento"
                             :name="`fecha_vencimiento${index}`"
@@ -188,6 +189,7 @@ export default {
                 <v-text-field
                     v-if="editable"
                     v-model="item.cantidad"
+                    class="my-1"
                     variant="outlined"
                     label="Cantidad"
                     :name="`cantidad${index}`"
@@ -210,6 +212,7 @@ export default {
 
         <template #[`item.acciones`]="{ index }">
             <v-btn
+                class="my-1"
                 color="error"
                 density="compact"
                 icon="mdi-close"

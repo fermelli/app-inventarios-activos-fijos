@@ -300,20 +300,12 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <span class="text-h6">{{ tituloDialogoFormulario }}</span>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioEntrada
-                        :datos="datosItem"
-                        :nombre-item="nombreItem"
-                        @actualizar-listado="obtenerEntradasArticulos"
-                        @cancelar-guardado="cancelarGuardado"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioEntrada
+                :datos="datosItem"
+                :nombre-item="nombreItem"
+                @actualizar-listado="obtenerEntradasArticulos"
+                @cancelar-guardado="cancelarGuardado"
+            />
         </v-dialog>
 
         <v-dialog
@@ -422,41 +414,17 @@ export default {
             persistent
             scrollable
         >
-            <v-card>
-                <v-card-title>
-                    <div
-                        class="d-flex flex-wrap justify-space-between align-center"
-                    >
-                        <span class="text-h6">
-                            Importar Entradas de Artículos
-                        </span>
-
-                        <v-btn
-                            class="ma-1"
-                            color="primary"
-                            variant="text"
-                            density="compact"
-                            prepend-icon="mdi-microsoft-excel"
-                            :loading="descargandoFormatoEjemplo"
-                            :disabled="descargandoFormatoEjemplo"
-                            title="Descargar Formato de Importación"
-                            @click="descargarFormatoImportacion"
-                        >
-                            Ejemplo
-                        </v-btn>
-                    </div>
-                </v-card-title>
-
-                <v-card-text class="pa-4">
-                    <FormularioImportar
-                        :datos="datosFormularioImportar"
-                        :metodo-importar="metodoImportar"
-                        :nombre-item="nombreItem"
-                        @actualizar-listado="obtenerEntradasArticulos"
-                        @cancelar-guardado="cancelarGuardadoImportar"
-                    />
-                </v-card-text>
-            </v-card>
+            <FormularioImportar
+                :datos="datosFormularioImportar"
+                :metodo-importar="metodoImportar"
+                :metodo-formato-importacion="metodoFormatoImportacion"
+                :titulo-archivo-ejemplo-importacion="
+                    tituloArchivoEjemploImportacion
+                "
+                nombre-item="Importación de Entradas"
+                @actualizar-listado="obtenerEntradasArticulos"
+                @cancelar-guardado="cancelarGuardadoImportar"
+            />
         </v-dialog>
 
         <DialogoConfirmacion
