@@ -99,7 +99,7 @@ export default {
                             label="Password"
                             name="password"
                             density="compact"
-                            :append-icon="
+                            :append-inner-icon="
                                 passwordMostrado ? 'mdi-eye' : 'mdi-eye-off'
                             "
                             :type="passwordMostrado ? 'text' : 'password'"
@@ -107,7 +107,9 @@ export default {
                                 reglasValidacion.requerido,
                                 reglasValidacion.password,
                             ]"
-                            @click:append="passwordMostrado = !passwordMostrado"
+                            @click:append-inner="
+                                passwordMostrado = !passwordMostrado
+                            "
                         />
 
                         <v-text-field
@@ -115,7 +117,8 @@ export default {
                             class="mb-2"
                             label="Confirmar Password"
                             name="password_confirmation"
-                            :append-icon="
+                            density="compact"
+                            :append-inner-icon="
                                 passwordMostrado ? 'mdi-eye' : 'mdi-eye-off'
                             "
                             :type="passwordMostrado ? 'text' : 'password'"
@@ -123,7 +126,9 @@ export default {
                                 reglasValidacion.requerido,
                                 reglasValidacion.confirmarPassword,
                             ]"
-                            @click:append="passwordMostrado = !passwordMostrado"
+                            @click:append-inner="
+                                passwordMostrado = !passwordMostrado
+                            "
                         />
 
                         <v-btn
