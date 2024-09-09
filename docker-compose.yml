@@ -1,0 +1,9 @@
+services:
+    app-inventarios-activos-fijos:
+        image: app-inventarios-activos-fijos:1.0.0
+        container_name: app-inventarios-activos-fijos
+        volumes:
+            - "/etc/localtime:/etc/localtime:ro"
+            - .env.docker:/var/www/.env
+        ports:
+            - "80:80"
