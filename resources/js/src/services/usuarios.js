@@ -7,6 +7,9 @@ export default {
     async show(id) {
         return await service.get(`/usuarios/${id}`);
     },
+    async store(datos) {
+        return await service.post("/usuarios", datos);
+    },
     async update(id, datos) {
         return await service.patch(`/usuarios/${id}`, datos);
     },

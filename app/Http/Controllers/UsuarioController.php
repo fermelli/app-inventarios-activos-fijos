@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ActualizarUsuarioRequest;
 use App\Http\Requests\CambiarRolUsuarioRequest;
 use App\Http\Requests\ConEliminadosOrdenDireccionRequest;
+use App\Http\Requests\CrearUsuarioRequest;
 use App\Models\User;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -50,6 +51,17 @@ class UsuarioController extends Controller
         $usuario = $this->findWithTrashed($id);
 
         return response()->jsonResponse('Usuario recuperado', $usuario, 200);
+    }
+
+    public function store(CrearUsuarioRequest $request)
+    {
+        $passwordPorDefecto = env('PASSWORD_POR_DEFECTO', 'Password123$');
+
+        $usuario = User::create(
+            array_merge($request->validated(), ['password' => bcrypt($passwordPorDefecto)])
+        );
+
+        return response()->jsonResponse('Usuario creado', $usuario, 201);
     }
     
     public function cambiarRol(CambiarRolUsuarioRequest $request, string $id)

@@ -30,17 +30,24 @@ export default {
     },
     data() {
         return {
+            metodoStore: UsuarioService.store,
             metodoUpdate: UsuarioService.update,
             ubicaciones: [],
             cargandoUbicaciones: false,
-            reglasValidacionRol: [(valor) => !!valor || "El rol es requerido"],
             reglasValidacionDependenciaId: [
-                (valor) => !!valor || "La dependencia es requerida",
                 (valor) =>
                     !valor ||
                     Number.isInteger(Number(valor)) ||
                     "Debe ser un número",
             ],
+            reglasValidacion: {
+                requerido: (valor) => !!valor || "Campo requerido.",
+                correoElectronico: (valor) => {
+                    let regex =
+                        /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+                    return regex.test(valor) || "Correo electrónico inválido.";
+                },
+            },
         };
     },
     created() {
@@ -92,6 +99,32 @@ export default {
             </v-card-title>
 
             <v-card-text class="pa-4 pb-0">
+                <v-text-field
+                    v-model="formulario.nombre"
+                    class="mb-2"
+                    label="Nombre"
+                    name="nombre"
+                    density="compact"
+                    required
+                    clearable
+                    :rules="[reglasValidacion.requerido]"
+                />
+
+                <v-text-field
+                    v-model="formulario.correo_electronico"
+                    class="mb-2"
+                    label="Correo Electrónico"
+                    name="correo_electronico"
+                    type="email"
+                    density="compact"
+                    required
+                    clearable
+                    :rules="[
+                        reglasValidacion.requerido,
+                        reglasValidacion.correoElectronico,
+                    ]"
+                />
+
                 <v-select
                     v-model="formulario.rol"
                     class="mb-2"
@@ -104,6 +137,7 @@ export default {
                     ]"
                     required
                     clearable
+                    :rules="[reglasValidacion.requerido]"
                 />
 
                 <v-autocomplete
