@@ -24,7 +24,7 @@ class ActualizarUsuarioRequest extends FormRequest
     {
         return [
             'rol' => ['required', 'string', 'in:' . User::ROL_ADMINISTRADOR . ',' . User::ROL_PERSONAL],
-            'dependencia_id' => ['required', 'exists:ubicaciones,id'],
+            'dependencia_id' => ['nullable', 'exists:ubicaciones,id'],
         ];
     }
 }
