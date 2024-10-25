@@ -290,6 +290,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'dashboard/articulos-proximos-vencer',
             [DashboardController::class, 'articulosProximosVencer']
         );
+        Route::get(
+            'dashboard/cantidad-activos-fijos-por-estado-agrupados-por-categoria',
+            [DashboardController::class, 'cantidadActivosFijosPorEstadoAgrupadosPorCategoria']
+        );
+        Route::get(
+            'dashboard/usuarios-con-mas-activos-fijos-asignados',
+            [DashboardController::class, 'usuariosConMasActivosFijosAsignados']
+        );
+        Route::get(
+            'dashboard/ubicaciones-con-mas-activos-fijos-asignados',
+            [DashboardController::class, 'ubicacionesConMasActivosFijosAsignados']
+        );
     });
 
     // Rutas para Activos Fijos
