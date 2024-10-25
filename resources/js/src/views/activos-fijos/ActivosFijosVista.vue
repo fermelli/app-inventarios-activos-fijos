@@ -58,7 +58,7 @@ export default {
 
             return [
                 {
-                    titulo: "Código SIGMA",
+                    titulo: "Código",
                     subtitulo: this.itemSeleccionado.codigo,
                 },
                 {

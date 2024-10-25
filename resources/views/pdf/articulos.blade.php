@@ -34,7 +34,7 @@
         <thead>
             <tr>
                 <th style="width: 5%;">#</th>
-                <th style="width: 15%;">CÓDIGO SIGMA</th>
+                <th style="width: 15%;">CÓDIGO</th>
                 <th style="width: 20%;">ÁRTICULO</th>
                 <th style="width: 15%;">CANTIDAD</th>
                 <th style="width: 15%;">CATEGORÍA</th>

@@ -34,7 +34,7 @@ export default {
         return {
             headers: [
                 { title: "#", key: "nro", sortable: false, filterable: false },
-                { title: "Código SIGMA", key: "codigo" },
+                { title: "Código", key: "codigo" },
                 { title: "Nombre", key: "nombre" },
                 { title: "Cantidad", key: "cantidad" },
                 { title: "Categoría", key: "categoria.nombre" },
