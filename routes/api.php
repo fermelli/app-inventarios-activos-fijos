@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivoFijoController;
 use App\Http\Controllers\ActivoFijoExcelController;
+use App\Http\Controllers\ActivoFijoReportePdfController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ArticuloReportePdfController;
 use App\Http\Controllers\ArticulosExcelController;
@@ -309,6 +310,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('activos-fijos/importar', [ActivoFijoExcelController::class, 'importar']);
         Route::get('activos-fijos/formato-importacion', [ActivoFijoExcelController::class, 'formatoImportacion']);
         Route::get('activos-fijos/exportar', [ActivoFijoExcelController::class, 'exportar']);
+        Route::get('activos-fijos/reporte-pdf', [ActivoFijoReportePdfController::class, 'index']);
         Route::apiResource(
             'activos-fijos',
             ActivoFijoController::class
