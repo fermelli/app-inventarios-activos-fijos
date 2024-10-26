@@ -2,43 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\ActivoFijoTrait;
 use App\Http\Requests\ActualizarActivoFijoRequest;
 use App\Http\Requests\CrearActivoFijoRequest;
 use App\Http\Requests\DarBajaActivoFijoRequest;
 use App\Http\Requests\IndexArticuloControllerRequest;
 use App\Models\Articulo;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ActivoFijoController extends Controller
 {
+    use ActivoFijoTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index(IndexArticuloControllerRequest $request)
     {
         $parametros = $request->validated();
-        $queryBuilder = Articulo::with(['categoria', 'institucion', 'asignacionActivoFijoActual'])->where('tipo', Articulo::TIPO_ACTIVO_FIJO);
-
-        if (isset($parametros['con_eliminados'])) {
-            $queryBuilder->withTrashed();
-        }
-
-        if (isset($parametros['orden_direccion'])) {
-            $queryBuilder->orderBy('id', $parametros['orden_direccion']);
-        }
-
-        if (isset($parametros['categoria_id'])) {
-            $queryBuilder->where('categoria_id', $parametros['categoria_id']);
-        }
-
-        if (isset($parametros['busqueda'])) {
-            $queryBuilder->where(function (Builder $query) use ($parametros) {
-                $query->where('codigo', 'like', "%{$parametros['busqueda']}%")
-                    ->orWhere('nombre', 'like', "%{$parametros['busqueda']}%");
-            });
-        }
+        $queryBuilder = $this->indexQueryBuilder($parametros);
 
         $activosFijos = $queryBuilder->paginate(
             $parametros['items_por_pagina'],
