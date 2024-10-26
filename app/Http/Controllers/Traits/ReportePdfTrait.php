@@ -13,13 +13,14 @@ trait ReportePdfTrait
      * @param string $vista
      * @param array<string, mixed> $datos
      * @param string $nombreArchivo
+     * @param string $orientacion 'portrait' o 'landscape'
      * @return \Barryvdh\DomPDF\PDF
      */
-    public function generarReportePdf(string $vista, array $datos): DomPDF
+    public function generarReportePdf(string $vista, array $datos, $orientacion = 'portrait'): DomPDF
     {
         $pdf = Pdf::loadView($vista, $datos);
 
-        $pdf->setPaper('letter', 'portrait');
+        $pdf->setPaper('letter', $orientacion);
         $pdf->output();
 
         $dom_pdf = $pdf->getDomPDF();
