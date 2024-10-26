@@ -32,4 +32,15 @@ export default {
             responseType: "blob",
         });
     },
+    async exportar(opciones = { params: {} }) {
+        return await service.get("/activos-fijos/exportar", {
+            responseType: "blob",
+            params: opciones.params,
+        });
+    },
+    async showReportePdf(opciones = { params: {} }) {
+        return await service.get("/activos-fijos/reporte-pdf", {
+            params: opciones.params,
+        });
+    },
 };

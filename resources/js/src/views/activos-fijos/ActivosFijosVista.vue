@@ -10,6 +10,8 @@ import TablaAsignacionesActivosFijos from "./components/TablaAsignacionesActivos
 import { ESTADOS_ACTIVOS_FIJOS } from "../../utils/constantes";
 import FormularioDarBajaActivoFijo from "./components/FormularioDarBajaActivoFijo.vue";
 import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
+import exportarArticulosMixin from "../../mixins/exportar-articulos.mixin";
+import ActivosFijosService from "./../../services/activos-fijos";
 
 export default {
     name: "ActivosFijosVista",
@@ -21,7 +23,11 @@ export default {
         TablaAsignacionesActivosFijos,
         FormularioDarBajaActivoFijo,
     },
-    mixins: [vistaMixin, dialogoFormularioImportarMixin],
+    mixins: [
+        vistaMixin,
+        dialogoFormularioImportarMixin,
+        exportarArticulosMixin,
+    ],
     setup() {
         const toast = useToast();
 
@@ -48,6 +54,8 @@ export default {
             metodoFormatoImportacion: ActivoFijoService.formatoImportacion,
             tituloArchivoEjemploImportacion:
                 "Formato de Importación de Activos Fijos",
+            metodoServicioObtenerExportarExcel: ActivosFijosService.exportar,
+            metodoServicioObtenerReportePdf: ActivosFijosService.showReportePdf,
         };
     },
     computed: {
@@ -285,6 +293,8 @@ export default {
                 @mostrar-formulario-dar-baja="
                     mostrarFormularioDarBajaActivoFijo
                 "
+                @exportar-pdf="exportarArticulosPdf"
+                @exportar-excel="() => exportarArticulosExcel('Activos Fijos')"
             />
         </v-col>
 
@@ -476,6 +486,12 @@ export default {
             :realizando-accion="realizandoAccion"
             @aceptar="funcionDialogoConfirmacion"
             @cancelar="cancelarAccion"
+        />
+
+        <DialogoReportePdf
+            v-model="mostradoDialogoReportePdf"
+            :pdf-src="pdfSrc"
+            @cerrar="mostradoDialogoReportePdf = false"
         />
     </v-row>
 </template>
