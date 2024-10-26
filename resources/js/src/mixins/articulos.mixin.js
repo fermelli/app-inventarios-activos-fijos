@@ -1,12 +1,12 @@
 import ArticuloService from "../services/articulos";
-import reportePdfMixin from "./reporte-pdf.mixin";
+import exportarArticulosMixin from "./exportar-articulos.mixin";
 
 export default {
-    mixins: [reportePdfMixin],
+    mixins: [exportarArticulosMixin],
     data() {
         return {
             categoria_id: null,
-            exportandoArticulos: false,
+            metodoServicioObtenerExportarExcel: ArticuloService.exportar,
             metodoServicioObtenerReportePdf: ArticuloService.showReportePdf,
         };
     },
@@ -42,72 +42,6 @@ export default {
                 console.log(error);
             } finally {
                 this.cargandoItems = false;
-            }
-        },
-        async exportarArticulosExcel() {
-            this.exportandoArticulos = true;
-            const params = {
-                orden_direccion: "desc",
-                con_eliminados: true,
-                pagina: this.pagina,
-                items_por_pagina: this.itemsPorPagina,
-                busqueda: this.busqueda,
-                categoria_id: this.categoria_id,
-            };
-
-            try {
-                const { data } = await ArticuloService.exportar({
-                    params,
-                });
-                const blob = new Blob([data], {
-                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                });
-                const link = document.createElement("a");
-
-                link.href = window.URL.createObjectURL(blob);
-                link.download = "Artículos.xlsx";
-                link.click();
-            } catch (error) {
-                console.log(error);
-
-                const mensaje =
-                    error?.response?.data?.message ||
-                    error.message ||
-                    error ||
-                    "Error al descargar el formato de ejemplo";
-
-                this.toast.error(mensaje);
-            } finally {
-                this.exportandoArticulos = false;
-            }
-        },
-        async exportarArticulosPdf() {
-            const params = {
-                orden_direccion: "desc",
-                con_eliminados: true,
-                pagina: this.pagina,
-                items_por_pagina: this.itemsPorPagina,
-                busqueda: this.busqueda,
-                categoria_id: this.categoria_id,
-            };
-
-            this.exportandoArticulos = true;
-
-            try {
-                const { data } = await ArticuloService.showReportePdf({
-                    params,
-                });
-                const datos = data?.datos;
-                const mensaje = data?.mensaje;
-                const { pdf } = datos;
-
-                this.toast.success(mensaje || "Reporte PDF generado");
-                this.pdfSrc = `data:application/pdf;base64,${pdf}`;
-                this.mostradoDialogoReportePdf = true;
-            } catch (error) {
-                console.log(error);
-            } finally {
-                this.exportandoArticulos = false;
             }
         },
     },

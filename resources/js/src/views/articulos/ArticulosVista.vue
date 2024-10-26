@@ -128,7 +128,7 @@ export default {
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
                 @cargar-items="obtenerArticulos"
                 @exportar-pdf="exportarArticulosPdf"
-                @exportar-excel="exportarArticulosExcel"
+                @exportar-excel="() => exportarArticulosExcel('Artículos')"
             />
         </v-col>
 
