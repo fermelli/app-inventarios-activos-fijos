@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Traits\ActivoFijoTrait;
+use App\Http\Requests\IndexArticuloControllerRequest;
 use App\Http\Requests\SubirArchivoExcelRequest;
 use App\Models\Articulo;
 use App\Models\Categoria;
@@ -16,6 +18,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ActivoFijoExcelController extends Controller
 {
+    use ActivoFijoTrait;
+    
     public function importar(SubirArchivoExcelRequest $request)
     {
         $archivoExcel = $request->file('archivo');
@@ -148,6 +152,40 @@ class ActivoFijoExcelController extends Controller
             'Razón de baja (si el estado del activo fijo es "de baja" sino se produce un error, ' .
             'maximo 1000 caracteres)',
         ]);
+
+        return $writer->toBrowser();
+    }
+
+    public function exportar(IndexArticuloControllerRequest $request)
+    {
+        $parametros = $request->validated();
+        $activosFijos = $this->indexQueryBuilder($parametros)->get();
+
+        $writer = SimpleExcelWriter::streamDownload('Activos Fijos.xlsx');
+        
+        $writer->nameCurrentSheet('Activos Fijos');
+        $writer->addHeader([
+            'CÓDIGO',
+            'ID.',
+            'NOMBRE',
+            'ESTADO',
+            'ESTA ASIGNADO',
+            'CATEOGRÍA',
+            'INSTITUCIÓN',
+            'DESCRIPCIÓN',
+        ]);
+        $activosFijos->each(function (Articulo $activoFijo) use ($writer) {
+            $writer->addRow([
+                $activoFijo->codigo,
+                $activoFijo->id,
+                $activoFijo->nombre,
+                $activoFijo->estado_activo_fijo,
+                is_null($activoFijo->asignacionActivoFijoActual) ? 'No' : 'Sí',
+                $activoFijo->categoria->nombre,
+                $activoFijo->institucion->nombre,
+                $activoFijo->descripcion,
+            ]);
+        });
 
         return $writer->toBrowser();
     }

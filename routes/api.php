@@ -308,6 +308,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
         Route::post('activos-fijos/importar', [ActivoFijoExcelController::class, 'importar']);
         Route::get('activos-fijos/formato-importacion', [ActivoFijoExcelController::class, 'formatoImportacion']);
+        Route::get('activos-fijos/exportar', [ActivoFijoExcelController::class, 'exportar']);
         Route::apiResource(
             'activos-fijos',
             ActivoFijoController::class
