@@ -28,6 +28,7 @@ export default {
         "mostrarFormularioDarBaja",
         "exportarPdf",
         "exportarExcel",
+        "mostrarFormularioGeneracionQr",
     ],
     setup() {
         const display = useDisplay();
@@ -283,6 +284,15 @@ export default {
                     icon="mdi-pencil"
                     title="Editar"
                     @click="$emit('mostrarFormulario', item)"
+                />
+
+                <v-btn
+                    class="ma-1"
+                    color="secondary"
+                    density="compact"
+                    icon="mdi-text-box"
+                    title="Generar etiqueta"
+                    @click="$emit('mostrarFormularioGeneracionQr', item)"
                 />
 
                 <v-btn

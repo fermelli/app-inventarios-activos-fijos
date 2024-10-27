@@ -12,6 +12,7 @@ import FormularioDarBajaActivoFijo from "./components/FormularioDarBajaActivoFij
 import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
 import exportarArticulosMixin from "../../mixins/exportar-articulos.mixin";
 import ActivosFijosService from "./../../services/activos-fijos";
+import FormularioGeneracionQr from "./components/FormularioGeneracionQr.vue";
 
 export default {
     name: "ActivosFijosVista",
@@ -22,6 +23,7 @@ export default {
         FormularioDevolucionActivoFijo,
         TablaAsignacionesActivosFijos,
         FormularioDarBajaActivoFijo,
+        FormularioGeneracionQr,
     },
     mixins: [
         vistaMixin,
@@ -56,6 +58,7 @@ export default {
                 "Formato de Importación de Activos Fijos",
             metodoServicioObtenerExportarExcel: ActivosFijosService.exportar,
             metodoServicioObtenerReportePdf: ActivosFijosService.showReportePdf,
+            mostradoDialogoFormularioGeneracionQr: false,
         };
     },
     computed: {
@@ -230,6 +233,13 @@ export default {
             this.mostradoDialogoFormularioDarBaja = false;
             this.datosItem = this.crearDatosItem();
         },
+        mostrarFormularioGeneracionQR(item) {
+            this.datosItem = item;
+            this.mostradoDialogoFormularioGeneracionQr = true;
+        },
+        cancelarGuardadoGeneracionQr() {
+            this.mostradoDialogoFormularioGeneracionQr = false;
+        },
     },
 };
 </script>
@@ -295,6 +305,9 @@ export default {
                 "
                 @exportar-pdf="exportarArticulosPdf"
                 @exportar-excel="() => exportarArticulosExcel('Activos Fijos')"
+                @mostrar-formulario-generacion-qr="
+                    mostrarFormularioGeneracionQR
+                "
             />
         </v-col>
 
@@ -493,5 +506,19 @@ export default {
             :pdf-src="pdfSrc"
             @cerrar="mostradoDialogoReportePdf = false"
         />
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioGeneracionQr"
+            width="500"
+            persistent
+            scrollable
+        >
+            <FormularioGeneracionQr
+                :datos="datosItem"
+                :nombre-item="`Generación de Código QR ${nombreItem}`"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardadoGeneracionQr"
+            />
+        </v-dialog>
     </v-row>
 </template>

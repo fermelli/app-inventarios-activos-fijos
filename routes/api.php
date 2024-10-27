@@ -311,6 +311,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('activos-fijos/formato-importacion', [ActivoFijoExcelController::class, 'formatoImportacion']);
         Route::get('activos-fijos/exportar', [ActivoFijoExcelController::class, 'exportar']);
         Route::get('activos-fijos/reporte-pdf', [ActivoFijoReportePdfController::class, 'index']);
+        Route::get('activos-fijos/{activoFijo}/etiqueta-pdf', [ActivoFijoReportePdfController::class, 'generarEtiqueta']);
         Route::apiResource(
             'activos-fijos',
             ActivoFijoController::class

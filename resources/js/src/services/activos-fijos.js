@@ -43,4 +43,9 @@ export default {
             params: opciones.params,
         });
     },
+    async generarEtiquetaPdf(id, opciones = { params: {} }) {
+        return await service.get(`/activos-fijos/${id}/etiqueta-pdf`, {
+            params: opciones.params,
+        });
+    },
 };

@@ -34,4 +34,21 @@ trait ReportePdfTrait
 
         return $pdf;
     }
+
+    /**
+     * Genera etiqueta en PDF.
+     *
+     * @param string $vista
+     * @param array<string, mixed> $datos
+     * @return \Barryvdh\DomPDF\PDF
+     */
+    public function generarEtiquetaPdf(string $vista, array $datos): DomPDF
+    {
+        $pdf = Pdf::loadView($vista, $datos);
+
+        $pdf->setPaper('letter', 'portrait');
+        $pdf->output();
+
+        return $pdf;
+    }
 }
