@@ -129,6 +129,7 @@ export default {
                 @cargar-items="obtenerArticulos"
                 @exportar-pdf="exportarArticulosPdf"
                 @exportar-excel="() => exportarArticulosExcel('Artículos')"
+                @exportar-pdf-sin-paginacion="exportarArticulosPdfSinPaginacion"
             />
         </v-col>
 

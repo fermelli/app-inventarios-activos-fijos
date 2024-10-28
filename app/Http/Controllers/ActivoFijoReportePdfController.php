@@ -22,6 +22,7 @@ class ActivoFijoReportePdfController extends Controller
     {
         $parametros = $request->validated();
 
+        $sinPaginacion = $parametros['sin_paginacion'];
         $categoriaId = $parametros['categoria_id'] ?? null;
         $categoria = null;
 
@@ -30,24 +31,36 @@ class ActivoFijoReportePdfController extends Controller
         }
 
         $queryBuilder = $this->indexQueryBuilder($parametros);
-
-        $paginador = $queryBuilder->paginate(
-            $parametros['items_por_pagina'],
-            ['*'],
-            'pagina',
-            $parametros['pagina']
-        );
-        $pdf = $this->generarReportePdf('pdf.activos-fijos', [
-            'activosFijos' => $paginador->items(),
+        $pdf = null;
+        $pdfBase64 = null;
+        $datos = [
+            'activosFijos' => null,
             'categoria' => $categoria,
-            'metadatos' => [
+            'usuario' => $request->user(),
+            'metadatos' => null,
+        ];
+
+        if ($sinPaginacion) {
+            $activosFijos = $queryBuilder->get();
+            $datos['activosFijos'] = $activosFijos;
+        } else {
+            $paginador = $queryBuilder->paginate(
+                $parametros['items_por_pagina'],
+                ['*'],
+                'pagina',
+                $parametros['pagina']
+            );
+            $activosFijos = $paginador->items();
+            $datos['activosFijos'] = $activosFijos;
+            $datos['metadatos'] = [
                 'pagina' => $paginador->currentPage(),
                 'items_por_pagina' => $paginador->perPage(),
                 'total' => $paginador->total(),
                 'ultima_pagina' => $paginador->lastPage(),
-            ],
-            'usuario' => $request->user(),
-        ], 'landscape');
+            ];
+        }
+        
+        $pdf = $this->generarReportePdf('pdf.activos-fijos', $datos, 'landscape');
         $pdfBase64 = base64_encode($pdf->output());
 
         return response()->jsonResponse(

@@ -28,6 +28,7 @@ export default {
         "mostrarFormularioDarBaja",
         "exportarPdf",
         "exportarExcel",
+        "exportarPdfSinPaginacion",
         "mostrarFormularioGeneracionQr",
     ],
     setup() {
@@ -183,6 +184,15 @@ export default {
                                 @click="$emit('exportarPdf')"
                             >
                                 <v-list-item-title> a PDF </v-list-item-title>
+                            </v-list-item>
+
+                            <v-list-item
+                                density="compact"
+                                @click="$emit('exportarPdfSinPaginacion')"
+                            >
+                                <v-list-item-title>
+                                    a PDF (sin paginación)
+                                </v-list-item-title>
                             </v-list-item>
 
                             <v-list-item

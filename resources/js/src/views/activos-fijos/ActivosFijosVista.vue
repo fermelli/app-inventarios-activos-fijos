@@ -305,6 +305,7 @@ export default {
                 "
                 @exportar-pdf="exportarArticulosPdf"
                 @exportar-excel="() => exportarArticulosExcel('Activos Fijos')"
+                @exportar-pdf-sin-paginacion="exportarArticulosPdfSinPaginacion"
                 @mostrar-formulario-generacion-qr="
                     mostrarFormularioGeneracionQR
                 "

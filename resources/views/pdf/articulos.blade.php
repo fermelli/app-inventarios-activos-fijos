@@ -15,6 +15,7 @@
                 </td>
             </tr>
 
+            @if(isset($metadatos))
             <tr>
                 <td style="width: 16.66%; text-align: right;"><strong>Página:</strong></td>
                 <td style="width: 16.66%; text-align: left;">
@@ -27,6 +28,7 @@
                 <td style="width: 16.66%; text-align: right;"><strong>Cantidad Items: </strong></td>
                 <td style="width: 16.66%; text-align: left;">{{ $metadatos['total'] }}</td>
             </tr>
+            @endif
         </tbody>
     </table>
 

@@ -15,7 +15,8 @@ class ArticuloReportePdfController extends Controller
     public function index(IndexArticuloControllerRequest $request)
     {
         $parametros = $request->validated();
-
+        
+        $sinPaginacion = $parametros['sin_paginacion'];
         $categoriaId = $parametros['categoria_id'] ?? null;
         $categoria = null;
 
@@ -24,19 +25,36 @@ class ArticuloReportePdfController extends Controller
         }
 
         $queryBuilder = $this->indexQueryBuilder($parametros);
-        $paginador = $queryBuilder->paginate($parametros['items_por_pagina'], ['*'], 'pagina', $parametros['pagina']);
-
-        $pdf = $this->generarReportePdf('pdf.articulos', [
-            'articulos' => $paginador->items(),
+        $pdf = null;
+        $pdfBase64 = null;
+        $datos = [
+            'articulos' => null,
             'categoria' => $categoria,
-            'metadatos' => [
+            'usuario' => $request->user(),
+            'metadatos' => null,
+        ];
+
+        if ($sinPaginacion) {
+            $articulos = $queryBuilder->get();
+            $datos['articulos'] = $articulos;
+        } else {
+            $paginador = $queryBuilder->paginate(
+                $parametros['items_por_pagina'],
+                ['*'],
+                'pagina',
+                $parametros['pagina']
+            );
+            $articulos = $paginador->items();
+            $datos['articulos'] = $articulos;
+            $datos['metadatos'] = [
                 'pagina' => $paginador->currentPage(),
                 'items_por_pagina' => $paginador->perPage(),
                 'total' => $paginador->total(),
                 'ultima_pagina' => $paginador->lastPage(),
-            ],
-            'usuario' => $request->user(),
-        ]);
+            ];
+        }
+
+        $pdf = $this->generarReportePdf('pdf.articulos', $datos);
         $pdfBase64 = base64_encode($pdf->output());
 
         return response()->jsonResponse(

@@ -387,6 +387,9 @@ export default {
                         @exportar-excel="
                             () => exportarArticulosExcel('Artículos')
                         "
+                        @exportar-pdf-sin-paginacion="
+                            exportarArticulosPdfSinPaginacion
+                        "
                     />
                 </v-card-text>
 

@@ -63,7 +63,7 @@ export default {
                 this.exportandoArticulos = false;
             }
         },
-        async exportarArticulosPdf() {
+        async exportarArticulosPdf(sinPaginacion = false) {
             const params = {
                 orden_direccion: "desc",
                 con_eliminados: true,
@@ -71,6 +71,7 @@ export default {
                 items_por_pagina: this.itemsPorPagina,
                 busqueda: this.busqueda,
                 categoria_id: this.categoria_id,
+                sin_paginacion: sinPaginacion,
             };
 
             this.exportandoArticulos = true;
@@ -91,6 +92,9 @@ export default {
             } finally {
                 this.exportandoArticulos = false;
             }
+        },
+        async exportarArticulosPdfSinPaginacion() {
+            await this.exportarArticulosPdf(true);
         },
         async generarEtiquetaArticuloPdf(articuloId, params = {}) {
             this.exportandoArticulos = true;

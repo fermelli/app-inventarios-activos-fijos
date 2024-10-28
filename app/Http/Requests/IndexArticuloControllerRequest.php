@@ -6,6 +6,7 @@ use App\Http\Requests\Traits\BusquedaRequestTrait;
 use App\Http\Requests\Traits\ConEliminadosRequestTrait;
 use App\Http\Requests\Traits\OrdenDireccionRequestTrait;
 use App\Http\Requests\Traits\PaginacionRequestTrait;
+use App\Http\Requests\Traits\SinPaginacionRequestTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexArticuloControllerRequest extends FormRequest
@@ -14,6 +15,7 @@ class IndexArticuloControllerRequest extends FormRequest
     use ConEliminadosRequestTrait;
     use OrdenDireccionRequestTrait;
     use BusquedaRequestTrait;
+    use SinPaginacionRequestTrait;
     
     /**
      * Determine if the user is authorized to make this request.
@@ -39,6 +41,7 @@ class IndexArticuloControllerRequest extends FormRequest
             $this->conEliminadosRules(),
             $this->ordenDireccionRules(),
             $this->busquedaRules(),
+            $this->sinPaginacionRules(),
             $reglas,
         );
     }
@@ -51,5 +54,6 @@ class IndexArticuloControllerRequest extends FormRequest
         $this->paginacionPrepareForValidation();
         $this->conEliminadosPrepareForValidation();
         $this->ordenDireccionPrepareForValidation();
+        $this->sinPaginacionPrepareForValidation();
     }
 }
