@@ -14,7 +14,7 @@ export default {
             <v-card-text>
                 <v-img
                     width="600"
-                    src="./../assets/imagenes/no-encontrado.svg"
+                    src="@/assets/imagenes/no-encontrado.svg"
                     class="mx-auto"
                     aspect-ratio="1"
                 />

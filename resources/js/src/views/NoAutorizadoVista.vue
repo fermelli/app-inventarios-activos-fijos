@@ -19,7 +19,7 @@ export default {
             <v-card-text>
                 <v-img
                     width="600"
-                    src="./../assets/imagenes/no-autorizado.svg"
+                    src="@/assets/imagenes/no-autorizado.svg"
                     class="mx-auto"
                     aspect-ratio="1"
                 />

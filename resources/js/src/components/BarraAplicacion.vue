@@ -41,7 +41,7 @@ export default {
             :width="36"
             aspect-ratio="1/1"
             alt="Logo"
-            src="./../assets/imagenes/logo.png"
+            src="@/assets/imagenes/logo.png"
         />
 
         <v-app-bar-title> CENTRO DE SALUD SUCRE </v-app-bar-title>
