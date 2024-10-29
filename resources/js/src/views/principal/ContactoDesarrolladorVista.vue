@@ -10,7 +10,7 @@ export default {
     <h3>Fermelli</h3>
 
     <p>
-        <a href="luisfernandosalgadomiguez@gmail.com">Email</a> |
+        <a href="mailto:luisfernandosalgadomiguez@gmail.com">Email</a> |
         <a href="https://github.com/fermelli">GitHub</a>
     </p>
 </template>
