@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/usuario-autenticado', function (Request $request) {
-        return $request->user();
+        return response()->jsonResponse('Datos del usuario autenticado.', $request->user(), 200);
     });
 
     // Rutas para categorias
