@@ -1,9 +1,13 @@
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import store from "@/store";
 import { useToast } from "vue-toastification";
 import ListaErroresValidacion from "@/components/ListaErroresValidacion.vue";
 import router from "@/router";
-import { ROLES } from "../utils/constantes";
+import {
+    CODIGO_ERRORES,
+    CODIGOS_ESTADO_HTTP_ADICIONALES,
+    ROLES,
+} from "../utils/constantes";
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -19,13 +23,28 @@ const service = axios.create({
 
 service.interceptors.response.use(
     (response) => {
+        const toast = useToast();
+        const mensaje = response.data?.mensaje;
+        let mensajeAlternativo = "Petición realizada";
+
+        if (response.status === HttpStatusCode.Ok) {
+            mensajeAlternativo = "Petición realizada con éxito.";
+        } else if (response.status === HttpStatusCode.Created) {
+            mensajeAlternativo = "Creado con éxito.";
+        } else if (response.status === HttpStatusCode.NoContent) {
+            mensajeAlternativo = "Respuesta sin contenido.";
+        } else if (response.status === HttpStatusCode.Accepted) {
+            mensajeAlternativo = "Petición aceptada.";
+        }
+
+        mensaje ? toast.success(mensaje) : toast.success(mensajeAlternativo);
+
         return response;
     },
     (error) => {
         const toast = useToast();
 
-        if (error.code === "ERR_BAD_RESPONSE") {
-            console.log(error.response);
+        if (error.code === CODIGO_ERRORES.ERR_BAD_RESPONSE) {
             if (
                 error.response &&
                 error.response.data &&
@@ -35,11 +54,16 @@ service.interceptors.response.use(
             } else {
                 toast.error("Error de respuesta del servidor.");
             }
-        } else if (error.code == "ECONNABORTED") {
-            toast.error("Tiempo de espera agotado.");
+        } else if (error.code == CODIGO_ERRORES.ECONNABORTED) {
+            toast.error(
+                "La solicitud ha tardado demasiado tiempo en responder.",
+            );
         } else if (
             error.response &&
-            [401, 419].includes(error.response.status)
+            [
+                HttpStatusCode.Unauthorized,
+                CODIGOS_ESTADO_HTTP_ADICIONALES.PageExpired,
+            ].includes(error.response.status)
         ) {
             if (store.getters["autenticacion/usuarioAutenticado"]) {
                 store.dispatch("autenticacion/logout");
@@ -48,7 +72,10 @@ service.interceptors.response.use(
             toast.error(
                 "Su sesión ha expirado. Por favor, inicie sesión nuevamente.",
             );
-        } else if (error.response && error.response.status === 422) {
+        } else if (
+            error.response &&
+            error.response.status === HttpStatusCode.UnprocessableEntity
+        ) {
             const { data } = error.response;
 
             if (data.errores && Object.keys(data.errores).length > 0) {
@@ -65,13 +92,13 @@ service.interceptors.response.use(
             }
         } else if (
             error.response &&
-            (error.response.status === 403 ||
-                error.response.status === 400 ||
-                error.response.status === 404)
+            (error.response.status === HttpStatusCode.Forbidden ||
+                error.response.status === HttpStatusCode.BadRequest ||
+                error.response.status === HttpStatusCode.NotFound)
         ) {
             toast.error(error.response.data.mensaje);
 
-            if (error.response.status === 403) {
+            if (error.response.status === HttpStatusCode.Forbidden) {
                 const usuarioAutenticado =
                     store.getters["autenticacion/usuarioAutenticado"];
 
