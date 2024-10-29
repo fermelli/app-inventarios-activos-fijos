@@ -13,13 +13,14 @@ trait ReportePdfTrait
      * @param string $vista
      * @param array<string, mixed> $datos
      * @param string $nombreArchivo
+     * @param string $orientacion 'portrait' o 'landscape'
      * @return \Barryvdh\DomPDF\PDF
      */
-    public function generarReportePdf(string $vista, array $datos): DomPDF
+    public function generarReportePdf(string $vista, array $datos, $orientacion = 'portrait'): DomPDF
     {
         $pdf = Pdf::loadView($vista, $datos);
 
-        $pdf->setPaper('letter', 'portrait');
+        $pdf->setPaper('letter', $orientacion);
         $pdf->output();
 
         $dom_pdf = $pdf->getDomPDF();
@@ -30,6 +31,23 @@ trait ReportePdfTrait
         $canvas->page_text(35, $alto - 35, "Usuario: {$datos['usuario']->nombre}", null, 8, array(0, 0, 0));
         $canvas->page_text(($ancho / 2) - 25, $alto - 35, 'Página {PAGE_NUM} de {PAGE_COUNT}', null, 8, array(0, 0, 0));
         $canvas->page_text($ancho - 135, $alto - 35, 'Fecha: ' . now(), null, 8, array(0, 0, 0));
+
+        return $pdf;
+    }
+
+    /**
+     * Genera etiqueta en PDF.
+     *
+     * @param string $vista
+     * @param array<string, mixed> $datos
+     * @return \Barryvdh\DomPDF\PDF
+     */
+    public function generarEtiquetaPdf(string $vista, array $datos): DomPDF
+    {
+        $pdf = Pdf::loadView($vista, $datos);
+
+        $pdf->setPaper('letter', 'portrait');
+        $pdf->output();
 
         return $pdf;
     }

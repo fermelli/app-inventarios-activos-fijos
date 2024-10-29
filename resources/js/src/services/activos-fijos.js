@@ -32,4 +32,20 @@ export default {
             responseType: "blob",
         });
     },
+    async exportar(opciones = { params: {} }) {
+        return await service.get("/activos-fijos/exportar", {
+            responseType: "blob",
+            params: opciones.params,
+        });
+    },
+    async showReportePdf(opciones = { params: {} }) {
+        return await service.get("/activos-fijos/reporte-pdf", {
+            params: opciones.params,
+        });
+    },
+    async generarEtiquetaPdf(id, opciones = { params: {} }) {
+        return await service.get(`/activos-fijos/${id}/etiqueta-pdf`, {
+            params: opciones.params,
+        });
+    },
 };

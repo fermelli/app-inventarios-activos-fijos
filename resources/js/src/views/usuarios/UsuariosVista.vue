@@ -88,6 +88,17 @@ export default {
 
                 <v-btn
                     class="ml-2"
+                    color="success"
+                    density="compact"
+                    prepend-icon="mdi-plus"
+                    title="Registrar"
+                    @click="() => mostrarDialogoFormulario()"
+                >
+                    Registrar
+                </v-btn>
+
+                <v-btn
+                    class="ml-2"
                     color="primary"
                     density="compact"
                     icon="mdi-reload"

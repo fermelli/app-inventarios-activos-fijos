@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActivoFijoController;
 use App\Http\Controllers\ActivoFijoExcelController;
+use App\Http\Controllers\ActivoFijoReportePdfController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\ArticuloReportePdfController;
 use App\Http\Controllers\ArticulosExcelController;
@@ -150,7 +151,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::apiResource(
             'usuarios',
             UsuarioController::class,
-            ['only' => ['destroy']]
+            ['only' => ['store', 'destroy']]
         );
     });
     Route::apiResource('usuarios', UsuarioController::class, ['only' => ['index', 'show', 'update']]);
@@ -290,12 +291,27 @@ Route::middleware(['auth:sanctum'])->group(function () {
             'dashboard/articulos-proximos-vencer',
             [DashboardController::class, 'articulosProximosVencer']
         );
+        Route::get(
+            'dashboard/cantidad-activos-fijos-por-estado-agrupados-por-categoria',
+            [DashboardController::class, 'cantidadActivosFijosPorEstadoAgrupadosPorCategoria']
+        );
+        Route::get(
+            'dashboard/usuarios-con-mas-activos-fijos-asignados',
+            [DashboardController::class, 'usuariosConMasActivosFijosAsignados']
+        );
+        Route::get(
+            'dashboard/ubicaciones-con-mas-activos-fijos-asignados',
+            [DashboardController::class, 'ubicacionesConMasActivosFijosAsignados']
+        );
     });
 
     // Rutas para Activos Fijos
     Route::middleware(['can:' . User::ROL_ADMINISTRADOR])->group(function () {
         Route::post('activos-fijos/importar', [ActivoFijoExcelController::class, 'importar']);
         Route::get('activos-fijos/formato-importacion', [ActivoFijoExcelController::class, 'formatoImportacion']);
+        Route::get('activos-fijos/exportar', [ActivoFijoExcelController::class, 'exportar']);
+        Route::get('activos-fijos/reporte-pdf', [ActivoFijoReportePdfController::class, 'index']);
+        Route::get('activos-fijos/{activoFijo}/etiqueta-pdf', [ActivoFijoReportePdfController::class, 'generarEtiqueta']);
         Route::apiResource(
             'activos-fijos',
             ActivoFijoController::class

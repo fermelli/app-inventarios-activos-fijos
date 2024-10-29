@@ -26,6 +26,10 @@ export default {
         "mostrarFormularioAsignacion",
         "mostrarFormularioDevolucion",
         "mostrarFormularioDarBaja",
+        "exportarPdf",
+        "exportarExcel",
+        "exportarPdfSinPaginacion",
+        "mostrarFormularioGeneracionQr",
     ],
     setup() {
         const display = useDisplay();
@@ -36,7 +40,7 @@ export default {
         return {
             headers: [
                 { title: "#", key: "nro", sortable: false, filterable: false },
-                { title: "Código SIGMA", key: "codigo" },
+                { title: "Código", key: "codigo" },
                 { title: "Nombre", key: "nombre" },
                 { title: "Estado", key: "estado_activo_fijo" },
                 {
@@ -116,7 +120,7 @@ export default {
     >
         <template #top>
             <v-row>
-                <v-col cols="12" md="7" lg="8" xl="9">
+                <v-col cols="12" md="6" lg="7" xl="8">
                     <v-text-field
                         v-model="q"
                         class="mb-2"
@@ -131,7 +135,7 @@ export default {
                     />
                 </v-col>
 
-                <v-col cols="12" md="5" lg="4" xl="3">
+                <v-col cols="12" md="4" lg="3" xl="2">
                     <v-autocomplete
                         v-model="categoria_id"
                         class="mb-2"
@@ -156,6 +160,49 @@ export default {
                             <v-list-item v-bind="props" />
                         </template>
                     </v-autocomplete>
+                </v-col>
+
+                <v-col cols="12" md="2" lg="2" xl="2">
+                    <v-menu>
+                        <template #activator="{ props }">
+                            <v-btn
+                                v-bind="props"
+                                class="mb-8 mb-md-0"
+                                color="primary"
+                                density="compact"
+                                prepend-icon="mdi-file-import-outline"
+                                title="Exportar"
+                                :disabled="exportandoItems"
+                                :loading="exportandoItems"
+                            >
+                                Exportar
+                            </v-btn>
+                        </template>
+                        <v-list>
+                            <v-list-item
+                                density="compact"
+                                @click="$emit('exportarPdf')"
+                            >
+                                <v-list-item-title> a PDF </v-list-item-title>
+                            </v-list-item>
+
+                            <v-list-item
+                                density="compact"
+                                @click="$emit('exportarPdfSinPaginacion')"
+                            >
+                                <v-list-item-title>
+                                    a PDF (sin paginación)
+                                </v-list-item-title>
+                            </v-list-item>
+
+                            <v-list-item
+                                density="compact"
+                                @click="$emit('exportarExcel')"
+                            >
+                                <v-list-item-title> a Excel </v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
                 </v-col>
             </v-row>
         </template>
@@ -247,6 +294,15 @@ export default {
                     icon="mdi-pencil"
                     title="Editar"
                     @click="$emit('mostrarFormulario', item)"
+                />
+
+                <v-btn
+                    class="ma-1"
+                    color="secondary"
+                    density="compact"
+                    icon="mdi-text-box"
+                    title="Generar etiqueta"
+                    @click="$emit('mostrarFormularioGeneracionQr', item)"
                 />
 
                 <v-btn

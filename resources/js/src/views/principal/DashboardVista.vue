@@ -110,7 +110,7 @@ export default {
                 cargando: false,
                 cabeceras: [
                     { title: "#", key: "index", filterable: false },
-                    { title: "Código SIGMA", key: "codigo" },
+                    { title: "Código", key: "codigo" },
                     { title: "Artículo", key: "nombre" },
                     { title: "Unidad", key: "unidad" },
                     { title: "Cantidad", key: "stock" },
@@ -124,7 +124,7 @@ export default {
                 cargando: false,
                 cabeceras: [
                     { title: "#", key: "index", filterable: false },
-                    { title: "Código SIGMA", key: "codigo" },
+                    { title: "Código", key: "codigo" },
                     { title: "Artículo", key: "nombre" },
                     { title: "Unidad", key: "unidad" },
                     { title: "Cantidad", key: "cantidad" },
@@ -139,11 +139,50 @@ export default {
                 cargando: false,
                 cabeceras: [
                     { title: "#", key: "index", filterable: false },
-                    { title: "Código SIGMA", key: "codigo" },
+                    { title: "Código", key: "codigo" },
                     { title: "Artículo", key: "nombre" },
                     { title: "Unidad", key: "unidad" },
                     { title: "Cantidad", key: "cantidad" },
                     { title: "Fecha Vencimiento", key: "fecha_vencimiento" },
+                ],
+            },
+            cantidadActivosFijosPorEstadoAgrupadoPorCategoria: {
+                titulo: "Cantidad de Activos Fijos por Estado Agrupado por Categoría",
+                icono: "mdi-tag",
+                colorIcono: "primary",
+                items: [],
+                cargando: false,
+                cabeceras: [
+                    { title: "#", key: "index", filterable: false },
+                    { title: "Categoría", key: "categoria" },
+                    { title: "Activo", key: "activo" },
+                    { title: "De Baja", key: "de baja" },
+                    { title: "En Mantenimiento", key: "en mantenimiento" },
+                    { title: "Total", key: "total" },
+                ],
+            },
+            usuariosConMasActivosFijosAsignados: {
+                titulo: "Usuarios con más Activos Fijos Asignados",
+                icono: "mdi-account-group",
+                colorIcono: "primary",
+                items: [],
+                cargando: false,
+                cabeceras: [
+                    { title: "#", key: "index", filterable: false },
+                    { title: "Usuario", key: "usuario" },
+                    { title: "Cantidad", key: "cantidad" },
+                ],
+            },
+            ubicacionesConMasActivosFijosAsignados: {
+                titulo: "Ubicaciones con más Activos Fijos Asignados",
+                icono: "mdi-library-shelves",
+                colorIcono: "primary",
+                items: [],
+                cargando: false,
+                cabeceras: [
+                    { title: "#", key: "index", filterable: false },
+                    { title: "Ubicación", key: "ubicacion" },
+                    { title: "Cantidad", key: "cantidad" },
                 ],
             },
         };
@@ -207,11 +246,57 @@ export default {
                 this.articulosProximosVencer.cargando = false;
             }
         },
+        async obtenerCantidadActivosFijosPorEstadoAgrupadoPorCategoria() {
+            this.cantidadActivosFijosPorEstadoAgrupadoPorCategoria.cargando = true;
+
+            try {
+                const { data } =
+                    await DashboardService.cantidadActivosFijosPorEstadoAgrupadoPorCategoria();
+
+                this.cantidadActivosFijosPorEstadoAgrupadoPorCategoria.items =
+                    data.datos;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.cantidadActivosFijosPorEstadoAgrupadoPorCategoria.cargando = false;
+            }
+        },
+        async obtenerUsuariosConMasActivosFijosAsignados() {
+            this.usuariosConMasActivosFijosAsignados.cargando = true;
+
+            try {
+                const { data } =
+                    await DashboardService.usuariosConMasActivosFijosAsignados();
+
+                this.usuariosConMasActivosFijosAsignados.items = data.datos;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.usuariosConMasActivosFijosAsignados.cargando = false;
+            }
+        },
+        async obtenerUbicacionesConMasActivosFijosAsignados() {
+            this.ubicacionesConMasActivosFijosAsignados.cargando = true;
+
+            try {
+                const { data } =
+                    await DashboardService.ubicacionesConMasActivosFijosAsignados();
+
+                this.ubicacionesConMasActivosFijosAsignados.items = data.datos;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.ubicacionesConMasActivosFijosAsignados.cargando = false;
+            }
+        },
         actualizarDashboard() {
             this.obtenerCantidadRegistros();
             this.obtenerArticulosConStockMinimo();
             this.obtenerArticulosRecientementeVencidos();
             this.obtenerArticulosProximosVencer();
+            this.obtenerCantidadActivosFijosPorEstadoAgrupadoPorCategoria();
+            this.obtenerUsuariosConMasActivosFijosAsignados();
+            this.obtenerUbicacionesConMasActivosFijosAsignados();
         },
     },
 };
@@ -259,6 +344,24 @@ export default {
 
         <v-col cols="12" md="6" lg="4">
             <TarjetaTablaArticulosInfo :datos="articulosProximosVencer" />
+        </v-col>
+
+        <v-col cols="12" md="6" lg="4">
+            <TarjetaTablaArticulosInfo
+                :datos="cantidadActivosFijosPorEstadoAgrupadoPorCategoria"
+            />
+        </v-col>
+
+        <v-col cols="12" md="6" lg="4">
+            <TarjetaTablaArticulosInfo
+                :datos="usuariosConMasActivosFijosAsignados"
+            />
+        </v-col>
+
+        <v-col cols="12" md="6" lg="4">
+            <TarjetaTablaArticulosInfo
+                :datos="ubicacionesConMasActivosFijosAsignados"
+            />
         </v-col>
     </v-row>
 </template>

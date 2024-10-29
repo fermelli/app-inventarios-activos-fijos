@@ -10,6 +10,9 @@ import TablaAsignacionesActivosFijos from "./components/TablaAsignacionesActivos
 import { ESTADOS_ACTIVOS_FIJOS } from "../../utils/constantes";
 import FormularioDarBajaActivoFijo from "./components/FormularioDarBajaActivoFijo.vue";
 import dialogoFormularioImportarMixin from "../../mixins/dialogo-formulario-importar.mixin";
+import exportarArticulosMixin from "../../mixins/exportar-articulos.mixin";
+import ActivosFijosService from "./../../services/activos-fijos";
+import FormularioGeneracionQr from "./components/FormularioGeneracionQr.vue";
 
 export default {
     name: "ActivosFijosVista",
@@ -20,8 +23,13 @@ export default {
         FormularioDevolucionActivoFijo,
         TablaAsignacionesActivosFijos,
         FormularioDarBajaActivoFijo,
+        FormularioGeneracionQr,
     },
-    mixins: [vistaMixin, dialogoFormularioImportarMixin],
+    mixins: [
+        vistaMixin,
+        dialogoFormularioImportarMixin,
+        exportarArticulosMixin,
+    ],
     setup() {
         const toast = useToast();
 
@@ -48,6 +56,9 @@ export default {
             metodoFormatoImportacion: ActivoFijoService.formatoImportacion,
             tituloArchivoEjemploImportacion:
                 "Formato de Importación de Activos Fijos",
+            metodoServicioObtenerExportarExcel: ActivosFijosService.exportar,
+            metodoServicioObtenerReportePdf: ActivosFijosService.showReportePdf,
+            mostradoDialogoFormularioGeneracionQr: false,
         };
     },
     computed: {
@@ -58,7 +69,7 @@ export default {
 
             return [
                 {
-                    titulo: "Código SIGMA",
+                    titulo: "Código",
                     subtitulo: this.itemSeleccionado.codigo,
                 },
                 {
@@ -222,6 +233,13 @@ export default {
             this.mostradoDialogoFormularioDarBaja = false;
             this.datosItem = this.crearDatosItem();
         },
+        mostrarFormularioGeneracionQR(item) {
+            this.datosItem = item;
+            this.mostradoDialogoFormularioGeneracionQr = true;
+        },
+        cancelarGuardadoGeneracionQr() {
+            this.mostradoDialogoFormularioGeneracionQr = false;
+        },
     },
 };
 </script>
@@ -284,6 +302,12 @@ export default {
                 "
                 @mostrar-formulario-dar-baja="
                     mostrarFormularioDarBajaActivoFijo
+                "
+                @exportar-pdf="exportarArticulosPdf"
+                @exportar-excel="() => exportarArticulosExcel('Activos Fijos')"
+                @exportar-pdf-sin-paginacion="exportarArticulosPdfSinPaginacion"
+                @mostrar-formulario-generacion-qr="
+                    mostrarFormularioGeneracionQR
                 "
             />
         </v-col>
@@ -477,5 +501,25 @@ export default {
             @aceptar="funcionDialogoConfirmacion"
             @cancelar="cancelarAccion"
         />
+
+        <DialogoReportePdf
+            v-model="mostradoDialogoReportePdf"
+            :pdf-src="pdfSrc"
+            @cerrar="mostradoDialogoReportePdf = false"
+        />
+
+        <v-dialog
+            v-model="mostradoDialogoFormularioGeneracionQr"
+            width="500"
+            persistent
+            scrollable
+        >
+            <FormularioGeneracionQr
+                :datos="datosItem"
+                :nombre-item="`Generación de Código QR ${nombreItem}`"
+                @actualizar-listado="obtenerActivosFijos"
+                @cancelar-guardado="cancelarGuardadoGeneracionQr"
+            />
+        </v-dialog>
     </v-row>
 </template>

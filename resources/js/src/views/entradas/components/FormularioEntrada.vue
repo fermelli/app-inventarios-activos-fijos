@@ -384,7 +384,12 @@ export default {
                         @cargar-items="obtenerArticulos"
                         @seleccionar-item="seleccionarItem"
                         @exportar-pdf="exportarArticulosPdf"
-                        @exportar-excel="exportarArticulosExcel"
+                        @exportar-excel="
+                            () => exportarArticulosExcel('Artículos')
+                        "
+                        @exportar-pdf-sin-paginacion="
+                            exportarArticulosPdfSinPaginacion
+                        "
                     />
                 </v-card-text>
 

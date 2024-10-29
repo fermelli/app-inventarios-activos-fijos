@@ -12,11 +12,7 @@ export default {
             type: Object,
             required: true,
             validator: (valor) => {
-                return (
-                    "id" in valor &&
-                    "fecha_devolucion" in valor &&
-                    "observacion_devolucion" in valor
-                );
+                return "id" in valor;
             },
         },
     },

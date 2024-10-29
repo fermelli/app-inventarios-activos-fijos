@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ActualizarUsuarioRequest extends FormRequest
+class CrearUsuarioRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +24,14 @@ class ActualizarUsuarioRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'nombre' => ['required', 'string', 'max:255'],
+            'correo_electronico' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('usuarios', 'correo_electronico'),
+            ],
             'rol' => ['required', 'string', 'in:' . User::ROL_ADMINISTRADOR . ',' . User::ROL_PERSONAL],
             'dependencia_id' => ['nullable', 'exists:ubicaciones,id'],
         ];

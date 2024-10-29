@@ -272,11 +272,11 @@ Criterios de Aceptacion:
 -   El Administrador debe poder gestionar Categorias, Unidades y Ubicaciones de los articulos para poder organizar el inventario.
 -   El administrador o personal debe poder ver la lista de articulos
 -   El administrador o personal debe poder filtrar articulos por categoria
--   El administrador o personal debe poder buscar articulos por codigo SIGMA, nombre
--   El administrador debe poder registrar un articulo con los campos de codigo SIGMA, nombre, descripcion, categoria, unidad y ubicacion
+-   El administrador o personal debe poder buscar articulos por codigo, nombre
+-   El administrador debe poder registrar un articulo con los campos de codigo, nombre, descripcion, categoria, unidad y ubicacion
 -   El administrador debe poder editar un articulo
 -   El administrador debe poder eliminar un articulo
--   El administrador debe poder importar articulos desde un archivo XLSX con los campos de codigo SIGMA, nombre, descripcion, categoria, unidad y ubicacion
+-   El administrador debe poder importar articulos desde un archivo XLSX con los campos de codigo, nombre, descripcion, categoria, unidad y ubicacion
 -   El administrador debe poder exportar articulos a un archivo XLSX
 -   El administrador debe poder generar un reporte en PDF de los articulos
 
@@ -291,11 +291,11 @@ Criterios de Aceptacion:
 
 -   El administrador debe poder ver la lista de activos fijos
 -   El administrador debe poder filtrar activos fijos por categoria
--   El administrador debe poder buscar activos fijos por codigo SIGMA, nombre
--   El administrador debe poder registrar un activo fijo con los campos de codigo SIGMA, nombre, descripcion, categoria e institucion
+-   El administrador debe poder buscar activos fijos por codigo, nombre
+-   El administrador debe poder registrar un activo fijo con los campos de codigo, nombre, descripcion, categoria e institucion
 -   El administrador debe poder editar un activo fijo
 -   El administrador debe poder eliminar un activo fijo
--   El administrador debe poder importar activos fijos desde un archivo XLSX con los campos de codigo SIGMA, nombre, descripcion, categoria e institucion
+-   El administrador debe poder importar activos fijos desde un archivo XLSX con los campos de codigo, nombre, descripcion, categoria e institucion
 -   El administrador debe poder ver el historial de asignaciones de un activo fijo
 -   El administrador debe poder asignar un activo fijo a un usuario en una ubicacion con los campos de asignado a, ubicacion, fecha de asignacion y observacion de asignacion
 -   El administrador debe poder registrar la devolucion de un activo fijo con los campos de fecha de devolucion y observacion de devolucion
@@ -415,7 +415,7 @@ Pasos de Prueba:
 
 -   Loguearse en el sistema como administrador
 -   Ingresar a la vista de Articulos
--   Ingresar un nombre o codigo SIGMA en el campo de busqueda y verificar que se muestren resultados acorde a la busqueda
+-   Ingresar un nombre o codigo en el campo de busqueda y verificar que se muestren resultados acorde a la busqueda
 -   Abrir el formulario de registro de articulo presionando el boton de agregar, llenar el formulario de registro de articulo y enviar el formulario de registro de articulo
 -   Abrir el formulario de edicion de articulo presionando el boton de editar, cambiar los campos de articulo y enviar el formulario de edicion de articulo
 -   Presionar el boton de eliminar articulo y verificar que el articulo sea eliminado
@@ -437,7 +437,7 @@ Pasos de Prueba:
 
 -   Loguearse en el sistema como administrador
 -   Ingresar a la vista de Activos Fijos
--   Ingresar un nombre o codigo SIGMA en el campo de busqueda y verificar que se muestren resultados acorde a la busqueda
+-   Ingresar un nombre o codigo en el campo de busqueda y verificar que se muestren resultados acorde a la busqueda
 -   Abrir el formulario de registro de activo fijo presionando el boton de agregar, llenar el formulario de registro de activo fijo y enviar el formulario de registro de activo fijo
 -   Abrir el formulario de edicion de activo fijo presionando el boton de editar, cambiar los campos de activo fijo y enviar el formulario de edicion de activo fijo
 -   Presionar el boton de eliminar activo fijo y verificar que el activo fijo sea eliminado
@@ -536,18 +536,18 @@ Resultado Esperado: El administrador debe poder listar, buscar, generar reporte,
 
 ## Prueba de Aceptación 04: Gestion de Articulos
 
-| Criterio de Aceptación                                                                                                 | Resultado | Correción                                                                      |
-| ---------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------ |
-| Se debe poder gestionar Categorias, Unidades y Ubicaciones de los articulos                                            | Exitoso   | -                                                                              |
-| Se debe poder ver la lista de articulos                                                                                | Exitoso   | -                                                                              |
-| Se debe poder filtrar articulos por categoria                                                                          | Fallido   | Corregido el envio de la categoria al backend para filtrar articulos           |
-| Se debe poder buscar articulos por codigo SIGMA, nombre                                                                | Exitoso   | -                                                                              |
-| Se debe poder registrar un articulo con los campos de codigo SIGMA, nombre, descripcion, categoria, unidad y ubicacion | Exitoso   | -                                                                              |
-| Se debe poder editar un articulo                                                                                       | Exitoso   | -                                                                              |
-| Se debe poder eliminar un articulo                                                                                     | Exitoso   | -                                                                              |
-| Se debe poder importar articulos desde un archivo XLSX                                                                 | Fallido   | Cambio del tiempo de espera de la respuesta del servidor al importar articulos |
-| Se debe poder exportar articulos a un archivo XLSX                                                                     | Exitoso   | -                                                                              |
-| Se debe poder generar un reporte en PDF de los articulos                                                               | Fallido   | Agregado la paginación de los articulos para generar el reporte en PDF         |
+| Criterio de Aceptación                                                                                           | Resultado | Correción                                                                      |
+| ---------------------------------------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------------ |
+| Se debe poder gestionar Categorias, Unidades y Ubicaciones de los articulos                                      | Exitoso   | -                                                                              |
+| Se debe poder ver la lista de articulos                                                                          | Exitoso   | -                                                                              |
+| Se debe poder filtrar articulos por categoria                                                                    | Fallido   | Corregido el envio de la categoria al backend para filtrar articulos           |
+| Se debe poder buscar articulos por codigo, nombre                                                                | Exitoso   | -                                                                              |
+| Se debe poder registrar un articulo con los campos de codigo, nombre, descripcion, categoria, unidad y ubicacion | Exitoso   | -                                                                              |
+| Se debe poder editar un articulo                                                                                 | Exitoso   | -                                                                              |
+| Se debe poder eliminar un articulo                                                                               | Exitoso   | -                                                                              |
+| Se debe poder importar articulos desde un archivo XLSX                                                           | Fallido   | Cambio del tiempo de espera de la respuesta del servidor al importar articulos |
+| Se debe poder exportar articulos a un archivo XLSX                                                               | Exitoso   | -                                                                              |
+| Se debe poder generar un reporte en PDF de los articulos                                                         | Fallido   | Agregado la paginación de los articulos para generar el reporte en PDF         |
 
 ## Prueba de Aceptación 05: Gestion de Activos Fijos
 
@@ -555,8 +555,8 @@ Resultado Esperado: El administrador debe poder listar, buscar, generar reporte,
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------------------------------------------------------------- |
 | Se debe poder ver la lista de activos fijos                                                                                                                 | Exitoso   | -                                                                            |
 | Se debe poder filtrar activos fijos por categoria                                                                                                           | Fallido   | Corregido el envio de la categoria al backend para filtrar activos fijos     |
-| Se debe poder buscar activos fijos por codigo SIGMA, nombre                                                                                                 | Exitoso   | -                                                                            |
-| Se debe poder registrar un activo fijo con los campos de codigo SIGMA, nombre, descripcion, categoria e institucion                                         | Exitoso   | -                                                                            |
+| Se debe poder buscar activos fijos por codigo, nombre                                                                                                       | Exitoso   | -                                                                            |
+| Se debe poder registrar un activo fijo con los campos de codigo, nombre, descripcion, categoria e institucion                                               | Exitoso   | -                                                                            |
 | Se debe poder editar un activo fijo                                                                                                                         | Exitoso   | -                                                                            |
 | Se debe poder eliminar un activo fijo que no tenga asignaciones                                                                                             | Fallido   | Agregado validación de asignaciones de activo fijo para eliminar activo fijo |
 | Se debe poder importar activos fijos desde un archivo XLSX                                                                                                  | Exitoso   | -                                                                            |

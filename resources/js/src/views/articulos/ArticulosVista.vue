@@ -128,7 +128,8 @@ export default {
                 @mostrar-confirmacion="mostrarDialogoConfirmacion"
                 @cargar-items="obtenerArticulos"
                 @exportar-pdf="exportarArticulosPdf"
-                @exportar-excel="exportarArticulosExcel"
+                @exportar-excel="() => exportarArticulosExcel('Artículos')"
+                @exportar-pdf-sin-paginacion="exportarArticulosPdfSinPaginacion"
             />
         </v-col>
 
