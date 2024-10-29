@@ -62,6 +62,10 @@ export default {
                     <v-list-item-title>
                         {{ usuarioAutenticado.correo_electronico }}
                     </v-list-item-title>
+
+                    <v-list-item-subtitle>
+                        {{ usuarioAutenticado.rol.toUpperCase() }}
+                    </v-list-item-subtitle>
                 </v-list-item>
 
                 <v-divider />
