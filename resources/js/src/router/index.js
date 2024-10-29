@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import routes from "./routes";
 import store from "@/store";
+import { ROLES } from "../utils/constantes";
 
 const router = new createRouter({
     history: createWebHistory(),
@@ -15,6 +16,8 @@ router.beforeEach(async (to, from, next) => {
     const rutaInicio = { name: "inicio", redirect: to.fullPath };
     const rutaNoAutorizado = { name: "no-autorizado", redirect: to.fullPath };
     const esRutaLogin = to.name === "login";
+    const esRutaRegistrarse = to.name === "registrarse";
+    const esRutaNoAutorizado = to.name === "no-autorizado"; // TODO: revisar si aplicar esto
 
     if (requiresAuth && !usuarioAutenticado) {
         await store.dispatch("autenticacion/obtenerUsuarioAutenticado");
@@ -28,18 +31,27 @@ router.beforeEach(async (to, from, next) => {
             if (esRutaLogin) {
                 next(rutaInicio);
             } else {
-                !to.meta.rolesAutorizados.includes(usuarioAutenticado.rol)
+                !to.meta?.rolesAutorizados?.includes(usuarioAutenticado.rol)
                     ? next(rutaNoAutorizado)
                     : next();
             }
         }
     } else {
-        if (esRutaLogin) {
+        if (esRutaLogin || esRutaNoAutorizado || esRutaRegistrarse) {
             await store.dispatch("autenticacion/obtenerUsuarioAutenticado");
 
-            store.getters["autenticacion/usuarioAutenticado"]
-                ? next(rutaInicio)
-                : next();
+            const usuarioAutenticado =
+                store.getters["autenticacion/usuarioAutenticado"];
+
+            if (usuarioAutenticado) {
+                if (usuarioAutenticado.rol === ROLES.administrador) {
+                    next(rutaInicio);
+                } else {
+                    next({ name: "solicitudes-usuario" });
+                }
+            } else {
+                next();
+            }
         } else {
             next();
         }
