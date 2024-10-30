@@ -59,6 +59,9 @@ export default {
             metodoServicioObtenerExportarExcel: ActivosFijosService.exportar,
             metodoServicioObtenerReportePdf: ActivosFijosService.showReportePdf,
             mostradoDialogoFormularioGeneracionQr: false,
+            metodoServicioGenerarEtiquetasPdf:
+                ActivosFijosService.generarEtiquetasPdf,
+            generarEtiquetasMultiples: false,
         };
     },
     computed: {
@@ -108,6 +111,16 @@ export default {
                     ESTADOS_ACTIVOS_FIJOS.de_baja ||
                 !!this.itemSeleccionado.asignacion_activo_fijo_actual
             );
+        },
+        paramsGeneracionQr() {
+            return {
+                orden_direccion: "desc",
+                con_eliminados: true,
+                pagina: this.pagina,
+                items_por_pagina: this.itemsPorPagina,
+                busqueda: this.busqueda,
+                categoria_id: this.categoria_id,
+            };
         },
     },
     methods: {
@@ -233,7 +246,8 @@ export default {
             this.mostradoDialogoFormularioDarBaja = false;
             this.datosItem = this.crearDatosItem();
         },
-        mostrarFormularioGeneracionQR(item) {
+        mostrarFormularioGeneracionQR(esMultiple, item = null) {
+            this.generarEtiquetasMultiples = esMultiple;
             this.datosItem = item;
             this.mostradoDialogoFormularioGeneracionQr = true;
         },
@@ -309,6 +323,7 @@ export default {
                 @mostrar-formulario-generacion-qr="
                     mostrarFormularioGeneracionQR
                 "
+                @generar-etiquetas-qr="generarEtiquetasArticulosPdf"
             />
         </v-col>
 
@@ -517,6 +532,8 @@ export default {
             <FormularioGeneracionQr
                 :datos="datosItem"
                 :nombre-item="`Generación de Código QR ${nombreItem}`"
+                :multiple="generarEtiquetasMultiples"
+                :params-multiple="paramsGeneracionQr"
                 @actualizar-listado="obtenerActivosFijos"
                 @cancelar-guardado="cancelarGuardadoGeneracionQr"
             />

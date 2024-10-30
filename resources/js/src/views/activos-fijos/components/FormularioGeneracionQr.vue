@@ -9,11 +9,23 @@ export default {
     mixins: [formularioMixin, exportarArticulosMixin],
     props: {
         datos: {
-            type: Object,
+            type: [Object, null],
             required: true,
             validator: (valor) => {
+                if (valor === null) {
+                    return true;
+                }
+
                 return "id" in valor;
             },
+        },
+        paramsMultiple: {
+            type: Object,
+            default: () => ({}),
+        },
+        multiple: {
+            type: Boolean,
+            default: false,
         },
     },
     setup() {
@@ -32,6 +44,8 @@ export default {
             },
             metodoServicioGenerarEtiquetaPdf:
                 ActivosFijosService.generarEtiquetaPdf,
+            metodoServicioGenerarEtiquetasPdf:
+                ActivosFijosService.generarEtiquetasPdf,
         };
     },
     computed: {
@@ -51,16 +65,23 @@ export default {
     },
     methods: {
         validarFormulario() {
-            if (
-                Number(this.params.cantidad) < 1 ||
-                Number(this.params.cantidad) > this.cantidadMaxima
-            ) {
-                this.toast.error("Corrija los errores en el formulario");
+            if (this.multiple) {
+                this.generarEtiquetasArticulosPdf({
+                    ...this.params,
+                    ...this.paramsMultiple,
+                });
+            } else {
+                if (
+                    Number(this.params.cantidad) < 1 ||
+                    Number(this.params.cantidad) > this.cantidadMaxima
+                ) {
+                    this.toast.error("Corrija los errores en el formulario");
 
-                return;
+                    return;
+                }
+
+                this.generarEtiquetaArticuloPdf(this.datos.id, this.params);
             }
-
-            this.generarEtiquetaArticuloPdf(this.datos.id, this.params);
         },
     },
 };
@@ -155,6 +176,7 @@ export default {
                     />
 
                     <v-text-field
+                        v-if="!multiple"
                         v-model="params.cantidad"
                         label="Cantidad"
                         name="cantidad"

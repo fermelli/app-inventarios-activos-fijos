@@ -1,6 +1,6 @@
 @extends('pdf.layouts.etiqueta')
 
-@section('titulo', 'Etiqueta de Activo Fijo ' . $activoFijo->codigo . ' - ' . $activoFijo->nombre)
+@section('titulo', 'Etiquetas de Activos Fijos')
 
 @section('contenido-principal')
     <table class="tabla-contenedor">
@@ -8,10 +8,15 @@
             @for ($f = 1; $f <= $maximoFilas; $f++)
                 <tr>
                     @for ($c = 1; $c <= $maximoColumnas; $c++)
-                        @if (
-                            $numeroCeldaSeleccionada <= ($f -1) * $maximoColumnas + $c
-                            && $numeroCeldaSeleccionada + $cantidad > ($f -1) * $maximoColumnas + $c
-                        )
+                        @php
+                        $indice = ($f -1) * $maximoColumnas + $c - 1;
+                        @endphp
+
+                        @if (isset($datos['activosFijos'][$indice]))
+                        
+                        @php
+                        $activoFijo = $datos['activosFijos'][$indice];
+                        @endphp
                         <td style="width: 25%; max-width: 25%; height: 92px;">
                             <table class="tabla-etiqueta">
                                 <tbody>

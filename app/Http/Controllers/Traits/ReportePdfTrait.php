@@ -42,7 +42,7 @@ trait ReportePdfTrait
      * @param array<string, mixed> $datos
      * @return \Barryvdh\DomPDF\PDF
      */
-    public function generarEtiquetaPdf(string $vista, array $datos): DomPDF
+    public function generarEtiquetasPdf(string $vista, array $datos): DomPDF
     {
         $pdf = Pdf::loadView($vista, $datos);
 

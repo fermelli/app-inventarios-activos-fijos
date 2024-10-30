@@ -18,7 +18,8 @@ trait ActivoFijoTrait
         $queryBuilder = Articulo::with([
             'categoria',
             'institucion',
-            'asignacionActivoFijoActual',
+            'asignacionActivoFijoActual.usuario',
+            'asignacionActivoFijoActual.ubicacion',
         ])->where('tipo', Articulo::TIPO_ACTIVO_FIJO);
 
         if (isset($parametros['con_eliminados'])) {

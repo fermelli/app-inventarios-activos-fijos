@@ -201,6 +201,17 @@ export default {
                             >
                                 <v-list-item-title> a Excel </v-list-item-title>
                             </v-list-item>
+
+                            <v-list-item
+                                density="compact"
+                                @click="
+                                    $emit('mostrarFormularioGeneracionQr', true)
+                                "
+                            >
+                                <v-list-item-title>
+                                    Etiquetas
+                                </v-list-item-title>
+                            </v-list-item>
                         </v-list>
                     </v-menu>
                 </v-col>
@@ -302,7 +313,7 @@ export default {
                     density="compact"
                     icon="mdi-text-box"
                     title="Generar etiqueta"
-                    @click="$emit('mostrarFormularioGeneracionQr', item)"
+                    @click="$emit('mostrarFormularioGeneracionQr', false, item)"
                 />
 
                 <v-btn

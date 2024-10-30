@@ -23,6 +23,12 @@ export default {
                         "No se ha definido el servicio para generar la etiqueta del artículo",
                     );
                 }),
+            metodoServicioGenerarEtiquetasPdf: async () =>
+                new Promise((resolve, reject) => {
+                    reject(
+                        "No se ha definido el servicio para generar las etiquetas de los artículos",
+                    );
+                }),
         };
     },
     methods: {
@@ -106,6 +112,26 @@ export default {
                         params,
                     },
                 );
+                const datos = data?.datos;
+                const mensaje = data?.mensaje;
+                const { pdf } = datos;
+
+                this.toast.success(mensaje || "Reporte PDF generado");
+                this.pdfSrc = `data:application/pdf;base64,${pdf}`;
+                this.mostradoDialogoReportePdf = true;
+            } catch (error) {
+                console.log(error);
+            } finally {
+                this.exportandoArticulos = false;
+            }
+        },
+        async generarEtiquetasArticulosPdf(params = {}) {
+            this.exportandoArticulos = true;
+
+            try {
+                const { data } = await this.metodoServicioGenerarEtiquetasPdf({
+                    params,
+                });
                 const datos = data?.datos;
                 const mensaje = data?.mensaje;
                 const { pdf } = datos;
