@@ -7,64 +7,64 @@ export default [
         texto: "Dashboard",
         rolesAutorizados: [ROLES.administrador],
     },
-    {
-        to: null,
-        icono: "mdi-store",
-        texto: "Inventario",
-        rolesAutorizados: [ROLES.administrador],
-        rutasHijas: [
-            {
-                to: { name: "unidades" },
-                icono: "mdi-ruler",
-                texto: "Unidades",
-                rolesAutorizados: [ROLES.administrador],
-            },
-            {
-                to: { name: "articulos" },
-                icono: "mdi-package-variant-closed",
-                texto: "Artículos",
-                rolesAutorizados: [ROLES.administrador],
-            },
-        ],
-    },
-    {
-        to: null,
-        icono: "mdi-store-check",
-        texto: "Operaciones de Inventario",
-        rolesAutorizados: [ROLES.administrador, ROLES.personal],
-        rutasHijas: [
-            {
-                to: { name: "entradas" },
-                icono: "mdi-arrow-right",
-                texto: "Entradas",
-                rolesAutorizados: [ROLES.administrador],
-            },
-            {
-                to: { name: "solicitudes" },
-                icono: "mdi-file-document-multiple-outline",
-                texto: "Solicitudes",
-                rolesAutorizados: [ROLES.administrador],
-            },
-            {
-                to: { name: "solicitudes-usuario" },
-                icono: "mdi-file-document-outline",
-                texto: "Mis Solicitudes",
-                rolesAutorizados: [ROLES.personal],
-            },
-            {
-                to: { name: "salidas" },
-                icono: "mdi-arrow-left",
-                texto: "Salidas",
-                rolesAutorizados: [ROLES.administrador],
-            },
-            {
-                to: { name: "salidas-usuario" },
-                icono: "mdi-clipboard-arrow-left-outline",
-                texto: "Mis Salidas",
-                rolesAutorizados: [ROLES.personal],
-            },
-        ],
-    },
+    // {
+    //     to: null,
+    //     icono: "mdi-store",
+    //     texto: "Inventario",
+    //     rolesAutorizados: [ROLES.administrador],
+    //     rutasHijas: [
+    //         {
+    //             to: { name: "unidades" },
+    //             icono: "mdi-ruler",
+    //             texto: "Unidades",
+    //             rolesAutorizados: [ROLES.administrador],
+    //         },
+    //         {
+    //             to: { name: "articulos" },
+    //             icono: "mdi-package-variant-closed",
+    //             texto: "Artículos",
+    //             rolesAutorizados: [ROLES.administrador],
+    //         },
+    //     ],
+    // },
+    // {
+    //     to: null,
+    //     icono: "mdi-store-check",
+    //     texto: "Operaciones de Inventario",
+    //     rolesAutorizados: [ROLES.administrador, ROLES.personal],
+    //     rutasHijas: [
+    //         {
+    //             to: { name: "entradas" },
+    //             icono: "mdi-arrow-right",
+    //             texto: "Entradas",
+    //             rolesAutorizados: [ROLES.administrador],
+    //         },
+    //         {
+    //             to: { name: "solicitudes" },
+    //             icono: "mdi-file-document-multiple-outline",
+    //             texto: "Solicitudes",
+    //             rolesAutorizados: [ROLES.administrador],
+    //         },
+    //         {
+    //             to: { name: "solicitudes-usuario" },
+    //             icono: "mdi-file-document-outline",
+    //             texto: "Mis Solicitudes",
+    //             rolesAutorizados: [ROLES.personal],
+    //         },
+    //         {
+    //             to: { name: "salidas" },
+    //             icono: "mdi-arrow-left",
+    //             texto: "Salidas",
+    //             rolesAutorizados: [ROLES.administrador],
+    //         },
+    //         {
+    //             to: { name: "salidas-usuario" },
+    //             icono: "mdi-clipboard-arrow-left-outline",
+    //             texto: "Mis Salidas",
+    //             rolesAutorizados: [ROLES.personal],
+    //         },
+    //     ],
+    // },
     {
         to: { name: "activos-fijos" },
         icono: "mdi-archive-arrow-down",

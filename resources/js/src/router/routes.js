@@ -21,16 +21,16 @@ export default [
             rolesAutorizados: [ROLES.administrador],
         },
     },
-    {
-        path: "/unidades",
-        name: "unidades",
-        component: () => import("../views/unidades/UnidadesVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador],
-        },
-    },
+    // {
+    //     path: "/unidades",
+    //     name: "unidades",
+    //     component: () => import("../views/unidades/UnidadesVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.administrador],
+    //     },
+    // },
     {
         path: "/ubicaciones",
         name: "ubicaciones",
@@ -41,16 +41,16 @@ export default [
             rolesAutorizados: [ROLES.administrador],
         },
     },
-    {
-        path: "/articulos",
-        name: "articulos",
-        component: () => import("../views/articulos/ArticulosVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador],
-        },
-    },
+    // {
+    //     path: "/articulos",
+    //     name: "articulos",
+    //     component: () => import("../views/articulos/ArticulosVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.administrador],
+    //     },
+    // },
     {
         path: "/instituciones",
         name: "instituciones",
@@ -72,58 +72,58 @@ export default [
             rolesAutorizados: [ROLES.administrador],
         },
     },
-    {
-        path: "/entradas",
-        name: "entradas",
-        component: () => import("../views/entradas/EntradasVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador],
-        },
-    },
-    {
-        path: "/solicitudes",
-        name: "solicitudes",
-        component: () =>
-            import("../views/solicitudes/SolicitudesTodasVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador],
-        },
-    },
-    {
-        path: "/solicitudes/usuario",
-        name: "solicitudes-usuario",
-        component: () =>
-            import("../views/solicitudes/SolicitudesUsuarioVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.personal],
-        },
-    },
-    {
-        path: "/salidas",
-        name: "salidas",
-        component: () => import("../views/solicitudes/SalidasTodasVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.administrador],
-        },
-    },
-    {
-        path: "/salidas/usuario",
-        name: "salidas-usuario",
-        component: () => import("../views/solicitudes/SalidasUsuarioVista.vue"),
-        meta: {
-            layout: LAYOUTS.app,
-            requiresAuth: true,
-            rolesAutorizados: [ROLES.personal],
-        },
-    },
+    // {
+    //     path: "/entradas",
+    //     name: "entradas",
+    //     component: () => import("../views/entradas/EntradasVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.administrador],
+    //     },
+    // },
+    // {
+    //     path: "/solicitudes",
+    //     name: "solicitudes",
+    //     component: () =>
+    //         import("../views/solicitudes/SolicitudesTodasVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.administrador],
+    //     },
+    // },
+    // {
+    //     path: "/solicitudes/usuario",
+    //     name: "solicitudes-usuario",
+    //     component: () =>
+    //         import("../views/solicitudes/SolicitudesUsuarioVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.personal],
+    //     },
+    // },
+    // {
+    //     path: "/salidas",
+    //     name: "salidas",
+    //     component: () => import("../views/solicitudes/SalidasTodasVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.administrador],
+    //     },
+    // },
+    // {
+    //     path: "/salidas/usuario",
+    //     name: "salidas-usuario",
+    //     component: () => import("../views/solicitudes/SalidasUsuarioVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.app,
+    //         requiresAuth: true,
+    //         rolesAutorizados: [ROLES.personal],
+    //     },
+    // },
     {
         path: "/activos-fijos",
         name: "activos-fijos",
@@ -164,15 +164,15 @@ export default [
             requiresAuth: false,
         },
     },
-    {
-        path: "/autenticacion/registrarse",
-        name: "registrarse",
-        component: () => import("../views/autenticacion/RegistrarseVista.vue"),
-        meta: {
-            layout: LAYOUTS.blank,
-            requiresAuth: false,
-        },
-    },
+    // {
+    //     path: "/autenticacion/registrarse",
+    //     name: "registrarse",
+    //     component: () => import("../views/autenticacion/RegistrarseVista.vue"),
+    //     meta: {
+    //         layout: LAYOUTS.blank,
+    //         requiresAuth: false,
+    //     },
+    // },
     {
         path: "/no-autorizado",
         name: "no-autorizado",

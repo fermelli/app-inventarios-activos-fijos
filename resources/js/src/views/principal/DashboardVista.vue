@@ -12,13 +12,13 @@ export default {
     data() {
         return {
             cantidadRegistros: {
-                articulos: {
-                    cantidad: 0,
-                    titulo: "Artículos",
-                    colorIcono: "primary",
-                    icono: "mdi-package-variant-closed",
-                    ruta: { name: "articulos" },
-                },
+                // articulos: {
+                //     cantidad: 0,
+                //     titulo: "Artículos",
+                //     colorIcono: "primary",
+                //     icono: "mdi-package-variant-closed",
+                //     ruta: { name: "articulos" },
+                // },
                 activos_fijos: {
                     cantidad: 0,
                     titulo: "Activos Fijos",
@@ -40,55 +40,55 @@ export default {
                     icono: "mdi-archive-arrow-down-outline",
                     ruta: { name: "activos-fijos" },
                 },
-                entradas_validas: {
-                    cantidad: 0,
-                    titulo: "Entradas Válidas",
-                    colorIcono: "success",
-                    icono: "mdi-arrow-right",
-                    ruta: { name: "entradas" },
-                },
-                entradas_anuladas: {
-                    cantidad: 0,
-                    titulo: "Entradas Anuladas",
-                    colorIcono: "error",
-                    icono: "mdi-arrow-right",
-                    ruta: { name: "entradas" },
-                },
-                solicitudes_pendientes: {
-                    cantidad: 0,
-                    titulo: "Solicitudes Pendientes",
-                    colorIcono: "warning",
-                    icono: "mdi-file-document-multiple-outline",
-                    ruta: { name: "solicitudes" },
-                },
-                solicitudes_aprobadas: {
-                    cantidad: 0,
-                    titulo: "Solicitudes Aprobadas",
-                    colorIcono: "success",
-                    icono: "mdi-file-document-multiple-outline",
-                    ruta: { name: "solicitudes" },
-                },
-                solicitudes_rechazadas: {
-                    cantidad: 0,
-                    titulo: "Solicitudes Rechazadas",
-                    colorIcono: "error",
-                    icono: "mdi-file-document-multiple-outline",
-                    ruta: { name: "solicitudes" },
-                },
-                salidas_entregadas: {
-                    cantidad: 0,
-                    titulo: "Salidas Entregadas",
-                    colorIcono: "success",
-                    icono: "mdi-arrow-left",
-                    ruta: { name: "salidas" },
-                },
-                salidas_anuladas: {
-                    cantidad: 0,
-                    titulo: "Salidas Anuladas",
-                    colorIcono: "error",
-                    icono: "mdi-arrow-left",
-                    ruta: { name: "salidas" },
-                },
+                // entradas_validas: {
+                //     cantidad: 0,
+                //     titulo: "Entradas Válidas",
+                //     colorIcono: "success",
+                //     icono: "mdi-arrow-right",
+                //     ruta: { name: "entradas" },
+                // },
+                // entradas_anuladas: {
+                //     cantidad: 0,
+                //     titulo: "Entradas Anuladas",
+                //     colorIcono: "error",
+                //     icono: "mdi-arrow-right",
+                //     ruta: { name: "entradas" },
+                // },
+                // solicitudes_pendientes: {
+                //     cantidad: 0,
+                //     titulo: "Solicitudes Pendientes",
+                //     colorIcono: "warning",
+                //     icono: "mdi-file-document-multiple-outline",
+                //     ruta: { name: "solicitudes" },
+                // },
+                // solicitudes_aprobadas: {
+                //     cantidad: 0,
+                //     titulo: "Solicitudes Aprobadas",
+                //     colorIcono: "success",
+                //     icono: "mdi-file-document-multiple-outline",
+                //     ruta: { name: "solicitudes" },
+                // },
+                // solicitudes_rechazadas: {
+                //     cantidad: 0,
+                //     titulo: "Solicitudes Rechazadas",
+                //     colorIcono: "error",
+                //     icono: "mdi-file-document-multiple-outline",
+                //     ruta: { name: "solicitudes" },
+                // },
+                // salidas_entregadas: {
+                //     cantidad: 0,
+                //     titulo: "Salidas Entregadas",
+                //     colorIcono: "success",
+                //     icono: "mdi-arrow-left",
+                //     ruta: { name: "salidas" },
+                // },
+                // salidas_anuladas: {
+                //     cantidad: 0,
+                //     titulo: "Salidas Anuladas",
+                //     colorIcono: "error",
+                //     icono: "mdi-arrow-left",
+                //     ruta: { name: "salidas" },
+                // },
                 activos_fijos_asignados: {
                     cantidad: 0,
                     titulo: "Activos Fijos Asignados",
@@ -102,50 +102,50 @@ export default {
                     icono: "mdi-archive-remove-outline",
                 },
             },
-            articulosConStockMinimo: {
-                titulo: "Artículos con Stock Mínimo",
-                icono: "mdi-package-variant-closed",
-                colorIcono: "primary",
-                items: [],
-                cargando: false,
-                cabeceras: [
-                    { title: "#", key: "index", filterable: false },
-                    { title: "Código", key: "codigo" },
-                    { title: "Artículo", key: "nombre" },
-                    { title: "Unidad", key: "unidad" },
-                    { title: "Cantidad", key: "stock" },
-                ],
-            },
-            articulosRecientementeVencidos: {
-                titulo: "Artículos Recientemente Vencidos",
-                icono: "mdi-package-variant-closed",
-                colorIcono: "error",
-                items: [],
-                cargando: false,
-                cabeceras: [
-                    { title: "#", key: "index", filterable: false },
-                    { title: "Código", key: "codigo" },
-                    { title: "Artículo", key: "nombre" },
-                    { title: "Unidad", key: "unidad" },
-                    { title: "Cantidad", key: "cantidad" },
-                    { title: "Fecha Vencimiento", key: "fecha_vencimiento" },
-                ],
-            },
-            articulosProximosVencer: {
-                titulo: "Artículos Próximos a Vencer",
-                icono: "mdi-package-variant-closed",
-                colorIcono: "warning",
-                items: [],
-                cargando: false,
-                cabeceras: [
-                    { title: "#", key: "index", filterable: false },
-                    { title: "Código", key: "codigo" },
-                    { title: "Artículo", key: "nombre" },
-                    { title: "Unidad", key: "unidad" },
-                    { title: "Cantidad", key: "cantidad" },
-                    { title: "Fecha Vencimiento", key: "fecha_vencimiento" },
-                ],
-            },
+            // articulosConStockMinimo: {
+            //     titulo: "Artículos con Stock Mínimo",
+            //     icono: "mdi-package-variant-closed",
+            //     colorIcono: "primary",
+            //     items: [],
+            //     cargando: false,
+            //     cabeceras: [
+            //         { title: "#", key: "index", filterable: false },
+            //         { title: "Código", key: "codigo" },
+            //         { title: "Artículo", key: "nombre" },
+            //         { title: "Unidad", key: "unidad" },
+            //         { title: "Cantidad", key: "stock" },
+            //     ],
+            // },
+            // articulosRecientementeVencidos: {
+            //     titulo: "Artículos Recientemente Vencidos",
+            //     icono: "mdi-package-variant-closed",
+            //     colorIcono: "error",
+            //     items: [],
+            //     cargando: false,
+            //     cabeceras: [
+            //         { title: "#", key: "index", filterable: false },
+            //         { title: "Código", key: "codigo" },
+            //         { title: "Artículo", key: "nombre" },
+            //         { title: "Unidad", key: "unidad" },
+            //         { title: "Cantidad", key: "cantidad" },
+            //         { title: "Fecha Vencimiento", key: "fecha_vencimiento" },
+            //     ],
+            // },
+            // articulosProximosVencer: {
+            //     titulo: "Artículos Próximos a Vencer",
+            //     icono: "mdi-package-variant-closed",
+            //     colorIcono: "warning",
+            //     items: [],
+            //     cargando: false,
+            //     cabeceras: [
+            //         { title: "#", key: "index", filterable: false },
+            //         { title: "Código", key: "codigo" },
+            //         { title: "Artículo", key: "nombre" },
+            //         { title: "Unidad", key: "unidad" },
+            //         { title: "Cantidad", key: "cantidad" },
+            //         { title: "Fecha Vencimiento", key: "fecha_vencimiento" },
+            //     ],
+            // },
             cantidadActivosFijosPorEstadoAgrupadoPorCategoria: {
                 titulo: "Cantidad de Activos Fijos por Estado Agrupado por Categoría",
                 icono: "mdi-tag",
@@ -291,9 +291,9 @@ export default {
         },
         actualizarDashboard() {
             this.obtenerCantidadRegistros();
-            this.obtenerArticulosConStockMinimo();
-            this.obtenerArticulosRecientementeVencidos();
-            this.obtenerArticulosProximosVencer();
+            // this.obtenerArticulosConStockMinimo();
+            // this.obtenerArticulosRecientementeVencidos();
+            // this.obtenerArticulosProximosVencer();
             this.obtenerCantidadActivosFijosPorEstadoAgrupadoPorCategoria();
             this.obtenerUsuariosConMasActivosFijosAsignados();
             this.obtenerUbicacionesConMasActivosFijosAsignados();
@@ -332,7 +332,7 @@ export default {
 
         <v-col cols="12" />
 
-        <v-col cols="12" md="6" lg="4">
+        <!-- <v-col cols="12" md="6" lg="4">
             <TarjetaTablaArticulosInfo :datos="articulosConStockMinimo" />
         </v-col>
 
@@ -344,7 +344,7 @@ export default {
 
         <v-col cols="12" md="6" lg="4">
             <TarjetaTablaArticulosInfo :datos="articulosProximosVencer" />
-        </v-col>
+        </v-col> -->
 
         <v-col cols="12" md="6" lg="4">
             <TarjetaTablaArticulosInfo

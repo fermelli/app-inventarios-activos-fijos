@@ -115,7 +115,7 @@ export default {
                         >
                             Ingresar
                         </v-btn>
-
+                        <!-- 
                         <v-btn
                             color="primary"
                             density="compact"
@@ -124,7 +124,7 @@ export default {
                             :to="{ name: 'registrarse' }"
                         >
                             Registrarse
-                        </v-btn>
+                        </v-btn> -->
                     </v-form>
                 </v-card-text>
             </v-card>
