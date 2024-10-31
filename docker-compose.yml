@@ -1,9 +1,20 @@
 services:
-    app-inventarios-activos-fijos:
+    inventarios-activos-fijos:
         image: app-inventarios-activos-fijos:1.0.0
         container_name: app-inventarios-activos-fijos
         volumes:
             - "/etc/localtime:/etc/localtime:ro"
-            - .env.docker:/var/www/.env
+            - ".env.docker:/var/www/.env"
         ports:
-            - "80:80"
+            - "8000:80"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.inventarios-activos-fijos.rule=Host(`${TRAEFIK_HTTP_ROUTERS_RULE_HOST}`)"
+            - "traefik.http.routers.inventarios-activos-fijos.entrypoints=websecure"
+            - "traefik.http.routers.inventarios-activos-fijos.tls.certresolver=myresolver"
+        networks:
+            - web
+
+networks:
+    web:
+        external: true
