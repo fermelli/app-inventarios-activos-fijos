@@ -35,22 +35,15 @@ export default {
             this.guardandoItem = true;
 
             try {
-                let response = null;
-
                 if (this.formulario.id) {
-                    response = await this.metodoUpdate(
+                    await this.metodoUpdate(
                         this.formulario.id,
                         this.formulario,
                     );
                 } else {
-                    response = await this.metodoStore(this.formulario);
+                    await this.metodoStore(this.formulario);
                 }
 
-                const data = response.data;
-                const mensaje =
-                    data?.mensaje || `${this.nombreItem} guardada exitosamente`;
-
-                this.toast.success(mensaje);
                 this.emitActualizarListado();
                 this.emitCancelarGuardado();
             } catch (error) {
