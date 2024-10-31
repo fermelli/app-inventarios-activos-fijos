@@ -41,3 +41,19 @@ html::-webkit-scrollbar {
         padding: 1rem !important;
     }
 }
+
+.Vue-Toastification__toast--success {
+    background-color: #085c39 !important;
+}
+
+.Vue-Toastification__toast--error {
+    background-color: #e17635 !important;
+}
+
+.Vue-Toastification__toast--info {
+    background-color: #553a30 !important;
+}
+
+.Vue-Toastification__toast--warning {
+    background-color: #ffcf03 !important;
+}

@@ -17,7 +17,7 @@
                                 <tbody>
                                     <tr>
                                         <th colspan="3" style="width: 65%; max-width: 65%; text-align: center;">
-                                            <h2>CENTRO DE SALUD SUCRE</h2>
+                                            <h2>U. E. ANICETO ARCE</h2>
                                         </th>
                                     </tr>
 

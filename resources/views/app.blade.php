@@ -49,7 +49,7 @@
 
             body.light .app-spinner {
                 border: 4px solid rgba(0, 0, 0, 0.1);
-                border-left-color: #ce2d4f;
+                border-left-color: #19659d;
             }
 
             body.dark .app-spinner {

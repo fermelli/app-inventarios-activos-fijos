@@ -8,7 +8,7 @@ export default {
     <h2>Inicio</h2>
 
     <p>
-        Bienvenido al Sistema de Gestión de Inventarios y Activos Fijos de
-        Centro de Salud Sucre.
+        Bienvenido al Sistema de Gestión Activos Fijos de la U. E. Aniceto Arce
+        de la ciudad de Tarabuco.
     </p>
 </template>

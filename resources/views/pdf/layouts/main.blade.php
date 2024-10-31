@@ -87,24 +87,24 @@
         <tbody>
             <tr>
                 <td style="width: 70%; text-align: left;">
-                    <h1 class="h1">CENTRO DE SALUD SUCRE</h1>
+                    <h1 class="h1">U. E. ANICETO ARCE</h1>
                     <p class="subtitulo">
-                        ATENCIONES GRATUITAS EN EL MARCO DEL SEGURO MUNICIPAL DE SALUD
+                        AYUDANDO AL DESARROLLO DE NUESTRA COMUNIDAD
                     </p>
                 </td>
 
                 <td style="width: 30%; text-align: center;">
-                    <strong>Dirección: </strong>Av. 6 de Agosto Nº 123
+                    Tarabuco - Chuquisaca
                 </td>
             </tr>
 
             <tr>
                 <td style="width: 80%; text-align: left;">
-                    Consulta Externa, Enfermería, Odontología, Medicina Interna, Pediatría, Laboratorio y Ecografía
+                    Educación Inicial - Primaria - Secundaria
                 </td>
 
                 <td style="width: 20%; text-align: center;">
-                    <strong>Teléfono: </strong>64-44444
+                    <strong>Teléfono: </strong>S/N
                 </td>
             </tr>
         </tbody>

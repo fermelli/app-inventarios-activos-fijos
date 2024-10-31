@@ -44,7 +44,7 @@ export default {
             src="@/assets/imagenes/logo.png"
         />
 
-        <v-app-bar-title> CENTRO DE SALUD SUCRE </v-app-bar-title>
+        <v-app-bar-title> U. E. ANICETO ARCE </v-app-bar-title>
 
         <v-spacer />
 

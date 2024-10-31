@@ -7,14 +7,11 @@ export default {
 <template>
     <h2>Sobre Nosotros</h2>
 
-    <h3>CENTRO DE SALUD SUCRE</h3>
+    <h3>U. E. ANICETO ARCE</h3>
 
     <p>
-        Somos un Centro de Salud de Primer Nivel del Municipio de Sucre, que
-        brinda atención integral y de emergencia a los usuarios, mejorando la
-        condición de su salud mediante procesos de promoción, prevención,
-        tratamiento ambulatorio y la capacitación continua a sus profesionales,
-        demostrando de esta manera el compromiso de atención a la población
-        mediante la mejora constante.
+        La Unidad Educativa Aniceto Arce es una institución educativa de nivel
+        inicial, primario y secundario que se encuentra en la ciudad de
+        Tarabuco, en el departamento de Chuquisaca, en Bolivia.
     </p>
 </template>
