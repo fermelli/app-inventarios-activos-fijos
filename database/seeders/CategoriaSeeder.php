@@ -13,24 +13,36 @@ class CategoriaSeeder extends Seeder
     public function run(): void
     {
         DB::table('categorias')->insert([
-            ['id' => 1, 'nombre' => 'Categoría 1'],
-            ['id' => 2, 'nombre' => 'Categoría 2'],
-            ['id' => 3, 'nombre' => 'Categoría 3'],
-            ['id' => 4, 'nombre' => 'Categoría 4'],
-            ['id' => 5, 'nombre' => 'Categoría 5'],
-        ]);
+            [ 'id' => 1, 'categoria_padre_id' => null, 'nombre' => 'MOBILIARIO' ],
+            [ 'id' => 2, 'categoria_padre_id' => 1, 'nombre' => 'MESAS' ],
+            [ 'id' => 3, 'categoria_padre_id' => 1, 'nombre' => 'SILLAS' ],
+            [ 'id' => 4, 'categoria_padre_id' => 1, 'nombre' => 'ESTANTES' ],
+            [ 'id' => 5, 'categoria_padre_id' => 1, 'nombre' => 'PUPITRES' ],
+            [ 'id' => 6, 'categoria_padre_id' => 1, 'nombre' => 'ARMARIOS' ],
 
-        DB::table('categorias')->insert([
-            ['id' => 6, 'nombre' => 'Categoría 6', 'categoria_padre_id' => 1],
-            ['id' => 7, 'nombre' => 'Categoría 7', 'categoria_padre_id' => 1],
-            ['id' => 8, 'nombre' => 'Categoría 8', 'categoria_padre_id' => 2],
-            ['id' => 9, 'nombre' => 'Categoría 9', 'categoria_padre_id' => 6],
-            ['id' => 10, 'nombre' => 'Categoría 10', 'categoria_padre_id' => 3],
-            ['id' => 11, 'nombre' => 'Categoría 11', 'categoria_padre_id' => 6],
-            ['id' => 12, 'nombre' => 'Categoría 12', 'categoria_padre_id' => 4],
-            ['id' => 13, 'nombre' => 'Categoría 13', 'categoria_padre_id' => 4],
-            ['id' => 14, 'nombre' => 'Categoría 14', 'categoria_padre_id' => 4],
-            ['id' => 15, 'nombre' => 'Categoría 15', 'categoria_padre_id' => 14],
+            [ 'id' => 7, 'categoria_padre_id' => null, 'nombre' => 'EQUIPOS DE TECNOLOGIA' ],
+            [ 'id' => 8, 'categoria_padre_id' => 7, 'nombre' => 'COMPUTADORAS' ],
+            [ 'id' => 9, 'categoria_padre_id' => 7, 'nombre' => 'IMPRESORAS' ],
+            [ 'id' => 10, 'categoria_padre_id' => 7, 'nombre' => 'PROYECTORES' ],
+            [ 'id' => 11, 'categoria_padre_id' => 7, 'nombre' => 'TABLETS' ],
+            [ 'id' => 12, 'categoria_padre_id' => 7, 'nombre' => 'TELEVISORES' ],
+            [ 'id' => 13, 'categoria_padre_id' => 7, 'nombre' => 'TELEFONOS' ],
+
+            [ 'id' => 14, 'categoria_padre_id' => null, 'nombre' => 'EQUIPOS DEPORTIVOS' ],
+            [ 'id' => 15, 'categoria_padre_id' => 14, 'nombre' => 'BALONES' ],
+            [ 'id' => 16, 'categoria_padre_id' => 14, 'nombre' => 'RAQUETAS' ],
+            [ 'id' => 17, 'categoria_padre_id' => 14, 'nombre' => 'REDES' ],
+            [ 'id' => 18, 'categoria_padre_id' => 14, 'nombre' => 'CONOS' ],
+            [ 'id' => 19, 'categoria_padre_id' => 14, 'nombre' => 'PELOTAS' ],
+            [ 'id' => 20, 'categoria_padre_id' => 14, 'nombre' => 'AROS' ],
+
+            [ 'id' => 21, 'categoria_padre_id' => null, 'nombre' => 'EQUIPOS DE LABORATORIO' ],
+            [ 'id' => 22, 'categoria_padre_id' => 21, 'nombre' => 'MICROSCOPIOS' ],
+            [ 'id' => 23, 'categoria_padre_id' => 21, 'nombre' => 'BALANZAS' ],
+            [ 'id' => 24, 'categoria_padre_id' => 21, 'nombre' => 'TUBOS DE ENSAYO' ],
+            [ 'id' => 25, 'categoria_padre_id' => 21, 'nombre' => 'PIPETAS' ],
+            [ 'id' => 26, 'categoria_padre_id' => 21, 'nombre' => 'PROBETAS' ],
+            [ 'id' => 27, 'categoria_padre_id' => 21, 'nombre' => 'BURETAS' ],
         ]);
     }
 }
