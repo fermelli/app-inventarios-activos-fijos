@@ -1,4 +1,4 @@
-NAME=app-ue_aniceto_arce
+NAME=app-ue-aniceto-arce
 REPO=
 
 ifeq ($(REPO),)
@@ -11,7 +11,7 @@ VERSION=1.0.0
 TAG=$(URI):$(VERSION)
 
 build:
-	rm -rf public/build && ENV_FILE=.env.docker yarn build --mode docker
+	rm -rf public/build && public/hot && ENV_FILE=.env.docker yarn build --mode docker
 	docker build -t $(TAG) . --no-cache
 	docker system prune -f
 save:

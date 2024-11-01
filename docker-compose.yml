@@ -1,7 +1,7 @@
 services:
-    ue_aniceto_arce:
-        image: app-ue_aniceto_arce:1.0.0
-        container_name: app-ue_aniceto_arce
+    ue-aniceto-arce:
+        image: app-ue-aniceto-arce:1.0.0
+        container_name: app-ue-aniceto-arce
         volumes:
             - "/etc/localtime:/etc/localtime:ro"
             - ".env.docker:/var/www/.env"
@@ -9,9 +9,10 @@ services:
             - "8000:80"
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.ue_aniceto_arce.rule=Host(`${TRAEFIK_HTTP_ROUTERS_RULE_HOST}`)"
-            - "traefik.http.routers.ue_aniceto_arce.entrypoints=websecure"
-            - "traefik.http.routers.ue_aniceto_arce.tls.certresolver=myresolver"
+            - "traefik.http.routers.ue-aniceto-arce.rule=Host(`${TRAEFIK_HTTP_ROUTERS_RULE_HOST}`)"
+            - "traefik.http.routers.ue-aniceto-arce.entrypoints=websecure"
+            - "traefik.http.routers.ue-aniceto-arce.tls.certresolver=myresolver"
+        restart: unless-stopped
         networks:
             - web
 
