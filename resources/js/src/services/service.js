@@ -11,7 +11,7 @@ import {
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
-    timeout: 10000,
+    timeout: 600000,
     withCredentials: true,
     withXSRFToken: true,
     headers: {
