@@ -1,7 +1,7 @@
 services:
-    inventarios-activos-fijos:
-        image: app-inventarios-activos-fijos:1.0.0
-        container_name: app-inventarios-activos-fijos
+    ue_aniceto_arce:
+        image: app-ue_aniceto_arce:1.0.0
+        container_name: app-ue_aniceto_arce
         volumes:
             - "/etc/localtime:/etc/localtime:ro"
             - ".env.docker:/var/www/.env"
@@ -9,9 +9,9 @@ services:
             - "8000:80"
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.inventarios-activos-fijos.rule=Host(`${TRAEFIK_HTTP_ROUTERS_RULE_HOST}`)"
-            - "traefik.http.routers.inventarios-activos-fijos.entrypoints=websecure"
-            - "traefik.http.routers.inventarios-activos-fijos.tls.certresolver=myresolver"
+            - "traefik.http.routers.ue_aniceto_arce.rule=Host(`${TRAEFIK_HTTP_ROUTERS_RULE_HOST}`)"
+            - "traefik.http.routers.ue_aniceto_arce.entrypoints=websecure"
+            - "traefik.http.routers.ue_aniceto_arce.tls.certresolver=myresolver"
         networks:
             - web
 

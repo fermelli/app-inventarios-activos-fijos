@@ -1,4 +1,4 @@
-NAME=app-inventarios-activos-fijos
+NAME=app-ue_aniceto_arce
 REPO=
 
 ifeq ($(REPO),)
